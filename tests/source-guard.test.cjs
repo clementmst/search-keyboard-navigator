@@ -88,11 +88,9 @@ test("controller contains the specified instant-scroll and fail-closed static gu
     "aria-labelledby must fail closed before aria-label is considered"
   );
   assert.match(navigatorSource, /hasUnsupportedExplicitRole\(headingLink\)/);
-  assert.match(
-    navigatorSource,
-    /hasSecondaryInteractiveLinkCandidate\(block, headingLink\)/
-  );
-  assert.match(navigatorSource, /querySelectorAll\("a, \[role\]"\)/);
+  assert.match(navigatorSource, /layoutAdapter\.classifyStructure/);
+  assert.match(navigatorSource, /RESULT_BLOCK_SELECTOR/);
+  assert.match(navigatorSource, /\[data-text-ad\].*aria-roledescription/s);
   assert.match(navigatorSource, /isUnsupportedPrimaryRole\(anchor\.getAttribute\("role"\)\)/);
   assert.match(navigatorSource, /isResultContainerLink\(block\.getAttribute\("role"\)\)/);
   assert.match(navigatorSource, /isBlockedResultRole\(roleEvidence\(/);

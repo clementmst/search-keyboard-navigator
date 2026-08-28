@@ -2,7 +2,7 @@
 
 Search Keyboard Navigator is a planned Manifest V3 Chrome extension for fast, keyboard-focused navigation of ordinary organic results on desktop Google Search, with explicit assistive-technology limitations under evaluation.
 
-This repository contains the authorized **Stage 1A disposable, fixture-first interaction experiment and correction pass**. Its deterministic subset is not a substitute for branded-Chrome or assistive-technology evidence. It is not an MVP release, Store artifact, or authorization for Stage 1B.
+This repository contains the authorized **bounded Stage 1B private-test adapter** built on the Stage 1A interaction experiment. Its deterministic subset is not a substitute for branded-Chrome or assistive-technology evidence. It is not an MVP release or Store artifact.
 
 ## Proposed MVP
 
@@ -17,7 +17,7 @@ The unmodified-arrow design conflicts with native page scrolling and some screen
 
 ## Proposed architecture
 
-The experiment is a packaged, content-script-only extension: readable packaged source, the default isolated world, no service worker, no named Chrome API permissions, no separate `host_permissions`, no storage, no extension network activity, and no runtime dependencies. The static `content_scripts.matches` entry still grants persistent site access and may produce a warning; it is not permission-free. Pure policy functions, a deliberately synthetic fail-closed semantic contract, a focus controller, and action-time recomputation keep the Stage 1A hypothesis separable. Versioned live-Google adapters remain Stage 1B work.
+The experiment is a packaged, content-script-only extension: readable packaged source, the default isolated world, no service worker, no named Chrome API permissions, no separate `host_permissions`, no storage, no extension network activity, and no runtime dependencies. The static `content_scripts.matches` entry still grants persistent site access and may produce a warning; it is not permission-free. Pure policy functions, a deliberately synthetic fail-closed contract, one versioned narrow desktop adapter, a focus controller, and action-time recomputation keep the compatibility hypothesis separable.
 
 ## Project map
 
@@ -41,6 +41,8 @@ The experiment is a packaged, content-script-only extension: readable packaged s
 - [MANUAL_TESTING.md](MANUAL_TESTING.md) — branded Chrome and assistive-technology procedures
 - [STAGE1A_MANUAL_RESULTS.md](STAGE1A_MANUAL_RESULTS.md) — observed execution availability and explicit not-run evidence
 - [BROWSER_AUTOMATION_PROPOSAL.md](BROWSER_AUTOMATION_PROPOSAL.md) — separately gated production DOM/controller lane; not authorized
+- [PRIVATE_TEST.md](PRIVATE_TEST.md) — fresh-profile, non-personal private-test procedure and result form
+- [STAGE1B_EVIDENCE.md](STAGE1B_EVIDENCE.md) — bounded implementation, deterministic evidence, review, and remaining limits
 - `manifest.json`, `src/`, `fixtures/`, and `tests/` — the dependency-free Stage 1A experiment and deterministic corpus
 - [research/sources.yaml](research/sources.yaml) — structured evidence ledger
 - [evals/README.md](evals/README.md) — evaluation governance
@@ -49,4 +51,4 @@ The experiment is a packaged, content-script-only extension: readable packaged s
 
 ## Current status
 
-The authorized dependency-free Stage 1A static-correction pass is implemented. Source and static regression checks cover ordered WAI-ARIA effective-role processing, container/secondary-link ambiguity, referenced-name precedence, widget exclusions, two-phase focus commit, a fixture-only non-navigating pointer guard, explicit user-value stopping rules, and qualified security-tripwire claims. An executable pure-policy sidecar oracle evaluates synthetic selector scenarios without claiming production DOM execution. The compliance register is an issue-spotting release gate, not legal advice or certification; public release remains blocked on publisher/market facts, current policy reconciliation, and the unresolved Google Terms/`robots.txt` question. Manual Chrome, assistive-technology, runtime privacy, install-warning, real-DOM, and independent frozen-tree review evidence remain required before any verdict can advance the interaction hypothesis. Publication, deployment, Store submission, paid services, telemetry, expanded permissions, dependencies, and material scope changes remain separate approval gates.
+The authorized dependency-free bounded Stage 1B private-test adapter is implemented and statically reviewed. Source and regression checks cover its versioned structural signals, exact title-link and secondary-link ambiguity, ordered WAI-ARIA effective-role processing, referenced-name precedence, widget exclusions, two-phase focus commit, and qualified security tripwires. The fixtures and pure-policy oracles do not claim production DOM execution. The compliance register is an issue-spotting release gate, not legal advice or certification; public release remains blocked on current policy reconciliation and unresolved legal questions. Real Chrome observation is still required before calling the private-test behavior observed; assistive-technology, runtime privacy, install-warning, visual, and real-DOM evidence are not claimed. Publication, deployment, Store submission, paid services, telemetry, expanded permissions, dependencies, broader layouts, and deferred backlog items remain separate approval gates.

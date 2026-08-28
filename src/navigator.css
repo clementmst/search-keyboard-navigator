@@ -1,11 +1,11 @@
-.skn-stage1a-focused {
+.skn-private-test-focused {
   outline: 3px solid #0b57d0 !important;
   outline-offset: 3px !important;
   box-shadow: 0 0 0 2px #ffffff !important;
 }
 
 @media (forced-colors: active) {
-  .skn-stage1a-focused {
+  .skn-private-test-focused {
     outline: 3px solid Highlight !important;
     outline-offset: 3px !important;
     box-shadow: none !important;

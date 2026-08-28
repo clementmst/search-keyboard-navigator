@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Search Keyboard Navigator - Stage 1A Experiment",
-  "version": "0.0.1",
-  "description": "Disposable fixture-first experiment for keyboard navigation of supported Google Search result layouts.",
+  "name": "Search Keyboard Navigator - Private Test",
+  "version": "0.1.0",
+  "description": "Private-test keyboard navigation for a narrowly supported Google Search results layout.",
   "content_scripts": [
     {
       "matches": [
@@ -11,6 +11,7 @@
       "js": [
         "src/policy.js",
         "src/result-policy.js",
+        "src/layout-adapter.js",
         "src/navigator.js"
       ],
       "css": [

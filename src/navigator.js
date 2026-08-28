@@ -3,7 +3,8 @@
 
   const policy = globalThis.SearchKeyboardNavigatorPolicy;
   const resultPolicy = globalThis.SearchKeyboardNavigatorResultPolicy;
-  const INDICATOR_CLASS = "skn-stage1a-focused";
+  const layoutAdapter = globalThis.SearchKeyboardNavigatorLayoutAdapter;
+  const INDICATOR_CLASS = "skn-private-test-focused";
   const EDITING_OR_WIDGET_SELECTOR = [
     "input",
     "textarea",
@@ -137,7 +138,7 @@
     selected: null
   };
 
-  if (!policy || !resultPolicy) {
+  if (!policy || !resultPolicy || !layoutAdapter) {
     return;
   }
 
@@ -330,20 +331,18 @@
   }
 
   function supportedRoot() {
-    const roots = Array.from(document.querySelectorAll("main"));
+    const roots = Array.from(
+      document.querySelectorAll(layoutAdapter.RESULT_ROOT_SELECTOR)
+    );
     if (roots.length !== 1) {
       return null;
     }
 
     const root = roots[0];
-    const children = Array.from(root.children);
     if (
       !isRendered(root) ||
       hasHiddenSemantics(root) ||
-      hasBlockedContext(root) ||
-      hasActiveOverlay() ||
-      children.length === 0 ||
-      children.some((child) => child.tagName !== "ARTICLE")
+      hasActiveOverlay()
     ) {
       return null;
     }
@@ -352,16 +351,50 @@
   }
 
   function candidateFromBlock(root, block) {
-    const headings = Array.from(block.querySelectorAll("h2, h3"));
-    const allLinks = Array.from(block.querySelectorAll("a[href]"));
+    const organicContainers = Array.from(
+      block.querySelectorAll(layoutAdapter.ORGANIC_CONTAINER_SELECTOR)
+    );
+    const titleWrappers = Array.from(
+      block.querySelectorAll(layoutAdapter.TITLE_WRAPPER_SELECTOR)
+    );
+    const headings = Array.from(block.querySelectorAll("h3"));
     const heading = headings.length === 1 ? headings[0] : null;
-    const headingLink = heading
-      ? heading.closest("a[href]") || heading.querySelector("a[href]")
-      : null;
+    const titleWrapper = titleWrappers.length === 1 ? titleWrappers[0] : null;
+    const headingLinks = heading && titleWrapper
+      ? Array.from(titleWrapper.querySelectorAll("a[href]")).filter(
+          (anchor) => anchor.contains(heading) || heading.contains(anchor)
+        )
+      : [];
+    const headingLink = headingLinks.length === 1 ? headingLinks[0] : null;
+    const structure = layoutAdapter.classifyStructure({
+      blockIsDirectChild: block.parentElement === root,
+      excludedModule: Boolean(
+        block.matches("[data-text-ad]") ||
+        block.querySelector(
+          "[data-text-ad], aside, [role='navigation'], [aria-roledescription], " +
+            "g-scrolling-carousel, block-component, table"
+        )
+      ),
+      headingCount: headings.length,
+      headingInsideTitleWrapper: Boolean(
+        heading && titleWrapper && titleWrapper.contains(heading)
+      ),
+      headingLinkCount: headingLinks.length,
+      headingLinkInsideTitleWrapper: Boolean(
+        headingLink && titleWrapper && titleWrapper.contains(headingLink)
+      ),
+      organicContainerCount: organicContainers.length,
+      rootCount: 1,
+      titleWrapperCount: titleWrappers.length,
+      titleWrapperInsideOrganicContainer: Boolean(
+        titleWrapper &&
+          organicContainers[0] &&
+          organicContainers[0].contains(titleWrapper)
+      )
+    });
     const ambiguous =
-      allLinks.length !== 1 ||
+      !structure.eligible ||
       !headingLink ||
-      allLinks[0] !== headingLink ||
       resultPolicy.isResultContainerLink(block.getAttribute("role")) ||
       hasSecondaryInteractiveLinkCandidate(block, headingLink);
     const baseTarget = document.querySelector("base[target]");
@@ -386,7 +419,7 @@
       hiddenBySemantics: Boolean(headingLink && hasHiddenSemantics(headingLink)),
       href: headingLink ? headingLink.getAttribute("href") || "" : "",
       inert: Boolean(headingLink && headingLink.closest("[inert]")),
-      primaryLinkCount: allLinks.length,
+      primaryLinkCount: headingLinks.length,
       rendered: Boolean(headingLink && isRendered(headingLink)),
       supportedRoot: root.contains(block),
       tabIndex: headingLink ? headingLink.tabIndex : -1
@@ -402,7 +435,7 @@
       return [];
     }
 
-    return Array.from(root.children)
+    return Array.from(root.querySelectorAll(layoutAdapter.RESULT_BLOCK_SELECTOR))
       .map((block) => candidateFromBlock(root, block))
       .filter(Boolean);
   }

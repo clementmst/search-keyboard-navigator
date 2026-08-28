@@ -32,6 +32,7 @@ test("manifest has one static site-access grant and no named API permissions", (
   assert.deepEqual(manifest.content_scripts[0].js, [
     "src/policy.js",
     "src/result-policy.js",
+    "src/layout-adapter.js",
     "src/navigator.js"
   ]);
   assert.deepEqual(manifest.content_scripts[0].css, ["src/navigator.css"]);

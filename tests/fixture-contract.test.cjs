@@ -85,3 +85,21 @@ test("role-token fixture covers fallback, recognized precedence, and container-s
     assert.equal(html.includes(token), true, `missing role-token fixture case: ${token}`);
   }
 });
+
+test("bounded desktop adapter fixtures contain positive and fail-closed minimal structures", () => {
+  const supported = fixture("live-desktop-organic.html");
+  const excluded = fixture("live-desktop-exclusions.html");
+
+  assert.equal((supported.match(/class="MjjYud"/g) || []).length, 2);
+  assert.equal((supported.match(/class="yuRUbf"/g) || []).length, 2);
+  assert.match(supported, /class="g">\s*<div class="yuRUbf">\s*<a[^>]+><h3>/);
+  for (const marker of [
+    "data-text-ad",
+    "<table>",
+    "<h3>Primary</h3><h3>Secondary</h3>",
+    '<div class="g"></div><div class="yuRUbf">',
+    '<h3><a href="https://example.test/one">One</a><a href="https://example.test/two">Two</a></h3>'
+  ]) {
+    assert.equal(excluded.includes(marker), true, `missing exclusion fixture: ${marker}`);
+  }
+});

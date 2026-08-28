@@ -1,4 +1,4 @@
-# Stage 1A fixtures
+# Stage 1A and bounded Stage 1B fixtures
 
 These fixtures are deterministic evidence for the disposable interaction experiment. They are not snapshots of Google markup and are not selector promises.
 
@@ -10,3 +10,9 @@ These fixtures are deterministic evidence for the disposable interaction experim
 - `contracts/result-policy-cases.json` and `contracts/selector-scenarios.json` are executable pure-policy sidecar oracles consumed by the built-in Node tests. They evaluate expected eligibility without a DOM implementation. Production code never reads fixture IDs or test metadata, and these tests do not claim browser or real-DOM execution.
 
 The local HTML files cannot directly exercise the extension because Stage 1A intentionally grants only `https://www.google.com/search*`. Follow `MANUAL_TESTING.md` to install the fixture markup temporarily on an in-scope page using Chrome DevTools.
+
+`live-desktop-organic.html` is a synthetic minimal representation of the bounded
+Stage 1B adapter's positive structural signals. `live-desktop-exclusions.html`
+covers sponsored, table/rich-module, and ambiguous-title rejection signals. They
+contain no live query, result text, URL, screenshot, or copied Google markup and
+are static contract evidence only, not proof that a current live layout matches.
