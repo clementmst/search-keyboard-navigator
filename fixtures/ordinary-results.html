@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Stage 1A supported ordinary-results fixture</title>
+  </head>
+  <body>
+    <style>
+      body { margin: 0; }
+      body > label, body > input, body > button { margin: 1rem; }
+      main > article { box-sizing: border-box; min-height: 75vh !important; padding: 2rem; }
+      main > article:nth-child(odd) { background: #f7f7f7; color: #202124; }
+      main > article:nth-child(even) { background: #202124; color: #f7f7f7; }
+      main > article:nth-child(even) a { color: #8ab4f8; }
+    </style>
+    <label for="fixture-search">Search</label>
+    <input id="fixture-search" type="search" value="keyboard navigation fixture">
+    <button type="button">Search</button>
+    <textarea aria-label="Fixture notes">editable text</textarea>
+    <select aria-label="Fixture choice"><option>choice</option></select>
+    <div contenteditable="true" tabindex="0">contenteditable fixture</div>
+    <div role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="10" aria-valuenow="5">slider fixture</div>
+    <div role="scrollbar" tabindex="0" aria-controls="fixture-scroll-target" aria-valuemin="0" aria-valuemax="10" aria-valuenow="5">scrollbar fixture</div>
+    <div role="separator" tabindex="0" aria-orientation="horizontal">focusable separator fixture</div>
+    <div role="tree" tabindex="0"><div role="treeitem">tree fixture</div></div>
+    <div role="toolbar"><button type="button">toolbar control</button></div>
+    <button type="button" popovertarget="fixture-popover">Open fixture popover</button>
+    <div id="fixture-popover" popover>Open popover fixture</div>
+    <iframe title="Embedded fixture" srcdoc="<p>embedded context</p>"></iframe>
+    <main id="fixture-scroll-target">
+      <article id="alpha">
+        <a href="https://example.test/alpha"><h3>Alpha ordinary result</h3></a>
+        <p>First synthetic result description.</p>
+      </article>
+      <article id="bravo">
+        <a href="https://example.test/bravo"><h3>Bravo ordinary result</h3></a>
+        <p>Second synthetic result description.</p>
+      </article>
+      <article id="charlie">
+        <a href="https://example.test/charlie"><h3>Charlie ordinary result</h3></a>
+        <p>Third synthetic result description.</p>
+      </article>
+    </main>
+    <button type="button">Unrelated control after results</button>
+  </body>
+</html>

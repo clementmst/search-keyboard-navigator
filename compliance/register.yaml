@@ -1,0 +1,155 @@
+schema_version: 1
+project: "Search Keyboard Navigator"
+assessment_version: "2026-08-28-initial"
+assessed: 2026-08-28
+status: "release-blocked-pending-facts-and-current-policy-review"
+disclaimer: "Engineering governance only; not legal advice or legal-compliance certification."
+user_facts_recorded: 2026-08-28
+user_supplied_facts:
+  publisher: "Individual publishing personally; resident and legally established in France; states authority to accept agreements."
+  distribution: "Private testing now; eventual public Chrome Web Store listing intended."
+  markets: "Worldwide public availability intended immediately after readiness/compliance review."
+  audience: "General public; not specifically directed at children under 16."
+  v1_data: "Optional privacy-minimized first-party analytics selected as a deferred future direction; current private-test Stage 1A remains local-only/backend-free because no collection design or authorization exists."
+  business_model: "Ideally free and cash-neutral; donations desired; data sales and affiliates mentioned but not approved."
+  branding: "Google/Chrome compatibility references in marketing only; not in product name."
+  open_source: "Use/adapt only when exact license permits and all obligations are met; otherwise independent implementation without copying."
+  support: "Future post-live agent-assisted workflow desired; no mailbox, retention, access, or outbound automation is authorized, and no external send may occur without explicit user approval."
+  counsel: "No external counsel planned; AI compliance reviewer is not licensed counsel and cannot certify compliance."
+statuses:
+  - satisfied
+  - not-applicable
+  - unresolved
+  - legal-review-required
+entries:
+  - id: CWS-POLICY
+    area: "Chrome Web Store Program Policies"
+    jurisdiction: "Chrome Web Store distribution"
+    source_ids: "CHROME-POLICY-001, CHROME-POLICY-2026-001, CHROME-MV3-001, CHROME-PRIV-001"
+    reviewed: 2026-08-28
+    status: unresolved
+    applicability: "Likely required if the extension is submitted or published through the Chrome Web Store."
+    reasoning: "Single purpose, minimum permissions, listing accuracy, user-data disclosures, Limited Use, deceptive behavior, security, and remote-code requirements must match the exact release artifact."
+    evidence: "Current tree is narrow, local-only, dependency-free, and unpublished; listing, dashboard, privacy URL, and exact release artifact do not exist."
+    unresolved: "Final artifact/listing/privacy URL/dashboard responses and live current policy readback for worldwide distribution."
+
+  - id: CWS-AGREEMENT
+    area: "Chrome Web Store Developer Agreement"
+    jurisdiction: "Chrome Web Store publisher relationship"
+    source_ids: "CHROME-AGREEMENT-001"
+    reviewed: 2026-08-28
+    status: unresolved
+    applicability: "Applies if an authorized publisher uses the Chrome Web Store developer service."
+    reasoning: "The agreement incorporates other Google terms and identifies contracting arrangements by residence; only an authorized human/entity may accept it."
+    evidence: "User identifies as an individual publisher resident/established in France and states authority to accept; no upload, account access, or acceptance is authorized."
+    unresolved: "Publisher-account details, legal capacity confirmation under the current France terms, registration requirements, and current agreement at submission."
+
+  - id: GOOGLE-TERMS
+    area: "Google Terms and Search interaction"
+    jurisdiction: "Use of Google Search and related services"
+    source_ids: "GOOGLE-TOS-001, GOOGLE-SERVICE-TERMS-001, GOOGLE-ROBOTS-001, GOOGLE-SPAM-001"
+    reviewed: 2026-08-28
+    status: legal-review-required
+    applicability: "Google Terms apply to service use; Search-specific applicability to an extension that changes local focus behavior must be confirmed for the intended release."
+    reasoning: "Current behavior is human-initiated local DOM focus, not a query bot, but the 2026 Terms prohibit automated access contrary to machine-readable instructions and the live robots.txt disallows /search; official text does not expressly resolve this extension pattern."
+    evidence: "No extension network request, scraping store, query automation, content copying, or provider replacement exists in the current tree."
+    unresolved: "Authoritative clarification or qualified advice on the Terms/robots.txt interaction, plus developer/user jurisdiction, intended scale, and distribution."
+
+  - id: GOOGLE-BRAND-IP
+    area: "Google branding, intellectual property, and third-party result content"
+    jurisdiction: "Trademark, copyright, and listing assets"
+    source_ids: "GOOGLE-BRAND-001, GOOGLE-TOS-001"
+    reviewed: 2026-08-28
+    status: not-applicable
+    applicability: "No Google logo, product icon, screenshot, visual identity, or third-party result content is included now. Reopens for Store assets and marketing."
+    reasoning: "Current project name does not contain a Google mark and synthetic fixtures avoid copied result content. Plain-text compatibility references must remain accurate and non-affiliative."
+    evidence: "Static repository inventory and synthetic fixtures."
+    unresolved: "Final name, icon, screenshots, listing copy, and any asset permissions."
+
+  - id: EU-GDPR
+    area: "GDPR"
+    jurisdiction: "EU/EEA personal-data processing"
+    source_ids: "EU-GDPR-001"
+    reviewed: 2026-08-28
+    status: legal-review-required
+    applicability: "Potentially applicable if the developer is established in the EU/EEA or offers services to or monitors people there."
+    reasoning: "Search queries, URLs, and page content may contain personal data; local on-device processing does not by itself answer controller, purpose, legal basis, transparency, or territorial-scope questions."
+    evidence: "Current design processes URL/result DOM ephemerally and has no retention, transmission, analytics, account, or backend."
+    unresolved: "French establishment and worldwide release make EU analysis material; controller/processor roles for local processing and any future telemetry, purposes, legal basis, notice duties, and France/CNIL application remain unresolved."
+
+  - id: EU-EPRIVACY
+    area: "ePrivacy and terminal-equipment rules"
+    jurisdiction: "EU/EEA Member State implementations"
+    source_ids: "EU-EPRIVACY-001"
+    reviewed: 2026-08-28
+    status: legal-review-required
+    applicability: "EDPB guidance indicates purely local use is not gaining access while information stays on-device, but installation/state and Member State implementation remain contextual."
+    reasoning: "No cookie, persistent storage, tracking, or transmission exists; extension installation and essential transient memory may still require a necessity/exemption assessment."
+    evidence: "Current source has no persistent storage, cookie access, telemetry, or extension network activity."
+    unresolved: "Markets, Member State law, installation/request model, scope of terminal-equipment access, and necessity/consent analysis."
+
+  - id: EU-PROVIDER-GPSR
+    area: "EU provider identity and general product safety"
+    jurisdiction: "EU public distribution"
+    source_ids: "EU-ECOMMERCE-001, EU-GPSR-001"
+    reviewed: 2026-08-28
+    status: legal-review-required
+    applicability: "Potentially applicable if the extension is an economic information-society service or consumer software made available through commercial activity in the EU."
+    reasoning: "Free distribution does not by itself settle economic or product status; possible duties include provider identity/contact, risk analysis, technical documentation, incident/corrective-action handling, and an EU economic operator."
+    evidence: "Current safety, focus, privacy, permission, and provenance risks are recorded, but no publisher entity, contact plan, EU market decision, technical release file, or incident process exists."
+    unresolved: "Entity and economic role, EU markets, commercial activity, product classification, responsible economic operator, contact/address plan, and qualified EU advice."
+
+  - id: ACCESSIBILITY-LAW
+    area: "Accessibility obligations and claims"
+    jurisdiction: "Market/entity/use-context dependent"
+    source_ids: "W3C-WCAG-001, EU-EAA-001, US-ADA-001"
+    reviewed: 2026-08-28
+    status: legal-review-required
+    applicability: "Depends on developer/entity, product or service category, market, public-accommodation/public-sector relationship, and target users."
+    reasoning: "WCAG 2.2 is the project quality baseline, not a blanket statement of legal compliance; the experimental arrow model still needs manual assistive-technology evidence."
+    evidence: "Static accessibility controls exist; real assistive-technology, visual, AX, and key-delivery validation are explicitly not claimed."
+    unresolved: "Entity, markets, service category, regulated contexts, legal standard, and substantiated listing language."
+
+  - id: CONSUMER-CLAIMS
+    area: "Consumer protection and marketing claims"
+    jurisdiction: "Launch-market dependent"
+    source_ids: "US-FTC-CLAIMS-001, EU-UCPD-001"
+    reviewed: 2026-08-28
+    status: unresolved
+    applicability: "Likely applies to promotional representations in markets where the extension is offered, including free offerings where relevant."
+    reasoning: "Objective and implied accessibility, privacy, compatibility, performance, and exclusion claims must be truthful, evidence-based, and appropriately qualified."
+    evidence: "Repository documents label Stage 1A experimental and explicitly withhold browser, visual, privacy-runtime, and assistive-technology passes."
+    unresolved: "Worldwide distribution is intended; final listing/evidence/disclosures, country availability, and any later marketing/SEO plan remain unresolved."
+
+  - id: OSS-LICENSES
+    area: "Open-source licenses and notices"
+    jurisdiction: "Artifact and source distribution"
+    source_ids: "None; repository provenance observation"
+    reviewed: 2026-08-28
+    status: not-applicable
+    applicability: "No third-party dependency or copied code is identified in the current tree; required again for every release artifact or dependency change."
+    reasoning: "Current dependency-free implementation does not create a known third-party notice obligation."
+    evidence: "No package manifest, lockfile, vendored library, or copied-code provenance record is present."
+    unresolved: "Future dependencies, copied snippets, build tools, fonts, icons, and required notices."
+
+  - id: THIRD-PARTY-ASSETS-DATA
+    area: "Third-party assets, fixtures, screenshots, and data rights"
+    jurisdiction: "Copyright, trademark, contract, and privacy"
+    source_ids: "GOOGLE-BRAND-001, GOOGLE-TOS-001"
+    reviewed: 2026-08-28
+    status: not-applicable
+    applicability: "Current fixtures are deliberately synthetic; reopens before using live screenshots, copied result content, logos, fonts, icons, or external datasets."
+    reasoning: "A Store listing and release package must not assume that public visibility grants reuse rights."
+    evidence: "No real query/result corpus, Google screenshot, logo, or third-party production asset appears in the current inventory."
+    unresolved: "Final Store assets, fixture acquisition, license/permission evidence, notices, and privacy sanitization."
+
+  - id: TELEMETRY-MONETIZATION
+    area: "Telemetry, advertising, sale/sharing, payment, and monetization"
+    jurisdiction: "Platform and market dependent"
+    source_ids: "CHROME-POLICY-001, CHROME-PRIV-001, CHROME-LIMITED-USE-001, CHROME-AFFILIATE-001, CHROME-PAYMENT-001"
+    reviewed: 2026-08-28
+    status: not-applicable
+    applicability: "No such feature exists or is authorized. User interest in donations and possible improvement data does not authorize implementation; data sale and affiliate rewriting/injection are blocked project defaults."
+    reasoning: "Keep v1 local-only/backend-free; never sell browsing/search/user data; require a separate opt-in privacy design for telemetry and a separate provider/platform/tax review for an optional external donation link."
+    evidence: "Manifest/source/static boundary checks."
+    unresolved: "Future first-party telemetry still needs a complete separately authorized design; donation is post-live and needs provider/payment/tax jurisdiction review; neither data nor payment implementation is authorized."

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Stage 1A excluded-result examples</title>
+  </head>
+  <body>
+    <main>
+      <article aria-label="Sponsored result">
+        <a href="https://example.com/ad"><h3>Sponsored unit</h3></a>
+      </article>
+      <article>
+        <a href="https://example.com/rich"><h3>Rich unit</h3></a>
+        <nav><a href="https://example.com/rich/child">Child navigation</a></nav>
+      </article>
+      <article>
+        <a href="https://example.com/one"><h3>Ambiguous title one</h3></a>
+        <a href="https://example.com/two"><h3>Ambiguous title two</h3></a>
+      </article>
+      <article>
+        <a href="javascript:void(0)"><h3>Unsafe destination</h3></a>
+      </article>
+      <article>
+        <a href="https://example.com/new-tab" target="_blank"><h3>Non-default target</h3></a>
+      </article>
+      <article>
+        <a href="https://example.com/hidden-name"><h3 aria-hidden="true">Hidden-only title</h3></a>
+      </article>
+      <article>
+        <span id="referenced-name">Referenced name</span>
+        <a href="https://example.com/conflicting-name" aria-label="Label name" aria-labelledby="referenced-name"><h3>Conflicting name sources</h3></a>
+      </article>
+    </main>
+  </body>
+</html>

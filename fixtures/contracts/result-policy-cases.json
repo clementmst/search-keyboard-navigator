@@ -1,0 +1,208 @@
+[
+  {
+    "id": "ordinary-single-title-link",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": false,
+      "ambiguous": false,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "Ordinary result",
+      "tabIndex": 0,
+      "hasDownload": false,
+      "effectiveTarget": "",
+      "href": "/ordinary",
+      "baseUrl": "https://example.com/search"
+    },
+    "expected": { "eligible": true, "reason": "eligible" }
+  },
+  {
+    "id": "unknown-root",
+    "evidence": {
+      "supportedRoot": false,
+      "connected": true,
+      "rendered": true,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "Unknown",
+      "tabIndex": 0,
+      "href": "https://example.com/unknown",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "unsupported-root" }
+  },
+  {
+    "id": "removed-node",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": false,
+      "rendered": false,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "Removed",
+      "tabIndex": 0,
+      "href": "https://example.com/removed",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "not-perceivable" }
+  },
+  {
+    "id": "ad-or-rich-context",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": true,
+      "ambiguous": false,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "Excluded",
+      "tabIndex": 0,
+      "hasDownload": false,
+      "effectiveTarget": "",
+      "href": "https://example.com/excluded",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "sitelink-ambiguity",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": false,
+      "ambiguous": true,
+      "headingCount": 1,
+      "primaryLinkCount": 2,
+      "accessibleName": "Ambiguous",
+      "tabIndex": 0,
+      "hasDownload": false,
+      "effectiveTarget": "",
+      "href": "https://example.com/ambiguous",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "two-headings",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": false,
+      "ambiguous": false,
+      "headingCount": 2,
+      "primaryLinkCount": 1,
+      "accessibleName": "Two headings",
+      "tabIndex": 0,
+      "hasDownload": false,
+      "effectiveTarget": "",
+      "href": "https://example.com/headings",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "noncanonical-title" }
+  },
+  {
+    "id": "not-focusable",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": false,
+      "ambiguous": false,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "Removed from tab order",
+      "tabIndex": -1,
+      "hasDownload": false,
+      "effectiveTarget": "",
+      "href": "https://example.com/no-tab",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "not-sequentially-focusable" }
+  },
+  {
+    "id": "missing-trustworthy-name",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": false,
+      "ambiguous": false,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "",
+      "tabIndex": 0,
+      "hasDownload": false,
+      "effectiveTarget": "",
+      "href": "https://example.com/no-name",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "not-sequentially-focusable" }
+  },
+  {
+    "id": "new-tab-target",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": false,
+      "ambiguous": false,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "New tab",
+      "tabIndex": 0,
+      "hasDownload": false,
+      "effectiveTarget": "_blank",
+      "href": "https://example.com/new-tab",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "unsupported-activation" }
+  },
+  {
+    "id": "script-url",
+    "evidence": {
+      "supportedRoot": true,
+      "connected": true,
+      "rendered": true,
+      "hiddenBySemantics": false,
+      "inert": false,
+      "disabled": false,
+      "excludedContext": false,
+      "ambiguous": false,
+      "headingCount": 1,
+      "primaryLinkCount": 1,
+      "accessibleName": "Unsafe",
+      "tabIndex": 0,
+      "hasDownload": false,
+      "effectiveTarget": "",
+      "href": "javascript:void(0)",
+      "baseUrl": "https://example.com/"
+    },
+    "expected": { "eligible": false, "reason": "unsafe-url" }
+  }
+]

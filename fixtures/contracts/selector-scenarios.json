@@ -1,0 +1,111 @@
+[
+  {
+    "id": "legitimate-single-title-anchor",
+    "fixture": "ordinary-results.html",
+    "requiredMarkup": "<article id=\"alpha\">",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [],
+    "expected": { "eligible": true, "reason": "eligible" }
+  },
+  {
+    "id": "secondary-exact-role-link",
+    "fixture": "secondary-role-link-context.html",
+    "requiredMarkup": "<div role=\"link\" tabindex=\"0\">",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [
+      { "tagName": "div", "explicitRole": "link", "hasHref": false, "hasTabIndex": true }
+    ],
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "secondary-fallback-role-link",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"secondary-fallback-link\"",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [
+      { "tagName": "div", "explicitRole": "foo link", "hasHref": false, "hasTabIndex": true }
+    ],
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "secondary-focusable-anchor",
+    "fixture": "secondary-focusable-anchor-context.html",
+    "requiredMarkup": "<a tabindex=\"0\">Secondary focusable anchor</a>",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [
+      { "tagName": "a", "explicitRole": "", "hasHref": false, "hasTabIndex": true }
+    ],
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "secondary-role-overridden-anchor",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"secondary-role-overridden-anchor\"",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [
+      { "tagName": "a", "explicitRole": "button", "hasHref": false, "hasTabIndex": true }
+    ],
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "secondary-recognized-nonlink-before-link",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"secondary-nonlink-first\"",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [
+      { "tagName": "div", "explicitRole": "button link", "hasHref": false, "hasTabIndex": true }
+    ],
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "legitimate-primary-fallback-link",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"primary-fallback-link\"",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "foo link", "hasHref": true, "hasTabIndex": false },
+    "secondary": [],
+    "expected": { "eligible": true, "reason": "eligible" }
+  },
+  {
+    "id": "legitimate-primary-link-first",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"primary-link-first\"",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "link button", "hasHref": true, "hasTabIndex": false },
+    "secondary": [],
+    "expected": { "eligible": true, "reason": "eligible" }
+  },
+  {
+    "id": "primary-recognized-nonlink-before-link",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"primary-nonlink-first\"",
+    "containerRole": "",
+    "primary": { "tagName": "a", "explicitRole": "button link", "hasHref": true, "hasTabIndex": false },
+    "secondary": [],
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "container-self-fallback-link",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"container-fallback-link\" role=\"foo link\"",
+    "containerRole": "foo link",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [],
+    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
+  },
+  {
+    "id": "container-recognized-nonlink-before-link",
+    "fixture": "role-token-context.html",
+    "requiredMarkup": "id=\"container-nonlink-first\" role=\"article link\"",
+    "containerRole": "article link",
+    "primary": { "tagName": "a", "explicitRole": "", "hasHref": true, "hasTabIndex": false },
+    "secondary": [],
+    "expected": { "eligible": true, "reason": "eligible" }
+  }
+]

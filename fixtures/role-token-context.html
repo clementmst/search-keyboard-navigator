@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><title>Stage 1A ordered role-token cases</title></head>
+  <body>
+    <main>
+      <article id="secondary-fallback-link">
+        <a href="https://example.test/secondary-fallback-primary"><h3>Primary title</h3></a>
+        <div role="foo link" tabindex="0">Secondary fallback link</div>
+      </article>
+      <article id="secondary-nonlink-first">
+        <a href="https://example.test/secondary-nonlink-primary"><h3>Primary title</h3></a>
+        <div role="button link" tabindex="0">Secondary effective button</div>
+      </article>
+      <article id="secondary-role-overridden-anchor">
+        <a href="https://example.test/secondary-role-anchor-primary"><h3>Primary title</h3></a>
+        <a role="button" tabindex="0">Secondary effective button anchor</a>
+      </article>
+      <article id="primary-fallback-link">
+        <a role="foo link" href="https://example.test/primary-fallback"><h3>Fallback-link title</h3></a>
+      </article>
+      <article id="primary-link-first">
+        <a role="link button" href="https://example.test/primary-link-first"><h3>Link-first title</h3></a>
+      </article>
+      <article id="primary-nonlink-first">
+        <a role="button link" href="https://example.test/primary-button-first"><h3>Button-first title</h3></a>
+      </article>
+      <article id="container-fallback-link" role="foo link">
+        <a href="https://example.test/container-fallback"><h3>Container fallback link</h3></a>
+      </article>
+      <article id="container-nonlink-first" role="article link">
+        <a href="https://example.test/container-article-first"><h3>Container article first</h3></a>
+      </article>
+    </main>
+  </body>
+</html>
