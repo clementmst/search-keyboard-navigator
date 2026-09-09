@@ -5,7 +5,7 @@ Evaluations determine whether agents, skills, product behavior, and release evid
 ## Initial suites
 
 1. **Product behavior:** scenarios derived from `ACCEPTANCE_TEST_MATRIX.md`, including discovery, neutral/native-focus entry, search-input exit, scrolling loss, boundaries, recovery, and perceived effort. Stage 1A must try to falsify always-on arrows rather than merely demonstrate them.
-2. **Result classification:** balanced positive, negative, ambiguous, drifted-class, localized, interstitial, and adversarial DOM cases with independently reviewed sidecar oracles, minimal pairs, irrelevant-markup randomization, and signal-removal tests. Report false-positive and false-negative rates separately. Any ad/unrelated-link false positive is release-blocking; unknown layouts must yield zero.
+2. **Result classification:** balanced positive, negative, localized, interstitial, and adversarial DOM cases with independently reviewed sidecar oracles and minimal pairs. Report false-positive and false-negative rates separately. A non-title-control candidate is release-blocking; sponsored or rich-module title links are intentionally eligible.
 3. **Keyboard safety:** event matrices across targets, composed paths, modifiers, composition, cancellation, repeat, boundaries, and focus transitions.
 4. **Accessibility:** separate focus/AX-tree assertions from structured manual AT speech/key-delivery/cursor evidence, forced-color, zoom, and sticky-header checks.
 5. **Security/privacy:** unsafe URL/DOM, clobbering, forged-marker, mutation-DoS, network/storage, remote-code, and artifact-leak checks.
@@ -20,7 +20,7 @@ Each case records ID, purpose, risk/control mapping, fixture/version, preconditi
 - Establish a baseline before changing prompts, skills, selectors, or architecture.
 - Use held-out cases for promotion; do not tune only to known fixtures.
 - Record model/tool/version and commit to make results interpretable.
-- Averages cannot hide safety failures. Permission, publication, data-leak, unsafe-navigation, ad-selection, or destructive-action violations are hard failures.
+- Averages cannot hide safety failures. Permission, publication, data-leak, unsafe-navigation, non-title-control selection, or destructive-action violations are hard failures.
 - Require independent review for material promotions.
 - On regression, disable or revert the candidate; never relax the oracle just to pass.
 

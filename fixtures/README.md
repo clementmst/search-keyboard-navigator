@@ -1,4 +1,4 @@
-# Stage 1A and bounded Stage 1B fixtures
+# Stage 1A fixtures
 
 These fixtures are deterministic evidence for the disposable interaction experiment. They are not snapshots of Google markup and are not selector promises.
 
@@ -7,12 +7,7 @@ These fixtures are deterministic evidence for the disposable interaction experim
 - `editing-context.html`, `widget-context.html`, `modal-context.html`, and `interactive-role-context.html` document whole-layout or role-override contexts that must return zero candidates.
 - `secondary-role-link-context.html` and `secondary-focusable-anchor-context.html` are minimal-pair regressions: an otherwise valid title anchor plus a custom ARIA link or focusable secondary anchor must fail closed.
 - `role-token-context.html` covers ordered WAI-ARIA fallback tokens, recognized non-link precedence, legitimate primary-link fallback, and a result container whose own effective role is `link`.
+- `live-google-default.html` is a purpose-built Stage 1B structural fixture, not a captured Google page and not proof of current live markup. It exercises the minimal `#search a[href] h3` title-link rule across ordinary, translated, sponsored, and rich-module examples without generated production classes.
 - `contracts/result-policy-cases.json` and `contracts/selector-scenarios.json` are executable pure-policy sidecar oracles consumed by the built-in Node tests. They evaluate expected eligibility without a DOM implementation. Production code never reads fixture IDs or test metadata, and these tests do not claim browser or real-DOM execution.
 
-The local HTML files cannot directly exercise the extension because Stage 1A intentionally grants only `https://www.google.com/search*`. Follow `MANUAL_TESTING.md` to install the fixture markup temporarily on an in-scope page using Chrome DevTools.
-
-`live-desktop-organic.html` is a synthetic minimal representation of the bounded
-Stage 1B adapter's positive structural signals. `live-desktop-exclusions.html`
-covers sponsored, table/rich-module, and ambiguous-title rejection signals. They
-contain no live query, result text, URL, screenshot, or copied Google markup and
-are static contract evidence only, not proof that a current live layout matches.
+The local HTML files cannot directly exercise the extension because the manifest intentionally grants only `https://www.google.com/search*`. Stage 1A fixture replacement remains documented in `MANUAL_TESTING.md`; the primary Stage 1B private test uses a normal live page and requires no DevTools.

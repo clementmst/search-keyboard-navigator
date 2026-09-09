@@ -4,29 +4,31 @@
 
 Make desktop web search faster and more accessible for keyboard-oriented users through a trustworthy Chrome extension that complements, rather than replaces or hijacks, native browser and page behavior.
 
+The product is currently named **ArrowKey Search Navigator** and was published initially as **Search Keyboard Navigator**. The former name remains in migration and privacy references where it helps existing users understand continuity.
+
 ## Product promise
 
-On supported Google Search result pages, a user can move predictably among ordinary organic results, see and perceive the current target, and activate it using native browser behavior. The extension processes the current page URL and result DOM locally and ephemerally, is narrowly scoped and minimally privileged, and is candid about limitations.
+On Google Search result pages, a user can move predictably among visible result-title links, see the current target, and activate it using native browser behavior. The extension processes the current page URL and result DOM locally and ephemerally, is narrowly scoped and minimally privileged, and is candid about limitations.
 
-## Current Stage 1A scope
+## Current release-improvement scope
 
-Stage 1A contains a disposable, dependency-free, fixture-first extension experiment plus research, governance, risk, evaluation, and test plans. It does not claim a live Google layout adapter, real-DOM/browser validation, assistive-technology compatibility, an MVP package, Store assets, uploads, publication, or deployment. Stage 1B remains separately gated.
+Version 0.1.1 is public after a user-run Chrome Web Store submission. The current bounded pass prepares version 0.1.2 with clearer naming, accurate Store copy, a genuine-screenshot request, and a static tracker-free discovery website. It does not broaden product behavior, permissions, domains, data flows, dependencies, or accessibility claims, and it does not authorize external deployment or Store publication by an agent.
 
 ## MVP scope boundary
 
 ### In scope
 
-- Desktop Chrome and exact runtime `www.google.com/search` default-web-result pages represented by an approved layout contract.
-- One canonical primary title link per supported ordinary organic-result block, in DOM/logical order.
+- Desktop Chrome and the exact runtime `www.google.com/search` route.
+- Visible native links containing one `h3` result title, in DOM order.
 - Arrow navigation, native link activation, escape/clear behavior, visible focus, and dynamic-result handling.
 - Deterministic fixtures, real-Chrome automation, accessibility checks, security review, and documented live manual testing.
 - Manifest V3, packaged logic, one narrow content-script site-access grant, and zero named Chrome API permissions or separate host permissions unless later evidence proves otherwise.
 
 ### Out of scope
 
-- Advertisements, sponsored results, shopping, carousels, maps/local packs, image/video/news verticals, sitelinks unless explicitly specified, related searches, navigation, account controls, and unrelated links.
+- Non-title controls such as translation links, menus, account controls, and search-box controls are not arrow-navigation candidates.
 - Regional Google domains, mobile layouts, other search engines, Firefox/Safari/Edge-specific releases, and configurable keymaps.
-- Accounts, backend, sync, analytics, telemetry, advertising, affiliate links, monetization, or retention/transmission of browsing activity, search queries, URLs, or page content. Transient local DOM processing is inherent and must be disclosed.
+- In the current private-test build: accounts, backend, sync, analytics, telemetry, advertising, affiliate links, monetization, or retention/transmission of browsing activity, search queries, URLs, or page content. Transient local DOM processing is inherent and must be disclosed. Privacy-minimized first-party analytics is only a deferred, separately gated future direction.
 - Remote executable code, remote configuration, automatic publication, or continuous autonomous operation.
 
 ## Success measures
@@ -37,11 +39,11 @@ The MVP is successful when:
 2. The acceptance matrix passes on versioned fixtures and documented live layouts.
 3. Native `Tab`, `Shift+Tab`, and link `Enter` behavior is not intercepted or reimplemented.
 4. No extension network request or persistent write occurs during representative sessions.
-5. Supported results are selected precisely enough that ads and unrelated links are never activated in the test corpus.
+5. Arrow movement selects visible result-title links and never selects non-title controls in the test corpus.
 6. The focus indicator remains perceivable under zoom, forced colors, and representative themes.
 7. The Store permission, privacy, single-purpose, and remote-code declarations match the code and artifact.
 8. Stage 1A evidence shows that representative users can discover the model, reach a named result predictably, recover native scrolling, and understand boundary/session behavior without accidental activation.
-9. Unsupported or ambiguous layouts produce zero candidates rather than a false-positive result.
+9. Hidden, disabled, unnamed, download, non-HTTP(S), and out-of-root links produce no candidates.
 
 ## Operating principles
 

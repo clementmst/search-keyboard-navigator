@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Stage 1B synthetic live-adapter structure</title>
+  </head>
+  <body>
+    <form role="search">
+      <input type="search" aria-label="Search">
+      <button type="submit">Search</button>
+    </form>
+    <div id="search">
+      <div data-fixture-case="localized-sponsored-outside-organic">
+        <a href="https://advertiser.example/ar"><h3>إعلان</h3></a>
+      </div>
+      <div id="rso">
+        <div data-fixture-case="ordinary-alpha">
+          <div>
+            <a href="https://example.test/alpha"><h3>Alpha ordinary result</h3></a>
+            <button type="button" aria-label="About this result">More</button>
+            <p>One primary title link and an incidental button.</p>
+          </div>
+        </div>
+        <div data-fixture-case="sponsored" data-text-ad>
+          <a href="https://advertiser.example/ar"><h3>إعلان ممول</h3></a>
+        </div>
+        <div data-fixture-case="ordinary-with-secondary-link">
+          <a href="https://example.test/ordinary"><h3>Ordinary result with extra controls</h3></a>
+          <a href="https://example.test/ordinary/translate">Traduire cette page</a>
+        </div>
+        <div data-fixture-case="rich-grid" role="grid">
+          <a href="https://example.test/rich"><h3>Rich grid result</h3></a>
+        </div>
+        <div data-fixture-case="ordinary-bravo">
+          <section>
+            <a href="https://example.test/bravo"><h3>Bravo ordinary result</h3></a>
+            <p>Second deliberately narrow ordinary result.</p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

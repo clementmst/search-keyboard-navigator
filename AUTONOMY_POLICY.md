@@ -63,7 +63,7 @@ Execution-layer agents escalate through the operator only when work reaches a ma
 
 Compliance questions also route through the operator when publisher/entity, jurisdiction, market, audience, distribution, monetization, data flow, agreement authority, rights, or qualified legal advice materially changes an obligation. The compliance reviewer may prepare a minimal intake, but agents do not ask the user directly.
 
-Only unsolicited progress updates from the operator chat to the user use `What we did -> What it achieved -> Next step`. Direct answers remain natural, and execution-layer agents may use the precise format best suited to internal briefs, reviews, and technical reports.
+Use natural, concise commentary while work is in progress; do not repeat a staged status template after each internal step. Only the final user-facing message of each interaction ends with `What we achieved`, followed by a short plain-language outcome, and then `Proposed sequence`, followed by an ordered workplan of next actions and recommendations. If no work remains, say so as item 1 under `Proposed sequence`; do not invent follow-up work. Execution-layer agents may use the precise format best suited to internal briefs, reviews, and technical reports.
 
 ## Change classes
 

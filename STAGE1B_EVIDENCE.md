@@ -1,63 +1,32 @@
-# Bounded Stage 1B private-test evidence
+# Stage 1B private-test evidence
 
-## Scope and classification
+Status: minimal language-neutral title-link adapter implemented after the user's live French-layout test exposed over-restrictive exclusions. A subsequent live screenshot exposed a fragmented inline-link focus outline; the indicator now targets only the result title and adds a small left marker. On 2026-08-31 the user confirmed that the revised live behavior and indicator work in that environment. **53 dependency-free tests passed** before Store-preparation changes. This single observation does not establish broad layout, browser, runtime-privacy, forced-colors, zoom, or assistive-technology compatibility.
 
-The operator explicitly authorized the immediate task in `CLOUD_HANDOFF.md`.
-This is autonomy-policy Class B repository-local work: it retains the single
-`https://www.google.com/search*` static match, adds no named API permission,
-dependency, storage, network, telemetry, publication, or external action, and
-does not implement any deferred backlog item.
+## Authorized boundary
 
-## Implemented contract
+Stage 1B adds a minimal adapter for visible Google result-title links on the existing MV3 content-script surface. The exact manifest match remains `https://www.google.com/search*`; runtime code requires origin `https://www.google.com` and pathname `/search`, but does not restrict language, query parameters, vertical type, sponsored status, rich modules, secondary links, or target disposition. There are no named Chrome API permissions, separate host permissions, optional permissions, service worker, action, storage, messaging, web-accessible resources, extension network activity, runtime dependencies, telemetry, backend, accounts, monetization, Store work, or publication.
 
-Adapter `google-desktop-organic-2026-08-v1` requires exactly one `#search #rso`
-root. Only direct `.MjjYud` children can be considered. Each candidate block must
-contain exactly one `.g`, one `.yuRUbf` inside that organic container, and exactly
-one title link associated with one `h3` inside the wrapper. Any secondary
-interactive link makes the block ambiguous.
-The existing URL, accessible-name, rendering, focusability, target, disabled,
-role, overlay, keyboard-context, and action-time focus revalidation controls still
-apply. Blocks containing sponsored markers, tables, carousels, rich components,
-navigation, or ambiguous headings fail closed. Unknown layouts return no
-candidates; this is expected safe behavior, not a compatibility failure.
+## Implemented change
 
-No mutation observer was added. Every potential extension-owned movement freshly
-enumerates the root and blocks, and focus is followed by a second fresh
-enumeration before the session commits. A removed/replaced/ineligible selected
-node therefore clears the session without semantic replacement or focus transfer.
+- `src/google-adapter-policy.js` contains the exact origin/path guard and minimal genuine-link classification without language or module exclusions.
+- `src/navigator.js` retains keyboard/session safeguards and discovers rendered native `a[href]` elements containing one `h3` inside the rendered `#search` root, without generated Google class selectors.
+- A candidate must be connected, rendered, programmatically focusable, named, enabled, non-inert, non-download, HTTP(S), and inside the search root. Negative tab order and surrounding page metadata do not disqualify it.
+- ArrowDown may start from any page focus that does not genuinely own arrow behavior, and the guarded key listener runs in capture phase so Google components cannot hide the key before it arrives. Editing and arrow-owning widgets remain inert; Tab and Enter remain untouched.
+- Candidate order and eligibility are recomputed before each extension-owned movement. Node replacement, removal, hiding, or ineligibility clears the session without focus transfer. No `MutationObserver` was added.
+- `fixtures/live-google-default.html` is synthetic and sanitized. It contains ordinary, translated, sponsored, and rich-grid title-link scenarios without copied queries, result content, Google generated classes, cookies, accounts, or personal data.
+- `tests/google-adapter-policy.test.cjs`, the fixture contract, manifest test, and source guard cover the authorized live-adapter policy and authority boundary. These are static/pure-policy tests, not production DOM or browser execution.
+- `src/navigator.css` outlines only the focused result's `h3` title and adds a non-interactive CSS triangle on its left, with separate dark-theme and forced-colors treatment. It does not alter the link's DOM or accessibility semantics.
 
-## Evidence boundary
+## Deterministic result
 
-Dependency-free tests cover the adapter's positive contract and mutations of each
-required signal. Synthetic fixtures cover two ordinary title blocks and excluded
-sponsored/rich/ambiguous blocks. Static checks retain the manifest, no-network,
-no-storage, no unsafe-sink, no Enter/Tab synthesis, no ARIA/tab-order rewrite,
-and exact post-focus-revalidation tripwires.
+On 2026-08-31, the seven `tests/*.test.cjs` files ran directly with the bundled Node runtime because this environment denies the built-in test runner's child-process fan-out. Result after the indicator correction: **53 passed, 0 failed, 0 skipped**. Exact route, permission, genuine-link, keyboard non-interference, source, and indicator guards remain. No package manifest, lockfile, runtime dependency, DOM package, Playwright code, custom browser controller, Chrome profile, new origin, or new permission was added.
 
-These checks do **not** execute a DOM, trusted input, Chrome extension load, live
-Google page, visual state, accessibility tree, speech output, or assistive
-technology. No real Chrome observation was performed in the cloud. Follow
-`PRIVATE_TEST.md` and record only the bounded pass/fail fields.
+`STAGE1B_SHA256SUMS.txt` is generated only after this evidence record is final and the temporary implementation role is read-only. It enumerates every other non-Git project file by repository-relative path and SHA-256; its only exclusion is itself because a file cannot contain its own stable hash. Reviewers must reject a missing, extra, or mismatched file. The operator's final report supplies the independent-review verdict, branch, and exact commit; this file does not pre-claim those outcomes.
 
-Independent engineering/product/test, accessibility, and privacy/security plus
-compliance reviews initially found title-link counting, secondary-link ambiguity,
-and container-relationship blockers. The reviewed correction derives the actual
-associated link set, restores production secondary-link rejection, enforces
-wrapper containment, and adds minimal regression fixtures/checks. The final
-review status is recorded with the deterministic test result below.
+## Evidence limits
 
-After correction, all three independent review tracks reported no remaining
-blocker for the bounded unpublished private-test build. Engineering/product/test,
-accessibility, and privacy/security/compliance reviewers separately retained the
-human real-Chrome observation and candid AT/runtime evidence limits. The final
-dependency-free run completed 60 tests with 60 passes, 0 failures, and 0 skips.
+No browser automation, DOM package, custom controller, dependency installation, live Google markup capture, Chrome launch, extension load, install-warning observation, runtime network/storage observation, visual check, accessibility-tree check, speech, key-delivery, or assistive-technology test is claimed. Static source tripwires are intentionally limited and are not comprehensive security evidence. The required first live observation is `PRIVATE_TEST.md`.
 
-## Remaining risk and gate status
+## Private-test decision rule
 
-Google DOM structures drift and the adapter can safely become inert. A structure
-that imitates all positive signals could still be misclassified; the exclusion
-list is defense in depth, not a universal taxonomy. Unmodified arrows retain the
-known scrolling and assistive-technology conflict. Private observation remains
-necessary, and public release, Store preparation, telemetry, broader layouts,
-browser automation, and accessibility qualification remain deferred and blocked
-at their existing gates.
+The user may begin the bounded fresh-profile test only if the operator reports the tree review-clean. Focus movement from an editable or genuine arrow-owning control, focus on a non-title control as a destination, accidental navigation, runaway repeat, focus trap, broader permission warning, or developer-visible retention/transmission is a stop condition.

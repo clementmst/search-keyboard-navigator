@@ -3,9 +3,10 @@
 
   const policy = globalThis.SearchKeyboardNavigatorPolicy;
   const resultPolicy = globalThis.SearchKeyboardNavigatorResultPolicy;
-  const layoutAdapter = globalThis.SearchKeyboardNavigatorLayoutAdapter;
-  const INDICATOR_CLASS = "skn-private-test-focused";
-  const EDITING_OR_WIDGET_SELECTOR = [
+  const googleAdapterPolicy =
+    globalThis.SearchKeyboardNavigatorGoogleAdapterPolicy;
+  const INDICATOR_CLASS = "skn-focused";
+  const ARROW_OWNING_SELECTOR = [
     "input",
     "textarea",
     "select",
@@ -17,82 +18,15 @@
     "[role='spinbutton']",
     "[role='scrollbar']",
     "[role='separator'][tabindex]",
-    "[role='button']",
-    "[role='checkbox']",
     "[role='radio']",
-    "[role='switch']",
     "[role='tab']",
     "[role='option']",
     "[role='menuitem']",
     "[role='menuitemcheckbox']",
     "[role='menuitemradio']",
-    ":not(a)[tabindex]",
-    "summary",
-    "details",
     "audio[controls]",
     "video[controls]",
     "[role='slider']",
-    "[role='listbox']",
-    "[role='menu']",
-    "[role='menubar']",
-    "[role='tree']",
-    "[role='treegrid']",
-    "[role='grid']",
-    "[role='tablist']",
-    "[role='radiogroup']",
-    "[role='toolbar']",
-    "[role='application']",
-    "[role='dialog']",
-    "dialog",
-    "[aria-modal='true']",
-    "[popover]",
-    "iframe",
-    "object",
-    "embed"
-  ].join(",");
-  const INTERACTIVE_OR_FOCUSABLE_SELECTOR = [
-    "a[href]",
-    "button",
-    "input",
-    "textarea",
-    "select",
-    "summary",
-    "audio[controls]",
-    "video[controls]",
-    "[contenteditable]:not([contenteditable='false'])",
-    "[tabindex]",
-    "[role='button']",
-    "[role='link']",
-    "[role='checkbox']",
-    "[role='radio']",
-    "[role='switch']",
-    "[role='tab']",
-    "[role='option']",
-    "[role='menuitem']",
-    "[role='menuitemcheckbox']",
-    "[role='menuitemradio']",
-    "iframe",
-    "object",
-    "embed"
-  ].join(",");
-  const BLOCKED_RESULT_CONTEXT_SELECTOR = [
-    "button",
-    "input",
-    "textarea",
-    "select",
-    "option",
-    "[contenteditable]:not([contenteditable='false'])",
-    "[role='textbox']",
-    "[role='searchbox']",
-    "[role='combobox']",
-    "aside",
-    "nav",
-    "[role='navigation']",
-    "dialog",
-    "[role='dialog']",
-    "[aria-modal='true']",
-    "[popover]",
-    "[role='application']",
     "[role='listbox']",
     "[role='menu']",
     "[role='menubar']",
@@ -100,37 +34,37 @@
     "[role='treeitem']",
     "[role='treegrid']",
     "[role='grid']",
-    "[role='gridcell']",
-    "[role='row']",
-    "[role='feed']",
     "[role='tablist']",
     "[role='radiogroup']",
     "[role='toolbar']",
-    "[role='slider']",
-    "[role='spinbutton']",
-    "[role='scrollbar']",
-    "[role='separator'][tabindex]",
-    "[role='button']",
-    "[role='checkbox']",
-    "[role='radio']",
-    "[role='switch']",
-    "[role='tab']",
-    "[role='option']",
-    "[role='menuitem']",
-    "[role='menuitemcheckbox']",
-    "[role='menuitemradio']",
-    ":not(a)[tabindex]",
-    "summary",
-    "details",
-    "audio[controls]",
-    "video[controls]",
-    "iframe",
-    "object",
-    "embed",
-    "[aria-roledescription]",
-    "[data-text-ad]"
+    "[role='application']"
   ].join(",");
-
+  const ARROW_OWNING_ROLES = new Set([
+    "application",
+    "combobox",
+    "grid",
+    "listbox",
+    "menu",
+    "menubar",
+    "menuitem",
+    "menuitemcheckbox",
+    "menuitemradio",
+    "option",
+    "radio",
+    "radiogroup",
+    "scrollbar",
+    "searchbox",
+    "separator",
+    "slider",
+    "spinbutton",
+    "tab",
+    "tablist",
+    "textbox",
+    "toolbar",
+    "tree",
+    "treegrid",
+    "treeitem"
+  ]);
   const state = {
     active: false,
     movingFocus: false,
@@ -138,7 +72,7 @@
     selected: null
   };
 
-  if (!policy || !resultPolicy || !layoutAdapter) {
+  if (!policy || !resultPolicy || !googleAdapterPolicy) {
     return;
   }
 
@@ -155,6 +89,15 @@
       explicitRole: element.getAttribute("role") || "",
       hasTabIndex: element.hasAttribute("tabindex")
     };
+  }
+
+  function isArrowOwningRole(evidence) {
+    const role = resultPolicy.effectiveAriaRole(evidence.explicitRole);
+    if (!ARROW_OWNING_ROLES.has(role)) {
+      return false;
+    }
+
+    return role !== "separator" || Boolean(evidence.hasTabIndex);
   }
 
   function closestInPath(event, selector, rolePolicy) {
@@ -243,14 +186,11 @@
   }
 
   function accessibleNameFor(anchor) {
-    // Stage 1A deliberately declines complex referenced-name computation.
-    // A future adapter may support aria-labelledby only with DOM/AX evidence.
-    if (anchor.hasAttribute("aria-labelledby")) {
-      return "";
-    }
-
     if (anchor.hasAttribute("aria-label")) {
-      return normalizeText(anchor.getAttribute("aria-label"));
+      const explicitLabel = normalizeText(anchor.getAttribute("aria-label"));
+      if (explicitLabel) {
+        return explicitLabel;
+      }
     }
 
     const walker = document.createTreeWalker(anchor, NodeFilter.SHOW_TEXT);
@@ -267,47 +207,6 @@
     }
 
     return normalizeText(segments.join(" "));
-  }
-
-  function hasUnsupportedExplicitRole(anchor) {
-    if (!anchor || !anchor.hasAttribute("role")) {
-      return false;
-    }
-
-    return resultPolicy.isUnsupportedPrimaryRole(anchor.getAttribute("role"));
-  }
-
-  function hasSecondaryInteractiveLinkCandidate(block, primaryLink) {
-    return Array.from(block.querySelectorAll("a, [role]")).some((element) =>
-      resultPolicy.isSecondaryInteractiveLinkCandidate({
-        explicitRole: element.getAttribute("role") || "",
-        hasHref: element.hasAttribute("href"),
-        hasTabIndex: element.hasAttribute("tabindex"),
-        isPrimary: element === primaryLink,
-        tagName: element.localName
-      })
-    );
-  }
-
-  function hasBlockedContext(element) {
-    if (
-      element.closest(BLOCKED_RESULT_CONTEXT_SELECTOR) ||
-      element.querySelector(BLOCKED_RESULT_CONTEXT_SELECTOR)
-    ) {
-      return true;
-    }
-
-    let current = element;
-    while (current) {
-      if (resultPolicy.isBlockedResultRole(roleEvidence(current))) {
-        return true;
-      }
-      current = current.parentElement;
-    }
-
-    return Array.from(element.querySelectorAll("[role]")).some((descendant) =>
-      resultPolicy.isBlockedResultRole(roleEvidence(descendant))
-    );
   }
 
   function hasActiveOverlay() {
@@ -330,113 +229,75 @@
     });
   }
 
-  function supportedRoot() {
-    const roots = Array.from(
-      document.querySelectorAll(layoutAdapter.RESULT_ROOT_SELECTOR)
-    );
-    if (roots.length !== 1) {
-      return null;
-    }
-
-    const root = roots[0];
+  function supportedLiveRoot() {
     if (
-      !isRendered(root) ||
-      hasHiddenSemantics(root) ||
-      hasActiveOverlay()
+      !googleAdapterPolicy.isSupportedDefaultWebContext(location)
     ) {
       return null;
     }
 
-    return root;
+    const roots = Array.from(document.querySelectorAll("#search"));
+    if (roots.length !== 1) {
+      return null;
+    }
+
+    const searchRoot = roots[0];
+    if (
+      !isRendered(searchRoot) ||
+      hasHiddenSemantics(searchRoot) ||
+      hasActiveOverlay() ||
+      searchRoot.closest(
+        "dialog, [role='dialog'], [aria-modal='true'], [popover], iframe, object, embed"
+      )
+    ) {
+      return null;
+    }
+
+    return searchRoot;
   }
 
-  function candidateFromBlock(root, block) {
-    const organicContainers = Array.from(
-      block.querySelectorAll(layoutAdapter.ORGANIC_CONTAINER_SELECTOR)
-    );
-    const titleWrappers = Array.from(
-      block.querySelectorAll(layoutAdapter.TITLE_WRAPPER_SELECTOR)
-    );
-    const headings = Array.from(block.querySelectorAll("h3"));
-    const heading = headings.length === 1 ? headings[0] : null;
-    const titleWrapper = titleWrappers.length === 1 ? titleWrappers[0] : null;
-    const headingLinks = heading && titleWrapper
-      ? Array.from(titleWrapper.querySelectorAll("a[href]")).filter(
-          (anchor) => anchor.contains(heading) || heading.contains(anchor)
-        )
-      : [];
-    const headingLink = headingLinks.length === 1 ? headingLinks[0] : null;
-    const structure = layoutAdapter.classifyStructure({
-      blockIsDirectChild: block.parentElement === root,
-      excludedModule: Boolean(
-        block.matches("[data-text-ad]") ||
-        block.querySelector(
-          "[data-text-ad], aside, [role='navigation'], [aria-roledescription], " +
-            "g-scrolling-carousel, block-component, table"
-        )
-      ),
-      headingCount: headings.length,
-      headingInsideTitleWrapper: Boolean(
-        heading && titleWrapper && titleWrapper.contains(heading)
-      ),
-      headingLinkCount: headingLinks.length,
-      headingLinkInsideTitleWrapper: Boolean(
-        headingLink && titleWrapper && titleWrapper.contains(headingLink)
-      ),
-      organicContainerCount: organicContainers.length,
-      rootCount: 1,
-      titleWrapperCount: titleWrappers.length,
-      titleWrapperInsideOrganicContainer: Boolean(
-        titleWrapper &&
-          organicContainers[0] &&
-          organicContainers[0].contains(titleWrapper)
-      )
+  function liveTitleAnchors(root) {
+    return Array.from(root.querySelectorAll("a[href]")).filter((anchor) => {
+      const headings = Array.from(anchor.querySelectorAll("h3"));
+      return (
+        headings.length === 1 &&
+        headings[0].closest("a[href]") === anchor
+      );
     });
-    const ambiguous =
-      !structure.eligible ||
-      !headingLink ||
-      resultPolicy.isResultContainerLink(block.getAttribute("role")) ||
-      hasSecondaryInteractiveLinkCandidate(block, headingLink);
-    const baseTarget = document.querySelector("base[target]");
-    const effectiveTarget = headingLink
-      ? headingLink.getAttribute("target") ||
-        (baseTarget ? baseTarget.getAttribute("target") || "" : "")
-      : "";
+  }
+
+  function candidateFromLiveTitle(root, headingLink) {
+    if (!headingLink) {
+      return null;
+    }
+
     const evidence = {
-      accessibleName: headingLink ? accessibleNameFor(headingLink) : "",
-      ambiguous,
+      accessibleName: accessibleNameFor(headingLink),
       baseUrl: document.baseURI,
-      connected: Boolean(headingLink && headingLink.isConnected),
-      disabled: Boolean(headingLink && isDisabled(headingLink)),
-      effectiveTarget,
-      excludedContext: Boolean(
-        block.hasAttribute("aria-label") ||
-        hasUnsupportedExplicitRole(headingLink) ||
-        hasBlockedContext(block)
-      ),
-      hasDownload: Boolean(headingLink && headingLink.hasAttribute("download")),
-      headingCount: headings.length,
-      hiddenBySemantics: Boolean(headingLink && hasHiddenSemantics(headingLink)),
-      href: headingLink ? headingLink.getAttribute("href") || "" : "",
-      inert: Boolean(headingLink && headingLink.closest("[inert]")),
-      primaryLinkCount: headingLinks.length,
-      rendered: Boolean(headingLink && isRendered(headingLink)),
-      supportedRoot: root.contains(block),
-      tabIndex: headingLink ? headingLink.tabIndex : -1
+      connected: headingLink.isConnected,
+      disabled: isDisabled(headingLink),
+      excludedContext: false,
+      hasDownload: headingLink.hasAttribute("download"),
+      hiddenBySemantics: hasHiddenSemantics(headingLink),
+      href: headingLink.getAttribute("href") || "",
+      inert: Boolean(headingLink.closest("[inert]")),
+      rendered: isRendered(headingLink),
+      supportedRoot: root.contains(headingLink),
+      tabIndex: 0
     };
-    const classification = resultPolicy.classifyEvidence(evidence);
+    const classification = googleAdapterPolicy.classifyEvidence(evidence);
 
     return classification.eligible ? headingLink : null;
   }
 
   function candidatesInFreshOrder() {
-    const root = supportedRoot();
-    if (!root) {
+    const liveRoot = supportedLiveRoot();
+    if (!liveRoot) {
       return [];
     }
 
-    return Array.from(root.querySelectorAll(layoutAdapter.RESULT_BLOCK_SELECTOR))
-      .map((block) => candidateFromBlock(root, block))
+    return liveTitleAnchors(liveRoot)
+      .map((anchor) => candidateFromLiveTitle(liveRoot, anchor))
       .filter(Boolean);
   }
 
@@ -526,7 +387,9 @@
     const freshCandidates = candidatesInFreshOrder();
     const commitAllowed = policy.canCommitFocus({
       focusStayedOnTarget: document.activeElement === target,
-      supportedLocation: policy.isSupportedLocation(location),
+      supportedLocation:
+        policy.isSupportedLocation(location) &&
+        googleAdapterPolicy.isSupportedDefaultWebContext(location),
       targetConnected: target.isConnected,
       targetStillEligible: freshCandidates.includes(target)
     });
@@ -587,23 +450,18 @@
 
     const activeElement = document.activeElement;
     const activeEligibleIndex = candidates.indexOf(activeElement);
-    const neutralFocus = isNeutralDocumentFocus(activeElement);
+    const arrowOwnedByControl = closestInPath(
+      event,
+      ARROW_OWNING_SELECTOR,
+      isArrowOwningRole
+    );
 
-    if (
-      activeEligibleIndex < 0 &&
-      (closestInPath(
-        event,
-        EDITING_OR_WIDGET_SELECTOR,
-        resultPolicy.isEditingOrWidgetRole
-      ) ||
-        closestInPath(
-          event,
-          INTERACTIVE_OR_FOCUSABLE_SELECTOR,
-          resultPolicy.isInteractiveRole
-        ))
-    ) {
+    if (activeEligibleIndex < 0 && arrowOwnedByControl) {
       return;
     }
+
+    const neutralFocus =
+      isNeutralDocumentFocus(activeElement) || activeEligibleIndex < 0;
 
     const decision = policy.decideMovement({
       activeEligibleIndex,
@@ -640,6 +498,9 @@
     }
   }
 
-  document.addEventListener("keydown", onKeyDown, { passive: false });
+  document.addEventListener("keydown", onKeyDown, {
+    capture: true,
+    passive: false
+  });
   document.addEventListener("focusin", onFocusIn);
 })();

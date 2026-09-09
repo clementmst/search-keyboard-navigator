@@ -8,19 +8,19 @@ Deliver research, charter, product spec, autonomy and research policies, agent r
 
 Exit: G0 passes and the user resolves or explicitly defers blocking decisions.
 
-## Stage 1A — Disposable interaction experiment (current; correction/evaluation authorized)
+## Stage 1A — Disposable interaction experiment (frozen baseline complete)
 
 Implement only the smallest readable content-script experiment and synthetic ordinary-result fixtures needed to falsify the unmodified-arrow interaction model. Evaluate neutral versus native-Tab/pointer origin, search-input entry, native Tab continuation, focus plus styling, fail-open boundaries, Escape/recovery, disabled repeat, discoverability, native-scroll loss, and AT key delivery/non-interference. Use a deliberately narrow primary-title fixture contract; do not spend this stage hardening live-Google selectors, Store material, or browser automation dependencies.
 
 Exit: the Stage 1A subset of G1-G4 passes; product-value questions in [ADVERSARIAL_REVIEW.md](ADVERSARIAL_REVIEW.md) have documented local/manual evidence; all temporary writer authority is revoked; the user explicitly chooses whether to stop, revise the interaction, or authorize Stage 1B.
 
-Immediate priority after the frozen static gate is a private unpacked-extension handoff. Optional privacy-minimized telemetry is deferred and cannot delay this handoff. Lower-risk documentation refinements are recorded for later; only a genuine user-safety or data/privacy blocker reopens correction before private testing.
+The frozen baseline is preserved by local commit `5b26eb7`. Optional privacy-minimized telemetry is deferred and cannot delay the private test.
 
-## Stage 1B — Classifier and dynamic-behavior experiment (separate approval)
+## Stage 1B — Bounded live-page private-test adapter (implemented; one live layout confirmed)
 
-Implement strict versioned layout adapters, independently reviewed fixture oracles, fail-closed unknown-layout behavior, action-time recomputation, same-node-only dynamic preservation, root-replacement cases, and selector mutation tests. Propose any browser-automation dependency and install method before adoption.
+Implement a minimal adapter for visible Google result-title links using the positive `#search a[href] h3` rule without relying on the synthetic `main > article` contract. Retain action-time recomputation and same-node-only dynamic preservation. Do not add language, sponsored, rich-module, secondary-link, target, or vertical exclusions that reject normal Google layouts. Give the user a simple live test; their observation is required evidence.
 
-Exit: G1-G4 pass on the expanded deterministic contract, with no ad/unrelated-link false positive and explicit evidence limits.
+Exit: dependency-free G1-G4 static subset passes, five independent read-only reviews find no private-test safety/privacy blocker, the exact tree is frozen, and the user receives the unpacked-extension path and test procedure. Stage 1B does not pass live behavior until the user records the real Chrome observation.
 
 ## Stage 2 — Hardened MVP
 
@@ -34,7 +34,7 @@ Create a reproducible, allowlisted package; test the exact artifact on stable/pr
 
 Exit: G7-G8 pass with independent review.
 
-## Stage 4 — Store preparation only
+## Stage 4 — Store preparation only (current; authorized)
 
 Prepare accurate listing copy, icons/screenshots, reviewer instructions, permission rationale, privacy policy, dashboard-answer draft, ownership/2SV plan, artifact hash, and rollback notes. Do not upload or submit.
 

@@ -1,63 +1,63 @@
-# Private test
+# Private Chrome test
 
-This build is only for a short, private observation. It supports one narrow
-desktop Google Search structure and may safely do nothing when the page differs.
-It is not published, does not claim universal compatibility, and has no
-telemetry, storage, account, backend, or extension network activity. It does
-locally inspect the current Search page URL and result structure while you use it.
+Status: ready only after the final frozen-tree reviews reported by the operator. This is a private, unpublished experiment, not a finished extension.
 
-## Load in a fresh Chrome profile
+## Before you start
 
-1. Create and open a fresh Chrome profile. Do not sign in or enable sync.
-2. Open `chrome://extensions`.
-3. Turn on **Developer mode**.
-4. Select **Load unpacked** and choose this repository folder.
-5. Confirm that **Search Keyboard Navigator - Private Test** appears. Do not
-   continue if Chrome reports an unexpected permission or a load error.
+- Allow about 5-10 minutes.
+- Use a fresh Chrome profile with sync off and do not sign in.
+- Use one non-personal query, such as `keyboard navigation accessibility`.
+- The adapter does not restrict language, result type, or surrounding Google layout modules.
+- Do not use personal, medical, financial, work, or account-specific searches.
+- The extension asks for access to `www.google.com` search pages because its packaged content script runs there. It has no named Chrome API permissions, backend, telemetry, storage, or extension network activity.
 
-## Make one non-personal test
+## Install the unpacked extension
 
-1. In that profile, open `https://www.google.com/` and make one ordinary,
-   non-personal query such as `keyboard navigation test`. Do not use a real name,
-   account detail, health topic, address, or other sensitive information.
-2. Dismiss the search suggestions so focus is not in the search box. If needed,
-   click a blank, non-interactive part of the page.
-3. Press `ArrowDown` once. **Pass:** a normal, unsponsored result-title link gets
-   native focus and a clear blue outline. **Safe unsupported outcome:** nothing
-   happens and the page scrolls normally. **Fail:** an ad, carousel, rich card,
-   control, or unrelated link receives focus.
-4. If navigation started, press `ArrowDown` and `ArrowUp` one at a time. Confirm
-   focus moves without wrapping. At the first/last supported result, the arrow
-   remains native and may scroll the page.
-5. Press `Tab`, `Shift+Tab`, and `Enter` normally. The extension must not replace
-   their browser behavior. Avoid activating a result if you do not want to leave
-   the page.
-6. Put focus in the search box and press both arrows. They must retain their
-   editing/suggestion behavior. Repeat with any visible page control you can test.
-7. Start result navigation again, then press `Escape`. The outline must clear;
-   prior focus is restored only when it remains safe.
+1. Open Chrome and enter `chrome://extensions` in the address bar.
+2. Turn on **Developer mode**.
+3. Choose **Load unpacked**.
+4. Select this exact folder:
 
-## Record only pass/fail
+   `C:\Users\68810\Documents\Codex\search-keyboard-navigator`
 
-Do not record the query, result titles, result URLs, screenshots, page source, or
-account information.
+5. Confirm that **Search Keyboard Navigator** appears. If Chrome reports any permission beyond access to `www.google.com`, stop and report it.
 
-| Observation | Result |
-|---|---|
-| Extension loaded with the expected site access | Not run / Pass / Fail |
-| Ordinary result navigation | Not run / Pass / Safe unsupported / Fail |
-| Ads, rich modules, and controls were not focused | Not run / Pass / Fail |
-| Tab, Shift+Tab, and Enter stayed native | Not run / Pass / Fail |
-| Search-box arrows stayed native | Not run / Pass / Fail |
-| Escape recovery | Not run / Pass / Fail |
+## Run the live test
 
-Chrome version and date may be recorded without page data. Real Chrome
-observation is required evidence, but this cloud implementation does not claim it
-was performed.
+1. Open `https://www.google.com`, keep your preferred interface language, and submit the non-personal query from the search box.
+2. While the search box still has the cursor, press `ArrowDown` and `ArrowUp`. They must keep their normal search-box behavior; the extension must not move focus to a result.
+3. First test keyboard entry: press `Tab` once to leave the search field for any ordinary page control, then press `ArrowDown`. The first visible result-title link should receive focus.
+4. Separately, click any blank part of the page and press `ArrowDown`. It should produce the same first-result behavior.
+5. The first visible result-title link inside the Google results area receives real keyboard focus and a clear blue outline. The page may scroll just enough to show it.
+6. Press `ArrowDown` once more, then `ArrowUp` once. Focus should move by one visible result title each time. Translation links, menus, and other non-title controls must not receive focus.
+7. Hold an arrow briefly. The active session must not race through many results.
+8. Press `Tab`. Chrome must continue its normal tab order from the focused result. The extension does not intercept Tab.
+9. Return to a focused ordinary result, press `Enter`, and observe native browser navigation. Use Back to return. The extension does not handle or guarantee Enter disposition.
+10. Start arrow navigation again and press `Escape`. The blue outline must clear. Focus restoration is best-effort and must never create a trap.
+11. At the first or last reachable eligible result, another outward arrow must not wrap. Native page scrolling may occur.
 
-## Uninstall and remove the profile
+## Stop immediately if
 
-1. Return to `chrome://extensions` and select **Remove** for the extension.
-2. Close the fresh profile and delete it using Chrome's profile picker.
-3. Delete any manually saved notes that contain more than the pass/fail fields
-   above.
+- an arrow takes focus out of the search box or another control;
+- a non-title page control receives extension focus;
+- a key causes accidental navigation, repeated runaway movement, a focus trap, or a broken page;
+- Chrome shows a broader permission request than the single approved Google Search site access.
+
+## Record the result
+
+Send the operator only:
+
+- Chrome version and the Google interface language used;
+- whether Chrome described the extension's site access as only `www.google.com`; the packaged content script itself injects only on `https://www.google.com/search*`;
+- pass/fail for search-box non-interference, start from ordinary page focus, blank-page start, one-step Up/Down, Tab, Enter, Escape, boundary behavior, and non-title-control skipping;
+- any unexpected behavior in plain language, without screenshots, page source, URLs containing the query, or personal result content.
+
+If no result ever receives focus, also state whether the address began with `https://www.google.com/search`, whether the page was showing ordinary web results, and whether native Tab could visibly focus an ordinary result title. That is the minimum observation needed before considering a bounded adapter revision.
+
+## Remove it
+
+1. Return to `chrome://extensions`.
+2. Choose **Remove** for the private-test extension.
+3. Delete the fresh Chrome profile if it is no longer needed.
+
+The user confirmed the main live navigation and revised visual indicator in one environment on 2026-08-31. That observation does not establish other layouts, runtime privacy, forced-colors, zoom, or assistive-technology compatibility; record each separately when tested.

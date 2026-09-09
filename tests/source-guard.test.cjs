@@ -11,6 +11,10 @@ const sources = fs.readdirSync(sourceDirectory)
   .map((name) => fs.readFileSync(path.join(sourceDirectory, name), "utf8"))
   .join("\n");
 const navigatorSource = fs.readFileSync(path.join(sourceDirectory, "navigator.js"), "utf8");
+const googleAdapterSource = fs.readFileSync(
+  path.join(sourceDirectory, "google-adapter-policy.js"),
+  "utf8"
+);
 const stylesheetSource = fs.readFileSync(path.join(sourceDirectory, "navigator.css"), "utf8");
 const fixtureScript = fs.readFileSync(path.join(__dirname, "..", "fixtures", "pointer-guard.js"), "utf8");
 const reviewedScripts = `${sources}\n${fixtureScript}`;
@@ -67,33 +71,19 @@ test("controller contains the specified instant-scroll and fail-closed static gu
     "role='scrollbar'",
     "role='separator'",
     "role='combobox'",
-    "role='gridcell'",
-    "role='button'",
-    "role='link'",
-    "role='checkbox'",
     "aria-modal='true'",
     "[popover]",
     "iframe",
     "object",
     "embed",
-    "aria-labelledby",
     "aria-hidden='true'"
   ]) {
     assert.equal(navigatorSource.includes(requiredToken), true, `missing guard: ${requiredToken}`);
   }
   assert.equal(/accessibleNameFor[\s\S]*?anchor\.textContent/.test(navigatorSource), false);
-  assert.ok(
-    navigatorSource.indexOf('hasAttribute("aria-labelledby")') <
-      navigatorSource.indexOf('hasAttribute("aria-label")'),
-    "aria-labelledby must fail closed before aria-label is considered"
-  );
-  assert.match(navigatorSource, /hasUnsupportedExplicitRole\(headingLink\)/);
-  assert.match(navigatorSource, /layoutAdapter\.classifyStructure/);
-  assert.match(navigatorSource, /RESULT_BLOCK_SELECTOR/);
-  assert.match(navigatorSource, /\[data-text-ad\].*aria-roledescription/s);
-  assert.match(navigatorSource, /isUnsupportedPrimaryRole\(anchor\.getAttribute\("role"\)\)/);
-  assert.match(navigatorSource, /isResultContainerLink\(block\.getAttribute\("role"\)\)/);
-  assert.match(navigatorSource, /isBlockedResultRole\(roleEvidence\(/);
+  assert.doesNotMatch(navigatorSource, /liveSecondaryLinkCount/);
+  assert.doesNotMatch(navigatorSource, /hasUnsupportedExplicitRole/);
+  assert.match(navigatorSource, /excludedContext:\s*false/);
   assert.match(sources, /effectiveAriaRole/);
   assert.doesNotMatch(sources, /explicitRole[\s\S]{0,160}split\(\/\\s\+\/\)\[0\]/);
 });
@@ -118,4 +108,38 @@ test("production controller does not depend on fixture metadata", () => {
   ]) {
     assert.equal(navigatorSource.includes(token), false, `fixture token leaked: ${token}`);
   }
+});
+
+test("Stage 1B adapter uses a minimal language-neutral title-link contract", () => {
+  assert.match(navigatorSource, /querySelectorAll\("#search"\)/);
+  assert.match(navigatorSource, /querySelectorAll\("a\[href\]"\)/);
+  assert.match(navigatorSource, /querySelectorAll\("h3"\)/);
+  assert.doesNotMatch(navigatorSource, /secondaryLinkCount:/);
+  assert.doesNotMatch(navigatorSource, /richOrVerticalSignal/);
+  assert.doesNotMatch(navigatorSource, /hasLiveAdSignal/);
+  assert.doesNotMatch(navigatorSource, /smallestSingleTitleBlock/);
+  assert.match(googleAdapterSource, /origin\s*!==\s*"https:\/\/www\.google\.com"/);
+  assert.match(googleAdapterSource, /pathname\s*!==\s*"\/search"/);
+  assert.doesNotMatch(googleAdapterSource, /isSupportedDocumentLanguage/);
+  assert.doesNotMatch(navigatorSource, /document\.documentElement\.lang/);
+  assert.doesNotMatch(navigatorSource, /supportedSyntheticRoot/);
+  assert.doesNotMatch(googleAdapterSource, /isKnownAdDestination/);
+  assert.match(navigatorSource, /tabIndex:\s*0/);
+  assert.match(navigatorSource, /capture:\s*true/);
+  assert.doesNotMatch(navigatorSource, /INTERACTIVE_OR_FOCUSABLE_SELECTOR/);
+  assert.doesNotMatch(
+    navigatorSource,
+    /querySelector(?:All)?\s*\(\s*["']\./,
+    "generated class selectors must not become positive live-layout evidence"
+  );
+});
+
+test("focus indicator targets the title and includes a non-layout arrow marker", () => {
+  assert.match(stylesheetSource, /\.skn-focused:focus h3\s*\{/);
+  assert.match(stylesheetSource, /\.skn-focused:focus h3::before\s*\{/);
+  assert.match(stylesheetSource, /border-left:\s*9px solid/);
+  assert.match(stylesheetSource, /pointer-events:\s*none/);
+  assert.match(stylesheetSource, /prefers-color-scheme:\s*dark/);
+  assert.match(stylesheetSource, /forced-colors:\s*active/);
+  assert.doesNotMatch(stylesheetSource, /^\.skn-focused\s*\{/m);
 });

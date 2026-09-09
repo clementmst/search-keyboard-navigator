@@ -1,20 +1,20 @@
 schema_version: 1
-project: "Search Keyboard Navigator"
-assessment_version: "2026-08-28-initial"
-assessed: 2026-08-28
-status: "release-blocked-pending-facts-and-current-policy-review"
+project: "ArrowKey Search Navigator (formerly Search Keyboard Navigator)"
+assessment_version: "2026-09-09-version-0.1.2-discovery-update"
+assessed: 2026-09-09
+status: "0.1.1-public-0.1.2-update-pending-exact-review"
 disclaimer: "Engineering governance only; not legal advice or legal-compliance certification."
 user_facts_recorded: 2026-08-28
 user_supplied_facts:
   publisher: "Individual publishing personally; resident and legally established in France; states authority to accept agreements."
-  distribution: "Private testing now; eventual public Chrome Web Store listing intended."
+  distribution: "Version 0.1.1 is publicly listed in the Chrome Web Store; version 0.1.2 is a local rename and discovery-update draft."
   markets: "Worldwide public availability intended immediately after readiness/compliance review."
   audience: "General public; not specifically directed at children under 16."
-  v1_data: "Optional privacy-minimized first-party analytics selected as a deferred future direction; current private-test Stage 1A remains local-only/backend-free because no collection design or authorization exists."
+  v1_data: "Optional privacy-minimized first-party analytics selected as a deferred future direction; current Stage 1B private-test build remains local-only/backend-free because no collection design or authorization exists."
   business_model: "Ideally free and cash-neutral; donations desired; data sales and affiliates mentioned but not approved."
   branding: "Google/Chrome compatibility references in marketing only; not in product name."
   open_source: "Use/adapt only when exact license permits and all obligations are met; otherwise independent implementation without copying."
-  support: "Future post-live agent-assisted workflow desired; no mailbox, retention, access, or outbound automation is authorized, and no external send may occur without explicit user approval."
+  support: "User created searchkeyboardnavigator.support@gmail.com as the public support/privacy address and confirmed forwarding plus send-as replies through the user's personal Gmail. No fixed automatic deletion schedule is configured; the privacy policy discloses the current support purpose, forwarding, access, sensitive-information warning, and deletion approach. Future agent assistance remains deferred; no agent mailbox access, outbound automation, or unsupervised external send is authorized."
   counsel: "No external counsel planned; AI compliance reviewer is not licensed counsel and cannot certify compliance."
 statuses:
   - satisfied
@@ -26,29 +26,29 @@ entries:
     area: "Chrome Web Store Program Policies"
     jurisdiction: "Chrome Web Store distribution"
     source_ids: "CHROME-POLICY-001, CHROME-POLICY-2026-001, CHROME-MV3-001, CHROME-PRIV-001"
-    reviewed: 2026-08-28
+    reviewed: 2026-08-31
     status: unresolved
     applicability: "Likely required if the extension is submitted or published through the Chrome Web Store."
     reasoning: "Single purpose, minimum permissions, listing accuracy, user-data disclosures, Limited Use, deceptive behavior, security, and remote-code requirements must match the exact release artifact."
-    evidence: "Current tree is narrow, local-only, dependency-free, and unpublished; listing, dashboard, privacy URL, and exact release artifact do not exist."
-    unresolved: "Final artifact/listing/privacy URL/dashboard responses and live current policy readback for worldwide distribution."
+    evidence: "Version 0.1.1 was submitted and published by the user. The 0.1.2 tree remains narrow, local-only, dependency-free, and unsubmitted; revised listing, privacy-name migration, visual, website, and packaging drafts exist."
+    unresolved: "Exact 0.1.2 artifact/listing/dashboard reconciliation, genuine popup screenshot, and current policy readback before the next update submission."
 
   - id: CWS-AGREEMENT
     area: "Chrome Web Store Developer Agreement"
     jurisdiction: "Chrome Web Store publisher relationship"
     source_ids: "CHROME-AGREEMENT-001"
-    reviewed: 2026-08-28
+    reviewed: 2026-08-31
     status: unresolved
     applicability: "Applies if an authorized publisher uses the Chrome Web Store developer service."
     reasoning: "The agreement incorporates other Google terms and identifies contracting arrangements by residence; only an authorized human/entity may accept it."
-    evidence: "User identifies as an individual publisher resident/established in France and states authority to accept; no upload, account access, or acceptance is authorized."
-    unresolved: "Publisher-account details, legal capacity confirmation under the current France terms, registration requirements, and current agreement at submission."
+    evidence: "User identifies as an individual publisher resident/established in France, states authority to accept, and reports completing the account/agreement/submission steps for public version 0.1.1. No agent accessed the account or accepted terms."
+    unresolved: "Recheck the current agreement and dashboard requirements before any future submission where terms or publisher facts changed."
 
   - id: GOOGLE-TERMS
     area: "Google Terms and Search interaction"
     jurisdiction: "Use of Google Search and related services"
     source_ids: "GOOGLE-TOS-001, GOOGLE-SERVICE-TERMS-001, GOOGLE-ROBOTS-001, GOOGLE-SPAM-001"
-    reviewed: 2026-08-28
+    reviewed: 2026-08-31
     status: legal-review-required
     applicability: "Google Terms apply to service use; Search-specific applicability to an extension that changes local focus behavior must be confirmed for the intended release."
     reasoning: "Current behavior is human-initiated local DOM focus, not a query bot, but the 2026 Terms prohibit automated access contrary to machine-readable instructions and the live robots.txt disallows /search; official text does not expressly resolve this extension pattern."
@@ -58,13 +58,13 @@ entries:
   - id: GOOGLE-BRAND-IP
     area: "Google branding, intellectual property, and third-party result content"
     jurisdiction: "Trademark, copyright, and listing assets"
-    source_ids: "GOOGLE-BRAND-001, GOOGLE-TOS-001"
-    reviewed: 2026-08-28
-    status: not-applicable
-    applicability: "No Google logo, product icon, screenshot, visual identity, or third-party result content is included now. Reopens for Store assets and marketing."
-    reasoning: "Current project name does not contain a Google mark and synthetic fixtures avoid copied result content. Plain-text compatibility references must remain accurate and non-affiliative."
-    evidence: "Static repository inventory and synthetic fixtures."
-    unresolved: "Final name, icon, screenshots, listing copy, and any asset permissions."
+    source_ids: "GOOGLE-BRAND-001, GOOGLE-SEARCH-BRAND-001, GOOGLE-TOS-001"
+    reviewed: 2026-08-31
+    status: unresolved
+    applicability: "Original project icons and an abstract promotional tile exist. The listing uses plain-text compatibility references, and three user-supplied Google Search screenshot candidates are preserved locally."
+    reasoning: "The name and original assets contain no Google mark or interface imitation. Compatibility wording is non-affiliative, but a live screenshot can contain Google interface and third-party result content requiring separate rights and privacy review."
+    evidence: "Asset provenance, listing draft, generated icon/promo inventory, screenshot sources/derivatives, and official Search screenshot guidance. The preferred neutral humorous candidate resolves the political-query concern."
+    unresolved: "Preferred candidate still needs manageable rights for depicted Wikipedia and Dictionary.com material, approved Google attribution placement/brand treatment, final dashboard rendering, publisher display name, and any required permission."
 
   - id: EU-GDPR
     area: "GDPR"
@@ -96,8 +96,8 @@ entries:
     status: legal-review-required
     applicability: "Potentially applicable if the extension is an economic information-society service or consumer software made available through commercial activity in the EU."
     reasoning: "Free distribution does not by itself settle economic or product status; possible duties include provider identity/contact, risk analysis, technical documentation, incident/corrective-action handling, and an EU economic operator."
-    evidence: "Current safety, focus, privacy, permission, and provenance risks are recorded, but no publisher entity, contact plan, EU market decision, technical release file, or incident process exists."
-    unresolved: "Entity and economic role, EU markets, commercial activity, product classification, responsible economic operator, contact/address plan, and qualified EU advice."
+    evidence: "The publisher is an individual resident/established in France and worldwide availability is intended, but no contact plan, technical release file, economic-role analysis, or incident process exists."
+    unresolved: "Economic role and commercial activity, product classification, responsible economic operator if required, contact/address plan, technical documentation, incident process, and qualified EU advice."
 
   - id: ACCESSIBILITY-LAW
     area: "Accessibility obligations and claims"
@@ -118,8 +118,8 @@ entries:
     status: unresolved
     applicability: "Likely applies to promotional representations in markets where the extension is offered, including free offerings where relevant."
     reasoning: "Objective and implied accessibility, privacy, compatibility, performance, and exclusion claims must be truthful, evidence-based, and appropriately qualified."
-    evidence: "Repository documents label Stage 1A experimental and explicitly withhold browser, visual, privacy-runtime, and assistive-technology passes."
-    unresolved: "Worldwide distribution is intended; final listing/evidence/disclosures, country availability, and any later marketing/SEO plan remain unresolved."
+    evidence: "Version 0.1.1 is public. The 0.1.2 listing and website qualify platform, layout, native-shortcut, privacy, and screen-reader claims; 66 dependency-free checks passed, while new browser, deployed-site, and assistive-technology validation is not claimed."
+    unresolved: "Reconcile the exact 0.1.2 listing, hosted privacy-name update, dashboard fields, screenshots, and deployed website before their external release."
 
   - id: OSS-LICENSES
     area: "Open-source licenses and notices"
@@ -132,16 +132,27 @@ entries:
     evidence: "No package manifest, lockfile, vendored library, or copied-code provenance record is present."
     unresolved: "Future dependencies, copied snippets, build tools, fonts, icons, and required notices."
 
+  - id: GITHUB-PAGES-CI
+    area: "GitHub Pages deployment supply chain"
+    jurisdiction: "Optional external website deployment"
+    source_ids: "GITHUB-PAGES-AUTO-001"
+    reviewed: 2026-09-09
+    status: unresolved
+    applicability: "Applies only if the user connects this repository and activates the proposed GitHub Pages workflow."
+    reasoning: "The static site itself is dependency-free, but the inactive workflow references actions/checkout@v6, actions/configure-pages@v5, actions/upload-pages-artifact@v4, and actions/deploy-pages@v4 using mutable official major-version tags from GitHub's current example."
+    evidence: "`.github/workflows/deploy-pages.yml` grants only contents:read, pages:write, and id-token:write, deploys only `website/`, and has not run because no Git remote or Pages environment is configured."
+    unresolved: "Before activation, recheck action versions and licenses, choose immutable reviewed commit pins or explicitly accept the official-tag update model, verify the canonical repository URL, and review the first deployment result."
+
   - id: THIRD-PARTY-ASSETS-DATA
     area: "Third-party assets, fixtures, screenshots, and data rights"
     jurisdiction: "Copyright, trademark, contract, and privacy"
-    source_ids: "GOOGLE-BRAND-001, GOOGLE-TOS-001"
-    reviewed: 2026-08-28
-    status: not-applicable
-    applicability: "Current fixtures are deliberately synthetic; reopens before using live screenshots, copied result content, logos, fonts, icons, or external datasets."
+    source_ids: "GOOGLE-BRAND-001, GOOGLE-SEARCH-BRAND-001, GOOGLE-TOS-001"
+    reviewed: 2026-08-31
+    status: unresolved
+    applicability: "Current fixtures are deliberately synthetic and generated branding is original. Three user-supplied actual-experience Google Search screenshots are now proposed as Store listing assets."
     reasoning: "A Store listing and release package must not assume that public visibility grants reuse rights."
-    evidence: "No real query/result corpus, Google screenshot, logo, or third-party production asset appears in the current inventory."
-    unresolved: "Final Store assets, fixture acquisition, license/permission evidence, notices, and privacy sanitization."
+    evidence: "Source captures, 1280x800 derived files, deterministic crop record, and user authorization are preserved. No account identity is visibly included. The preferred neutral humorous candidate replaces the political candidate for consideration; official Search guidance still requires third-party approvals plus Google attribution."
+    unresolved: "Resolve rights for depicted Wikipedia and Dictionary.com material, Google attribution placement/brand treatment, dashboard rendering, and any required permission or notice."
 
   - id: TELEMETRY-MONETIZATION
     area: "Telemetry, advertising, sale/sharing, payment, and monetization"
