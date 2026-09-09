@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://clementmst.github.io/search-keyboard-navigator/sitemap.xml
