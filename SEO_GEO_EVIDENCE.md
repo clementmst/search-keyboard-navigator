@@ -50,5 +50,5 @@ No product behavior, content-script match, browser permission, runtime dependenc
 - The user approved one accessible first-use popup disclosure and Chrome's `storage` permission solely for a versioned local consent Boolean.
 - Before consent, the content controller does not inspect the page URL, DOM, focus state, or key events. **Enable keyboard navigation** is the required affirmative action. **Disable keyboard navigation** removes the page listeners and clears extension selection.
 - No search, URL, result content, focus history, keyboard activity, identifier, timestamp, analytics, telemetry, or backend data is stored or transmitted.
-- The consent-corrected package contains 14 allowlisted files. Its exact SHA-256 is `627cf4d2ca24adc6dba6fc75aad1e825e0bd23213d6bad58c0e5aaedbaba163e`.
+- The consent-corrected package contains 14 allowlisted files. Its exact SHA-256 is `56d6e542fc62875819723d3edbf7bfff1e9d28d434c65e32b1901eaf77dd26ed`.
 - The final consent-corrected tree passes 84 Node assertions across 12 files plus 3 direct PowerShell release checks. Independent review is recorded after the tree is frozen. This supplement does not claim Chrome, visual, deployed-site, runtime-privacy, or assistive-technology validation; the user performs the next Chrome step.

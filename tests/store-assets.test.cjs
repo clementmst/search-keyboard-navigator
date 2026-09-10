@@ -143,7 +143,7 @@ test("Store screenshots preserve their sources and use the required dimensions",
 test("0.1.2 reviewer and dashboard records identify the exact gated artifact", () => {
   const reviewer = fs.readFileSync(path.join(root, "store", "REVIEWER_INSTRUCTIONS.md"), "utf8");
   const dashboard = fs.readFileSync(path.join(root, "store", "DASHBOARD_RECONCILIATION.md"), "utf8");
-  const expectedHash = "627cf4d2ca24adc6dba6fc75aad1e825e0bd23213d6bad58c0e5aaedbaba163e";
+  const expectedHash = "56d6e542fc62875819723d3edbf7bfff1e9d28d434c65e32b1901eaf77dd26ed";
   for (const document of [reviewer, dashboard]) {
     assert.match(document, /0\.1\.2/);
     assert.equal(document.includes(expectedHash), true);

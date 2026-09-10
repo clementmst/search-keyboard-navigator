@@ -1,7 +1,7 @@
 # Store reviewer instructions
 
 - Version: `0.1.2`
-- Release ZIP SHA-256: `627cf4d2ca24adc6dba6fc75aad1e825e0bd23213d6bad58c0e5aaedbaba163e`
+- Release ZIP SHA-256: `56d6e542fc62875819723d3edbf7bfff1e9d28d434c65e32b1901eaf77dd26ed`
 - Supported site: desktop `https://www.google.com/search` only
 - Named Chrome API permissions: `storage`, only for the versioned local consent Boolean
 

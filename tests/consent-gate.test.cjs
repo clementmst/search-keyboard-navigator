@@ -75,9 +75,9 @@ function createPopupElements() {
     "disable-navigation",
     "status-message",
     "error-message",
+    "main-heading",
     "consent-heading",
-    "instructions-heading",
-    "enabled-state"
+    "instructions-heading"
   ]) {
     elements.set(id, {
       hidden: id !== "loading-panel",
@@ -167,7 +167,7 @@ test("popup requires an explicit enable action and supports disabling", () => {
   elements.get("enable-navigation").listeners.click();
   assert.equal(storage.writes[0].arrowKeyLocalPageProcessingConsentV1, true);
   assert.equal(elements.get("instructions-panel").hidden, false);
-  assert.equal(elements.get("enabled-state").focusCount, 1);
+  assert.equal(elements.get("main-heading").focusCount, 1);
   elements.get("disable-navigation").listeners.click();
   assert.equal(storage.writes[1].arrowKeyLocalPageProcessingConsentV1, false);
   assert.equal(elements.get("consent-panel").hidden, false);
@@ -175,9 +175,13 @@ test("popup requires an explicit enable action and supports disabling", () => {
 });
 
 test("post-enable focus uses a visible target with a focus indicator", () => {
-  assert.match(popupHtml, /id="enabled-state" class="enabled-state" tabindex="-1"/);
-  assert.doesNotMatch(popupHtml, /id="enabled-state"[^>]*visually-hidden/);
-  assert.match(popupCss, /\.enabled-state:focus\s*\{/);
+  assert.match(popupHtml, /<h1 id="main-heading" tabindex="-1">/);
+  assert.doesNotMatch(popupHtml, /id="main-heading"[^>]*visually-hidden/);
+  assert.match(popupCss, /h1:focus[\s\S]*outline: 3px solid/);
+  assert.match(
+    popupCss,
+    /@media \(prefers-color-scheme: dark\)[\s\S]*h1:focus,[\s\S]*outline-color: #8ab4f8/
+  );
 });
 
 for (const scenario of [

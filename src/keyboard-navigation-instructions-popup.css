@@ -33,8 +33,8 @@ h2 {
   margin: 0 0 10px;
 }
 
-h2:focus,
-.enabled-state:focus {
+h1:focus,
+h2:focus {
   outline: 3px solid #174ea6;
   outline-offset: 3px;
 }
@@ -71,15 +71,6 @@ p {
   color: #a50e0e;
   font-weight: 700;
   margin: 0 0 12px;
-  padding: 9px 11px;
-}
-
-.enabled-state {
-  background: #e6f4ea;
-  border-radius: 8px;
-  color: #137333;
-  font-weight: 700;
-  margin: 0 0 10px;
   padding: 9px 11px;
 }
 
@@ -203,13 +194,13 @@ kbd:hover {
     color: #f1f3f4;
   }
 
-  p {
-    color: #bdc1c6;
+  h1:focus,
+  h2:focus {
+    outline-color: #8ab4f8;
   }
 
-  .enabled-state {
-    background: #183b2b;
-    color: #81c995;
+  p {
+    color: #bdc1c6;
   }
 
   .error-message {
@@ -258,8 +249,8 @@ kbd:hover {
 
   button,
   .secondary-button,
-  h2:focus,
-  .enabled-state:focus {
+  h1:focus,
+  h2:focus {
     background: ButtonFace;
     border-color: ButtonText;
     color: ButtonText;

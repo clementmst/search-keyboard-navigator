@@ -8,7 +8,7 @@ This is a human readback sheet, not authority for an agent to certify statements
 
 - File: `dist/arrowkey-search-navigator-0.1.2.zip`
 - Version: `0.1.2`
-- SHA-256: `627cf4d2ca24adc6dba6fc75aad1e825e0bd23213d6bad58c0e5aaedbaba163e`
+- SHA-256: `56d6e542fc62875819723d3edbf7bfff1e9d28d434c65e32b1901eaf77dd26ed`
 - Name: `ArrowKey Search Navigator`
 - Package summary: `Navigate Google Search results with Arrow Up and Arrow Down. Open links with Enter or Chrome's native new-tab shortcut.`
 - Category: `Accessibility`

@@ -10,8 +10,8 @@
   const disableButton = document.getElementById("disable-navigation");
   const statusMessage = document.getElementById("status-message");
   const errorMessage = document.getElementById("error-message");
+  const mainHeading = document.getElementById("main-heading");
   const consentHeading = document.getElementById("consent-heading");
-  const enabledState = document.getElementById("enabled-state");
   let currentEnabled = false;
 
   function showPanel(enabled, moveFocus = false) {
@@ -24,7 +24,7 @@
       ? "Keyboard navigation is enabled."
       : "Keyboard navigation is off.";
     if (moveFocus) {
-      (enabled ? enabledState : consentHeading).focus();
+      (enabled ? mainHeading : consentHeading).focus();
     }
   }
 
