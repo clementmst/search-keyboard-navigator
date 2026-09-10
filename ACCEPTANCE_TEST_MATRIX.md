@@ -2,7 +2,7 @@
 
 Layers: **U** pure unit, **D** deterministic DOM fixture, **C** production extension in a named Chrome/Chrome for Testing browser build, **M** documented manual branded Chrome/AT, **S** static/artifact review.
 
-Stage 1A correction-pass applicability: pure policy/static fixture checks and documented branded-Chrome/AT procedures are in scope. A production DOM/controller browser lane, live versioned layout adapters, MutationObserver batching, and selector-hardening cases remain blocking or deferred to separately authorized work; they are not silently counted as passes. Stage 1A dynamic correctness is action-time recomputation with same-node preservation, not observer-driven refresh.
+Stage 1B private-test applicability: pure policy/static fixture checks plus one narrow live-page adapter and a documented human Chrome procedure are in scope. A production DOM/controller browser lane, broad or universal Google layout support, MutationObserver batching, and Stage 2 selector hardening remain deferred; they are not silently counted as passes. Dynamic correctness remains action-time recomputation with same-node preservation, not observer-driven refresh.
 
 | ID | Layer | Scenario | Pass condition |
 |---|---|---|---|
@@ -15,26 +15,27 @@ Stage 1A correction-pass applicability: pure policy/static fixture checks and do
 | KEY-07 | U,C | Modified ArrowUp/ArrowDown | Ctrl/Meta/Alt/AltGraph/Shift arrows cause no extension focus, cancellation, or scroll. |
 | KEY-08 | U,C | defaultPrevented, composition, untrusted event, and repeat | No extension action for prevented/composing/untrusted events; active available-direction repeats do not move or scroll, while neutral/boundary repeats remain fail-open. |
 | KEY-09 | C | Native Tab or pointer already focused eligible result | Up/Down moves relative to that result rather than restarting at the first. |
-| KEY-10 | C | Unrelated link, button, disclosure, checkbox, switch, custom focusable control, or closed-shadow host owns focus | Extension remains inert and does not cancel or move focus. |
+| KEY-10 | C | A non-arrow-owning page link, button, disclosure, checkbox, switch, or custom focusable control owns focus | ArrowDown may start at the first title result; controls that genuinely own arrow behavior remain inert. |
 | KEY-11 | C,M | Search submission, search input retention, suggestion dismissal, and back navigation | Entry behavior is recorded; arrows remain native while editing; inability to reach a predictable start state is treated as failed product evidence, not bypassed by stealing focus. |
 | KEY-12 | C,M | Ctrl/Meta/Shift/Alt+Enter on focused result | Extension performs no cancellation, synthesis, URL rewrite, or forced disposition; platform/browser result is recorded only. |
 | EDIT-01 | D,C | Input, textarea, select, searchbox, textbox, combobox | Arrow and Enter remain native; extension inert. |
 | EDIT-02 | D,C | Nested contenteditable, designMode, open Shadow DOM editing path, and closed-shadow interactive host | Inert through composed-path/host fail-closed detection. |
 | WID-01 | D,C | Menu/listbox/tree/grid/tablist/radio/slider/spinbutton/toolbar/application/media/dialog context | Extension does not consume widget arrows. |
-| DET-01 | D | Versioned supported ordinary-result block with one primary title anchor | Exactly one canonical candidate in DOM/logical order, justified by multiple independent adapter signals. |
-| DET-02 | D | Ads, shopping, carousels, maps/local, nav, account, related searches | Zero candidates from excluded regions. |
-| DET-03 | D | Generated/empirical classes removed, renamed, or randomized | No false positives; candidates remain only when independent evidence is sufficient, otherwise the adapter returns zero. |
+| DET-01 | D | Visible native link containing one `h3` inside `#search` | The title link is a candidate in DOM order. |
+| DET-02 | D | Ads, shopping, carousels, maps/local, and other Google modules | Qualifying title links are candidates; non-title controls are not. |
+| DET-03 | D | Generated/empirical classes removed, renamed, or randomized | Candidate detection remains unchanged because it does not use them. |
 | DET-04 | D | Hidden, inert, disabled, aria-hidden, missing/empty href, disconnected | Excluded. |
-| DET-05 | D | Sitelinks, duplicate links, multiple plausible titles, and rich/vertical blocks | Only an unambiguous supported primary title is eligible; ambiguity and non-ordinary units return zero. |
-| DET-06 | D | Unknown root/block, misleading h3 links, ad/consent/login/captcha/no-results/interstitial modules | Zero candidates and no key cancellation. |
-| DET-07 | D | Sampled locales and translated ad/module labels | Language-neutral evidence remains safe; localized text is never the sole inclusion/exclusion signal. |
-| DET-08 | D | DOM order differs materially from perceived multi-column order | Layout is rejected as unsupported rather than geometry-sorted. |
+| DET-05 | D | Translation links, sitelinks, rich modules, and sponsored modules around title links | Visible native links containing one `h3` are enumerated; surrounding non-title controls do not disqualify or become candidates. |
+| DET-06 | D | Missing/hidden `#search`, no title links, consent/login/captcha/no-results/interstitial page | Zero candidates and no key cancellation. |
+| DET-07 | D | Sampled locales and translated module labels | Language does not change title-link eligibility. |
+| DET-08 | D | DOM order differs from perceived multi-column order | Navigation follows DOM order; no geometry inference is attempted. |
 | DET-09 | U,S,D | Fixture oracle independence | Expected candidates live in reviewer-approved sidecars invisible to production; no fixture-only token or selector occurs in production code. Stage 1A currently executes only the dependency-free pure-policy/static portion; production DOM execution remains not run. |
-| DET-10 | D | Minimal pairs, wrapper-depth/class/ID randomization, and deletion of each adapter signal | Each outcome remains independently justified or fails closed to zero. |
+| DET-10 | D | Wrapper-depth/class randomization and surrounding extra links | Title-link eligibility remains stable. |
+| DET-11 | U,S,M | Stage 1B live adapter | Pure evidence policy accepts visible genuine title links on the exact route/root without language, ad, rich-module, secondary-link, layout, target, or negative-tabindex exclusions; it still rejects hidden, disabled, download, non-HTTP(S), unnamed, or out-of-root links. |
 | URL-01 | U | Relative/absolute/encoded HTTP(S) destinations | Parsed and accepted consistently without rewriting page content. |
 | URL-02 | U | javascript/data/blob/file/extension/malformed destination | Excluded; no focus as eligible result and no activation authority. |
-| URL-03 | D,C | Direct link, Google redirect link, `download`, target `_blank`, `<base target>`, and target mutation | Direct/redirect links are not decoded/rewritten; download/non-self targets are ineligible; native activation remains page/browser owned. |
-| DYN-01 | C | Results appended/reordered/replaced | One batched refresh; final order/eligibility correct. |
+| URL-03 | D,C | Direct link, Google redirect link, `download`, target `_blank`, `<base target>`, and target mutation | Direct/redirect links are not decoded/rewritten; download links are ineligible; target disposition remains page/browser owned. |
+| DYN-01 | C | Results appended/reordered/replaced | Action-time recomputation uses the current DOM order and eligibility. |
 | DYN-02 | C | Focused node replaced by a lookalike with same URL/name/position | No automatic focus transfer; extension state/style clears. |
 | DYN-03 | C | Focused node removed, hidden, or made ineligible | Session clears without unrelated jump or automatic prior-focus restoration. |
 | DYN-04 | C | Extension styling mutation | Observer reaches quiescence; no callback loop. |
@@ -51,7 +52,7 @@ Stage 1A correction-pass applicability: pure policy/static fixture checks and do
 | PRIV-01 | S,C | Representative session | Zero extension-originated network requests and persistent storage writes. |
 | PRIV-02 | S | Logs, fixtures, build files, package | No query/result content, credentials, identifiers, DOM dumps, or local machine paths. |
 | MV3-01 | S,C | Manifest and loaded extension | MV3, approved narrow match prefix, top frame/isolated/document_idle, only the declared content-script site access, no unapproved surface or error. |
-| ROUTE-01 | C | `/search`, `/searchfoo`, query/hash changes, non-web vertical, same-document route exit, consent/account/regional redirect | Actions occur only on exact supported `.com/search` default-web layout; unsupported/redirected states yield zero and teardown without cancellation. |
+| ROUTE-01 | C | `/search`, `/searchfoo`, query/hash changes, vertical parameters, same-document route exit, consent/account/regional redirect | Actions occur only on exact `.com/search`; query and vertical parameters do not disqualify it, while other paths/origins yield zero and teardown without cancellation. |
 | PERM-01 | C,M | Site access allowed, denied, and user-set on-click | Behavior and warning are captured; denied/on-click access fails safely without errors or misleading claims. |
 | BROWSER-01 | C | Automation-runtime validation | Pinned Chrome for Testing uses a fresh profile, receives the production extension, serves the intercepted matching-origin main document, aborts every other request, and leaks no real query/cookie/account state. |
 | PKG-01 | S,C | Production ZIP | Allowlisted files only, manifest at root, readable packaged logic, exact artifact passes Chrome tests. |
@@ -61,7 +62,7 @@ Stage 1A correction-pass applicability: pure policy/static fixture checks and do
 ## Fixture families
 
 - Versioned supported ordinary-result blocks; minimal pairs; misleading headings; duplicates; sitelinks; unknown blocks.
-- Explicit exclusions: ads, shopping, carousel, maps/local, navigation, account, related search.
+- Minimal exclusions only: non-title controls, hidden/disabled/download links, non-HTTP(S) destinations, and links outside the search root.
 - Hidden/inert/ARIA-disabled/malformed/adversarial DOM.
 - Editing and native/ARIA widget contexts, including open Shadow DOM.
 - Locales, verticals, consent/login/captcha/no-results/interstitials, redirects, targets/downloads, and route changes.

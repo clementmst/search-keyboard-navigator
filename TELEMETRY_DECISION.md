@@ -2,7 +2,7 @@
 
 ## Current status
 
-The user has selected **optional privacy-minimized first-party analytics as the future direction**, but its design and implementation are deferred and not authorized in this pass. It must not delay the private test build. Stage 1A remains exactly as implemented: local-only page processing, no analytics or telemetry, no identifiers, no backend, no extension network activity, and no accounts.
+The user has selected **optional privacy-minimized first-party analytics as the future direction**, but its design and implementation are deferred and not authorized in this pass. It must not delay the private test build. Stage 1B remains local-only: no analytics or telemetry, no identifiers, no backend, no extension network activity, and no accounts.
 
 The publisher is an individual in France and intends worldwide public Chrome Web Store availability. That makes the French GDPR/ePrivacy analysis a baseline and adds the laws and transfer rules of other launch markets. Chrome Web Store user-data, disclosure, Limited Use, permission, and single-purpose rules apply independently of whether a practice is lawful.
 

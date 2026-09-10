@@ -1,46 +1,41 @@
 # Cloud handoff
 
-## Objective
+This is a local handoff record. It does not make the project cloud-hosted and cannot continue work while the computer is off by itself. The reviewed working branch exists on the public GitHub repository; no merge to `main`, website deployment, Store publication, or secret transfer is authorized by this file.
 
-Continue building Search Keyboard Navigator into a safe private-test Chrome extension that lets a user move between ordinary organic Google Search result-title links with the keyboard.
+## Current objective
 
-## Current reviewed baseline
+Obtain one meaningful private Chrome observation of the bounded Stage 1B adapter on a normal, non-personal desktop Google Search page, then decide whether the unmodified-arrow interaction hypothesis should be rejected, revised, or advanced.
 
-This repository contains the frozen Stage 1A baseline from local commit 5b26eb7. It has:
-- Manifest V3 and only https://www.google.com/search* site access.
-- No named API permissions, backend, accounts, telemetry, monetization, or external data transmission.
-- 45 dependency-free static tests at the baseline.
-- Governance, privacy, compliance, accessibility, research, and multi-agent role documents.
-- Eleven project roles, read-only by default.
-- Future optional privacy-minimizing telemetry is approved in principle but explicitly deferred.
+## Completed gates at handoff
 
-## Immediate authorized task: bounded Stage 1B private-test adapter
+- Stage 1A governance and static baseline preserved by local commit `5b26eb7`.
+- Stage 1B remains MV3 and `https://www.google.com/search*` only, with exact runtime origin/path/default-web guards.
+- The only named Chrome API permission is `storage`, authorized on 2026-09-10 solely for one versioned local consent Boolean. There is no separate host permission, dependency, service worker, page-data storage, backend, telemetry, account, monetization, or publication work.
+- Dependency-free policy, manifest, fixture, selector, source-tripwire, syntax, configuration, link, integrity, and permission-boundary checks are recorded in `STAGE1B_EVIDENCE.md`.
+- Final independent review results and the exact Stage 1B snapshot commit are reported by the operator; this document must not be read as a substitute for that report.
 
-Implement the narrowest fail-closed adapter that can identify ordinary organic desktop Google result-title links on a normal live https://www.google.com/search page. The user wants a meaningful install-and-test build without DevTools or synthetic DOM replacement.
+## Exact next task
 
-Preserve:
-- www.google.com/search only and no new permissions.
-- Native Tab and Enter behavior.
-- Editing, widget, modal, popover, ad/sponsored, carousel, rich-card, embedded-content, modified-key, IME, and assistive-technology exclusions.
-- Predictable Arrow behavior with safe recovery and no universal-layout claim.
-- No telemetry, backend, accounts, donations, support automation, marketing, Playwright, dependency installation, or publication in this pass.
+Follow `PRIVATE_TEST.md` in a fresh unsigned Chrome profile. Verify the pre-consent inactive state, enable action, persisted choice, navigation behavior, and immediate disable/revocation behavior; return the small pass/fail set to the operator. If no movement occurs, provide only the minimum sanitized observation listed there. Do not broaden selectors from guesswork.
 
-Add focused fixtures and dependency-free tests. Produce PRIVATE_TEST.md with non-technical steps: load unpacked, use a fresh Chrome profile, make one non-personal query, test navigation, record pass/fail, and uninstall. Real Chrome observation is required evidence; do not claim it was run in cloud.
+## Required setup and local checks
 
-## Review gate
+- Unpacked-extension directory: `C:\Users\68810\Documents\Codex\search-keyboard-navigator`
+- Runtime for deterministic checks: Node.js with the built-in `node:test` module; no install step.
+- Run each `tests\*.test.cjs` file directly because this environment blocks Node's child-process test fan-out.
+- Parse every JSON/TOML file, validate the constrained YAML ledgers, check local Markdown links, verify manifest permission/dependency boundaries, run JavaScript syntax checks, and compare the complete `STAGE1B_SHA256SUMS.txt` inventory before trusting a transferred tree.
 
-Before declaring ready, run independent engineering, accessibility, privacy/security, compliance, and product/test reviews. Lower-risk documentation refinements may be deferred, but genuine user-safety or privacy blockers must be fixed or escalated.
-
-## User and operator decisions
-
-- Publisher: individual in France.
-- Intended audience: general public, not specifically directed at children under 16.
-- Intended eventual release: worldwide Chrome Web Store.
-- Monetization: free with optional donations later; no sale of user data; affiliate injection deferred/blocked.
-- Support agent and address: later, approval-gated; no public outbound messages without user approval.
-- Optional telemetry: later, opt-in and privacy-minimizing; never collect search queries, URLs, page content, account data, or browsing history.
-- The main operator chat is the user interface. Escalate only material choices, new permissions/credentials, costs/dependencies, irreversible external actions, safety/privacy/compliance concerns, or human-only validation.
+For work on another computer or a cloud worker, an authorized human must first arrange a private repository transfer or other secure copy and supply the needed environment. That future setup requires separate approval because no push, host, account, credential, or continuous worker is authorized here.
 
 ## Deferred backlog
 
-Optional telemetry design and infrastructure; Chrome/assistive-technology evidence; worldwide store publication and policy artifacts; approval-gated support workflow; donation page/link; possible compliant marketing/SEO role; long-term cloud scheduler and concise operator recaps.
+- Human live Chrome, visual, runtime-privacy, and assistive-technology evidence.
+- Any browser-automation or DOM-execution dependency proposal.
+- Stage 2 hardening and broader layout coverage.
+- Privacy-minimized first-party telemetry design; no implementation is authorized.
+- Donation, support workflow, marketing/SEO role, Store materials, public release, and publication.
+- Resolution of the compliance register's public-release blockers, including the Google Terms/`robots.txt` ambiguity.
+
+## Autonomy and approval limits
+
+Project agents remain read-only by default. One implementation writer may be restored only for a separately authorized bounded change, with writes serialized and independent review afterward. Ask through the operator before dependencies, costs, credentials, new permissions/origins, telemetry or other data collection, backend/accounts, monetization, external communication, legal-risk acceptance, destructive actions, publication, deployment, or any irreversible external action. Agents may not accept agreements or certify legal compliance.

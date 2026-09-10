@@ -2,17 +2,18 @@
 
 ## Status and limits
 
-This is a versioned engineering compliance register, not legal advice and not a certification that Search Keyboard Navigator complies with law or platform policy. The dedicated Compliance & Platform Policy Reviewer is read-only and is a required release-gate reviewer. It reports evidence and unresolved choices through the project orchestrator/operator interface.
+This is a versioned engineering compliance register, not legal advice and not a certification that ArrowKey Search Navigator (formerly Search Keyboard Navigator) complies with law or platform policy. The dedicated Compliance & Platform Policy Reviewer is read-only and is a required release-gate reviewer. It reports evidence and unresolved choices through the project orchestrator/operator interface.
 
-The current assessment was reviewed on 2026-08-28 against the sources listed in [research/sources.yaml](research/sources.yaml) and the structured [compliance register](compliance/register.yaml). Requirements that depend on developer identity, jurisdiction, launch market, publication method, or future product behavior remain unresolved. A release or external publication is blocked if a material item is unresolved, a drift-prone policy has not been rechecked, or qualified legal advice is required.
+The initial assessment was reviewed on 2026-08-28 and Store-preparation sources and gaps were refreshed on 2026-08-31 against [research/sources.yaml](research/sources.yaml) and [compliance/register.yaml](compliance/register.yaml). Requirements that depend on developer identity, jurisdiction, launch market, publication method, or future product behavior remain unresolved. A release or external publication is blocked if a material item is unresolved, a drift-prone policy has not been rechecked, or qualified legal advice is required.
 
 ## Confirmed project facts
 
-- The project is an unpublished, local Stage 1A experiment. It has not been uploaded or submitted to the Chrome Web Store.
-- The manifest has one static content-script match, `https://www.google.com/search*`, plus narrower runtime origin/path/layout guards. It has no named Chrome API permissions or separate host permissions.
-- Current source has no account, backend, analytics, telemetry, advertising, monetization, persistent storage, extension network activity, remote configuration, or remotely hosted executable code.
-- Current behavior necessarily inspects the page URL and synthetic result DOM locally and ephemerally. Project wording does not call that “no data handling.”
-- The repository currently contains no package manifest, lockfile, runtime dependency, copied third-party code, Google logo, or third-party production asset. Synthetic fixtures are purpose-built and do not contain real queries or result pages.
+- Version 0.1.1 is publicly listed in the Chrome Web Store following user-operated account setup, submission, review, and publication. The current 0.1.2 rename and discovery materials remain local drafts until separately submitted or deployed.
+- The manifest has one static content-script match, `https://www.google.com/search*`, plus narrower runtime origin/path/layout guards. Its only named Chrome API permission is `storage`, used for one versioned local consent Boolean; there is no separate host permission.
+- Current source has no account, backend, analytics, telemetry, advertising, monetization, page-data storage, extension network activity, remote configuration, or remotely hosted executable code.
+- Current behavior necessarily inspects the page URL and result DOM locally and ephemerally. Project wording does not call that “no data handling.”
+- Current Chrome Web Store guidance treats that local handling as user-data handling and requires a prominent in-product disclosure plus an affirmative action before handling begins. Version 0.1.2 now presents that disclosure in the popup, requires an explicit Enable action, and keeps page handling inactive until the exact local consent value is true. Browser observation and dashboard/hosted-policy reconciliation remain pending.
+- The extension contains no package-manager manifest, lockfile, runtime dependency, or copied third-party code. The proposed GitHub Pages workflow separately references four official GitHub Actions by the major-version tags shown in GitHub's current Pages example; this external CI supply-chain surface must be reviewed again before activation. Original generated icon and promotional assets have recorded prompts and provenance. Synthetic fixtures contain no real queries or result pages. Three user-supplied live Google Search screenshots are preserved; the user reports that selected screenshots were used for public version 0.1.1, but their third-party rights are not certified and the political candidate remains prohibited from future submission under the recorded Google Search screenshot guidance.
 - Native `Tab`, `Shift+Tab`, and Enter behavior is not intercepted or reimplemented. The unmodified-arrow interaction is still an experiment and has no accessibility-compliance claim.
 
 These are repository facts, not conclusions about every runtime, distribution channel, law, or future artifact.
@@ -22,20 +23,20 @@ These are repository facts, not conclusions about every runtime, distribution ch
 Recorded 2026-08-28; unanswered details remain unknown rather than inferred.
 
 - The intended publisher is an individual in France, publishing personally, who states they have authority to accept agreements.
-- Testing is private now; the intended eventual distribution is a public Chrome Web Store listing available worldwide immediately after readiness and compliance review.
+- Version 0.1.1 is publicly available through the Chrome Web Store. The intended availability remains worldwide; version 0.1.2 has not yet been submitted.
 - The intended audience is the general public, and the product will not be specifically directed at children under 16.
-- Optional privacy-minimized first-party analytics is the chosen future direction, but no categories, purpose, lawful basis/consent, retention, processors, infrastructure, or implementation authority exists. It is deferred and must not delay private testing, so current Stage 1A remains local-only and backend-free.
+- Optional privacy-minimized first-party analytics is the chosen future direction, but no categories, purpose, lawful basis/consent, retention, processors, infrastructure, or implementation authority exists. It is deferred and must not delay private testing, so current Stage 1B remains local-only and backend-free.
 - The preferred operation is simple, mostly non-commercial, ideally free and cash-neutral. Donations are desired. Data sales and affiliate links were mentioned as possibilities, not approved features.
 - Google and Chrome may be referenced only to explain compatibility/availability in marketing, not in the product name.
 - Open source may be used or adapted only when the exact license permits the intended use and every obligation is satisfied; otherwise the project may study concepts and implement independently without copying protected code.
-- A future support address may be monitored with agent assistance only after launch planning; no mailbox, retention policy, access model, external communication, or autonomous sending is authorized. An agent must never send publicly or externally without explicit user approval.
+- The public support/privacy address is `searchkeyboardnavigator.support@gmail.com`. The user confirmed forwarding and send-as replies through a personal Gmail inbox controlled by the same developer. No project agent has mailbox access or permission to send externally. No fixed automatic deletion schedule is configured; the public policy discloses the current support-message handling and deletion approach.
 - No external legal counsel is planned. The project compliance agent is an AI assistant, not licensed counsel, and cannot certify compliance or eliminate unresolved legal risk.
 
 ## Provisional risk defaults
 
 These are conservative project controls, not legal conclusions:
 
-1. Keep current Stage 1A local-only and backend-free. Telemetry remains a future user choice governed by [TELEMETRY_DECISION.md](TELEMETRY_DECISION.md); do not add accounts, analytics, telemetry, queries, URLs, page content, identifiers, crash uploads, or other product-improvement data without a complete separate design and explicit authorization.
+1. Keep current Stage 1B local-only and backend-free. Telemetry remains a future user choice governed by [TELEMETRY_DECISION.md](TELEMETRY_DECISION.md); do not add accounts, analytics, telemetry, queries, URLs, page content, identifiers, crash uploads, or other product-improvement data without a complete separate design and explicit authorization.
 2. Never sell browsing, search, or user data. Chrome Limited Use prohibits transfer or sale to data brokers and similar third parties, and an EU/worldwide data-sale model would create disproportionate privacy and trust risk.
 3. Treat affiliate-link rewriting, injection, codes, and cookies as blocked for this extension. The current Store policy requires prominent disclosures, a related user action for every inclusion, and a direct transparent benefit tied to core functionality; the current product supplies no such affiliate benefit and must retain one narrow purpose.
 4. If later authorized, prefer an optional clearly labelled external donation link with no feature gating, nagging, deceptive placement, or payment-card handling by the extension. Provider terms, platform placement, publisher/donor jurisdiction, tax, consumer, privacy, payment, and Store requirements must be reviewed first.
@@ -48,27 +49,27 @@ These are conservative project controls, not legal conclusions:
 ### Likely applicable at Chrome Web Store preparation or publication
 
 - The Chrome Web Store single-purpose, minimum-permission, accurate-listing, deceptive-behavior, user-data disclosure, Limited Use, security, and remote-code rules must be rechecked against the exact artifact and listing. A static content-script match is site access even without named API permissions.
-- Local-only inspection still handles website content and browsing activity under the Store's published user-data guidance. The privacy policy, prominent disclosure, dashboard answers, and listing must accurately state transient local processing and zero retention, transmission, sale, sharing, analytics, or advertising.
+- Local-only inspection still handles website content and browsing activity under the Store's published user-data guidance. The privacy policy, in-product disclosure and consent, dashboard answers, and listing must accurately state transient local processing and zero retention, transmission, sale, sharing, analytics, or advertising. Store copy alone does not satisfy the current FAQ's Product-UI consent requirement.
 - Web Store publication would require an authorized publisher to use an eligible Google account and accept the then-current Developer Agreement and incorporated terms. No agent may accept them.
 - Google Terms apply to use of Google services. The extension must not misrepresent its origin or affiliation, misuse Google content or brand elements, or introduce prohibited automated access. The current general terms prohibit automated access contrary to machine-readable instructions, while Google's live `robots.txt` disallows `/search`; official text does not expressly resolve a local extension that only moves focus on a page loaded by a human. That ambiguity blocks public release pending qualified review or authoritative clarification.
 - Objective claims such as “accessible,” “privacy-preserving,” “works on Google Search,” or “never selects ads” require evidence matching their scope. Listing limitations must be conspicuous and must not imply Google endorsement.
 - Accessibility law depends on the developer, offering, market, and use context. WCAG 2.2 remains the project quality baseline, but it is not a legal-compliance certification and does not replace human assistive-technology evidence.
-- An EU-facing release also needs qualified assessment of GDPR roles and territorial scope, ePrivacy installation/storage treatment, provider-identity disclosures, and whether the General Product Safety Regulation applies to this software and distribution model.
+- The current runtime's purely local processing is likely outside ePrivacy “gaining access” while information remains on-device, but future storage or telemetry reopens that gate. An EU-facing release still needs qualified assessment of GDPR support-mailbox transparency, provider identity, and whether the General Product Safety Regulation applies to this free personal software distribution model.
 - Open-source license/notice and third-party asset/data-rights review must run on the exact release artifact, listing screenshots, icons, copy, and provenance even though the current tree has no identified third-party dependency or production asset.
 
-### Not currently applicable to the frozen Stage 1A tree
+### Not currently active in the current 0.1.2 source tree
 
-- Chrome Web Store upload, dashboard certification, publisher-account, payment, and Store-listing execution steps are not active because the project is unpublished and no account access or publication is authorized. Release preparedness requirements still remain gated.
+- Chrome Web Store account, agreement, and initial publication steps were completed by the user for version 0.1.1. No agent has interactive dashboard access or authority to accept terms or certify disclosures. One publisher-linked service account now permits bounded API item management, and an agent performed a read-only status check on 2026-09-10. The current 0.1.2 update has not been uploaded or submitted; exact artifact, listing, dashboard, and compliance review still apply before any approved API release action.
 - Telemetry, advertising, affiliate, payment, cookie, cross-device sync, sale, and data-sharing controls have no active feature to govern because those behaviors are absent. Any addition reopens privacy, consumer, permission, and approval review before implementation.
 - Third-party software notice obligations are not currently triggered by a dependency or copied code because none is present. This is a repository observation, not a permanent exemption.
-- Google brand-asset permission is not currently needed because no Google logo, icon, screenshot, or visual identity is used. Plain-text references remain subject to accurate, non-affiliative use and current trademark guidance.
+- Google brand-asset permission is not currently needed for the original icon or abstract promotional tile because neither uses Google marks or interface content. A real Google Search screenshot is still required by the Store and its branding, third-party-content, and privacy treatment remains unresolved.
 
 ### Remaining facts requiring operator/user decision
 
 1. Who will perform private testing, in which countries, and whether real personal/account-based queries, screenshots, logs, or shared builds will be used.
 2. The future privacy-minimized first-party telemetry proposal and its complete purpose, events, consent/lawful basis, identifiers, retention, processors, infrastructure, international transfers, security, rights, permissions, and disclosures; current code remains no-telemetry until separately authorized.
 3. Intended donation provider and France/worldwide payment, tax, consumer, privacy, and Store placement analysis when the post-live donation task begins.
-4. Final privacy/support contact and hosting plan, exact Store listing/assets/claims, and whether authoritative clarification or qualified advice will be obtained for release-blocking legal ambiguities.
+4. Public privacy-policy URL, any required publisher/controller identity details, exact Store listing/assets/claims, and whether authoritative clarification or qualified advice will be obtained for release-blocking legal ambiguities.
 
 The operator should obtain these answers using [COMPLIANCE_INTAKE.md](COMPLIANCE_INTAKE.md) only at the relevant testing or distribution gate; execution-layer agents do not question the user directly.
 

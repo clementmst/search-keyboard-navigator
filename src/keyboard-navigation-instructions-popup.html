@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How to use ArrowKey Search Navigator</title>
+    <link rel="stylesheet" href="keyboard-navigation-instructions-popup.css">
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../assets/icons/icon48.png" width="44" height="44" alt="">
+        <div>
+          <h1 id="main-heading" tabindex="-1">Keyboard navigation</h1>
+          <p>Use these keys on Google Search</p>
+        </div>
+      </header>
+
+      <p id="status-message" class="visually-hidden" role="status" aria-live="polite"></p>
+      <p id="error-message" class="error-message" role="alert" hidden></p>
+
+      <section id="loading-panel" aria-label="Loading setting">
+        <p>Checking your local setting…</p>
+      </section>
+
+      <section id="consent-panel" aria-labelledby="consent-heading" hidden>
+        <h2 id="consent-heading" tabindex="-1">Enable keyboard navigation?</h2>
+        <p class="disclosure">
+          To move among results, ArrowKey temporarily examines the current Google Search page address,
+          visible result links and page structure, focus state, and briefly checks keyboard events only to
+          recognize eligible Arrow or Escape commands on your device.
+        </p>
+        <p class="disclosure">
+          It does not record typed text or send your searches, page content, or keyboard activity anywhere.
+          Your choice is stored only in Chrome on this device.
+        </p>
+        <button id="enable-navigation" type="button">Enable keyboard navigation</button>
+      </section>
+
+      <section id="instructions-panel" aria-labelledby="instructions-heading" hidden>
+        <h2 id="instructions-heading" class="visually-hidden">Keyboard controls</h2>
+        <table aria-label="Search result keyboard controls">
+          <tbody>
+            <tr>
+              <th scope="row"><kbd>↑</kbd></th>
+              <td>Previous result</td>
+            </tr>
+            <tr>
+              <th scope="row"><kbd>↓</kbd></th>
+              <td>Next result</td>
+            </tr>
+            <tr>
+              <th scope="row"><kbd>Enter</kbd></th>
+              <td>Open result</td>
+            </tr>
+            <tr>
+              <th scope="row">
+                <span class="key-combination"><kbd>Ctrl</kbd><span aria-hidden="true">+</span><kbd>Enter</kbd></span>
+              </th>
+              <td>New tab where supported</td>
+            </tr>
+            <tr>
+              <th scope="row"><kbd>Esc</kbd></th>
+              <td>Clear selection</td>
+            </tr>
+          </tbody>
+        </table>
+        <button id="disable-navigation" class="secondary-button" type="button">Disable keyboard navigation</button>
+      </section>
+    </main>
+    <script src="consent-policy.js"></script>
+    <script src="keyboard-navigation-instructions-popup.js"></script>
+  </body>
+</html>

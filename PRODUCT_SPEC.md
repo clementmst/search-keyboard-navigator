@@ -1,6 +1,6 @@
 # Product Specification
 
-Status: Stage 1A disposable interaction experiment and correction pass authorized; G3-G4 evidence pending; Stage 1B not authorized.
+Status: Stage 1B bounded live-page private-test adapter authorized and implemented; deterministic and independent-review evidence pending; live Chrome and assistive-technology evidence not yet run.
 
 ## User problem
 
@@ -9,10 +9,10 @@ Keyboard-oriented users must repeatedly traverse or point at search results. The
 ## Supported environment
 
 - Desktop Google Chrome, current stable plus the previous stable release during release qualification.
-- Top-level documents injected by `https://www.google.com/search*` only when a runtime guard confirms origin `https://www.google.com`, pathname exactly `/search`, and a supported default-web-results layout.
-- One canonical primary title link per supported ordinary organic-result block on versioned layouts represented by approved fixtures and live-test records.
+- Top-level documents injected by `https://www.google.com/search*` only when a runtime guard confirms origin `https://www.google.com` and pathname exactly `/search`.
+- Visible native links containing one `h3` result title inside the rendered `#search` root.
 
-Stage 1A does not claim a live Google layout adapter. Its deliberately synthetic `main > article` contract exists only to falsify the interaction model. Versioned live-layout classification and selector-robustness claims begin no earlier than separately authorized Stage 1B.
+Stage 1B uses a minimal, language-neutral live-page adapter: on the exact supported route, it enumerates rendered native `a[href]` elements containing exactly one `h3` inside one rendered `#search` root. Surrounding translation links, sitelinks, sponsored markers, rich modules, target disposition, and vertical parameters do not disqualify an otherwise usable result-title link. The synthetic `main > article` contract remains only as a fixture-first interaction oracle.
 
 Regional Google domains are not implied. Chrome match patterns cannot wildcard country-code TLDs, so every added domain is a reviewed scope and permission change.
 
@@ -20,10 +20,9 @@ Regional Google domains are not implied. Chrome match patterns cannot wildcard c
 
 ### Start and movement
 
-- Neutral focus means that no page control owns focus, normally `body` or `documentElement`, and no modal, dialog, popover, editable, or other interactive context is active.
-- From neutral focus, a qualifying `ArrowDown` focuses the first eligible result. Initial `ArrowUp` remains native.
+- Start focus may be the page body or any page element that does not genuinely own ArrowUp/ArrowDown behavior. A qualifying `ArrowDown` focuses the first eligible result; initial `ArrowUp` remains native.
 - If an eligible result already owns focus through native Tab, pointer use, or prior extension movement, it is the origin even when no extension session exists.
-- If any other interactive or focusable element owns focus, the extension remains inert. It never steals focus from an unrelated link, button, disclosure, checkbox, switch, custom control, embedded content, or closed-shadow host.
+- If an editable or genuine arrow-owning widget owns focus, the extension remains inert. Ordinary links, buttons, disclosures, checkboxes, switches, and other non-arrow-owning page focus do not prevent ArrowDown from starting result navigation.
 - In a session, `ArrowDown` and `ArrowUp` focus the next or previous eligible result in fresh DOM/logical order within the supported single-column layout contract.
 - Movement never wraps. At either boundary, focus/session remain on the boundary result, the extension does not cancel the key, and native scrolling may occur. A newly appended result becomes reachable on the next movement.
 
@@ -48,7 +47,7 @@ This changes the current focus location, so the next native Tab proceeds from th
 
 ### Key-event guards
 
-Listen for `keydown` with a non-passive bubbling listener at the latest practical ancestor and use `event.key`. Accept non-operation when the page stops propagation. Ignore the event without cancellation when any of these apply:
+Listen for `keydown` with a non-passive capture listener and use `event.key`, so page components cannot hide otherwise eligible arrow events before the guarded handler sees them. Ignore the event without cancellation when any of these apply:
 
 - `event.defaultPrevented`, `event.isComposing`, an active composition session, or an untrusted event.
 - Any Ctrl, Meta/Command, Alt, AltGraph, or Shift modifier.
@@ -59,23 +58,19 @@ Listen for `keydown` with a non-passive bubbling listener at the latest practica
 
 Only after focus succeeds and `document.activeElement` is the intended result may the extension call `preventDefault()` for the arrow. It must never call `stopPropagation()` or `stopImmediatePropagation()`.
 
-Held-key repeat is disabled for Stage 1A: the initial accepted keydown moves one result. While an active session owns that direction and another movement is available, repeated keydowns do not advance and are canceled to avoid scroll/speech flooding. With no session or at a boundary, repeats follow the ordinary fail-open boundary rule. This policy is reversible and must be user-tested.
+Held-key repeat is disabled for the private-test hypothesis: the initial accepted keydown moves one result. While an active session owns that direction and another movement is available, repeated keydowns do not advance and are canceled to avoid scroll/speech flooding. With no session or at a boundary, repeats follow the ordinary fail-open boundary rule. This policy is reversible and must be user-tested.
 
 ## Eligible-result policy
 
-There is no standardized “organic result” role. Detection therefore uses strict, versioned layout adapters for observed structures rather than a universal semantic selector.
+Google exposes result titles as heading links. The live adapter therefore uses a small positive rule: a candidate is a native `a[href]` inside the rendered `#search` root containing exactly one `h3` whose closest link is that anchor. It must be connected, rendered, programmatically focusable, named, enabled, non-inert, free of `download`, and resolve through the platform URL parser to `http:` or `https:`. A negative `tabindex` does not disqualify it.
 
-A supported adapter must recognize both a main-results root and an ordinary-result block using multiple independent signals. It returns exactly one canonical native primary title anchor per block. The anchor must be connected, rendered/perceivable, sequentially focusable, non-empty in accessible name, outside hidden/inert/disabled/widget/navigation ancestry, free of `download`, have an effective target absent/empty/`_self`, and resolve through the platform URL parser to `http:` or `https:`. Direct and Google redirect anchors may be used without decoding or rewriting them.
-
-Exclude ads/sponsored regions, shopping/product units, carousels, maps/local packs, rich/vertical result units, page navigation, tabs, menus, account controls, consent/login/captcha/interstitial content, related searches, unrelated links, sitelinks, hidden/inert/disabled content, unsafe/empty destinations, and ambiguous blocks. Generated classes or empirical attributes may corroborate a versioned adapter but are never the sole positive signal. Localized text such as “Sponsored” is never the sole exclusion signal.
-
-Unknown roots, unknown blocks, multiple plausible primary anchors, DOM/visual-order disagreement in an unsupported layout, or insufficient exclusion evidence yield zero candidates. False negatives are preferred to false-positive navigation.
+Page language, sponsored status, surrounding secondary links, rich modules, target disposition, query parameters, result vertical, and negative tab order do not exclude a valid title link. Non-title controls never become candidates because they do not satisfy the positive title-link rule. Hidden, disabled, unnamed, download, non-HTTP(S), and out-of-root links remain excluded.
 
 Recompute and revalidate candidates before enumeration and every extension-owned movement/focus transfer. Native Enter activation remains browser/page owned; the extension does not claim atomic validation at that instant. Page DOM, attributes, events, order, timing, and URLs are untrusted.
 
 ## Dynamic results
 
-- Action-time recomputation is the correctness mechanism. `MutationObserver` is optional in Stage 1A and must be justified by measured invalidation or performance need.
+- Action-time recomputation is the correctness mechanism. Stage 1B adds no `MutationObserver`; any observer remains separately justified by measured invalidation or performance need.
 - If used, observe the smallest supported root while also handling root replacement, coalesce bursts, avoid per-record rescans, and filter extension-owned styling mutations.
 - Preserve the current target only while the exact same DOM node remains connected and eligible. Same-node reorder is allowed and subsequent movement uses fresh DOM order.
 - If the target is removed, replaced, hidden, or becomes ineligible, end the session and remove styling without transferring focus or automatically restoring prior focus.
@@ -83,21 +78,21 @@ Recompute and revalidate candidates before enumeration and every extension-owned
 
 ## Visual treatment
 
-The indicator supplements, not suppresses, native/page focus. It targets a two-CSS-pixel perimeter and at least 3:1 contrast against adjacent colors, remains distinguishable without color alone, works in forced-colors mode, and is not entirely obscured by sticky content at 100%, 200%, and 400% zoom.
+The selected anchor receives real native DOM focus. Because Google's inline title links can produce a fragmented browser outline, the current CSS suppresses that anchor outline and substitutes a title-only outline plus a small left marker. The replacement treatment still requires validation for contrast, light/dark page themes, forced colors, clipping, and 100%, 200%, and 400% zoom; it is not yet an accessibility-compliance claim.
 
 ## Privacy and security
 
 - Process the current supported page URL and result DOM locally and ephemerally only for eligibility and focus control.
 - Do not retain, transmit, log, analyze, monetize, sell, or share queries, URLs, result text, interactions, or identifiers.
-- No fetch/XHR/WebSocket/beacon, storage, cookies, analytics, telemetry, backend, accounts, messaging, remote configuration, or remote executable code.
+- No fetch/XHR/WebSocket/beacon, page-data storage, cookies, analytics, telemetry, backend, accounts, messaging, remote configuration, or remote executable code. Persist only one versioned local boolean for the user's consent choice.
 - No `eval`, `new Function`, string timers, dynamic remote import, unsafe HTML sinks, implicit globals, or named `window`/`document` property access.
 - Keep state in extension-owned lexical variables/collections, never in page-controlled attributes.
 
 ## Proposed MV3 architecture
 
-1. `manifest.json`: MV3, narrow static content-script prefix, top frame, isolated world, `document_idle`, no named API permissions, separate `host_permissions`, optional permissions, background context, action, or web-accessible resource. The content-script match still grants persistent site access and may produce a warning.
+1. `manifest.json`: MV3, narrow static content-script prefix, top frame, isolated world, `document_idle`, only the approved `storage` API permission, and no separate `host_permissions`, optional permissions, background context, or web-accessible resource. The content-script match still grants persistent site access and may produce a warning.
 2. Key policy: pure guards for modifiers, composition, prior cancellation, editing/widget contexts, boundaries, and repeat.
-3. Result policy: strict versioned layout adapters with explicit evidence/rejection reasons, independent signals, fail-closed ambiguity, and URL validation.
+3. Result policy: the minimal positive `#search a[href] h3` title-link rule plus genuine-link usability and URL validation.
 4. DOM adapter: enumeration, visibility/connection checks, focus styling, and minimal scrolling.
 5. Navigation controller: ephemeral session state and deterministic boundary/clear transitions.
 6. Optional mutation scheduler: narrow observation, root-replacement handling, batching, invalidation, and same-node-only preservation.
@@ -110,13 +105,13 @@ Unmodified arrows are native scroll keys and screen readers may reserve them for
 
 ## MVP acceptance summary
 
-- Correct neutral start, already-focused-result continuation, first/next/previous/boundary behavior, and inertness on unrelated controls, with no wrapping.
-- Native DOM focus on the canonical organic-result anchor.
+- Correct start from non-arrow-owning page focus, already-focused-result continuation, first/next/previous/boundary behavior, and inertness in editing or arrow-owning controls, with no wrapping.
+- Native DOM focus on each qualifying visible result-title anchor.
 - Native Tab/Shift+Tab and every Enter/modifier variant are never intercepted; claims distinguish pass-through from unchanged focus origin or guaranteed disposition.
 - Complete editing/widget/modifier/composition/default-prevented guards.
-- Strict versioned adapters prefer false negatives, unknown layouts yield zero candidates, and dynamic replacement never transfers focus.
+- The adapter avoids layout-specific exclusions; missing genuine title-link markup yields zero candidates, and dynamic replacement never transfers focus.
 - Perceivable focus at required zoom/theme/forced-color conditions.
-- Zero persistent data, extension network activity, runtime dependencies, and unnecessary permissions.
+- Zero persistent page/user activity data, extension network activity, runtime dependencies, and unnecessary permissions; only the consent boolean persists locally.
 - Deterministic fixture, real-Chrome, accessibility, performance, security, artifact, and live manual gates pass.
 
 See [ACCEPTANCE_TEST_MATRIX.md](ACCEPTANCE_TEST_MATRIX.md) for executable coverage.

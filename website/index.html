@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ArrowKey Search Navigator — Keyboard navigation for Google Search</title>
+    <meta name="description" content="Navigate Google Search results with your keyboard. Use Arrow Up and Arrow Down to move, then open links with Chrome's native shortcuts.">
+    <link rel="canonical" href="https://clementmst.github.io/search-keyboard-navigator/">
+    <link rel="icon" type="image/png" href="assets/arrowkey-search-navigator-icon-128x128.png">
+    <link rel="stylesheet" href="styles.css">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ArrowKey Search Navigator">
+    <meta property="og:description" content="Move through Google Search results with Arrow Up and Arrow Down—without tracking, accounts, or setup.">
+    <meta property="og:url" content="https://clementmst.github.io/search-keyboard-navigator/">
+    <meta property="og:image" content="https://clementmst.github.io/search-keyboard-navigator/assets/arrowkey-search-navigator-social-card-1200x630.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ArrowKey Search Navigator">
+    <meta name="twitter:description" content="Keyboard navigation for Google Search results.">
+    <meta name="twitter:image" content="https://clementmst.github.io/search-keyboard-navigator/assets/arrowkey-search-navigator-social-card-1200x630.png">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ArrowKey Search Navigator",
+        "alternateName": "Search Keyboard Navigator",
+        "description": "A Chrome extension for navigating Google Search result titles with Arrow Up and Arrow Down.",
+        "applicationCategory": "BrowserApplication",
+        "applicationSubCategory": "Accessibility",
+        "operatingSystem": "Google Chrome on desktop",
+        "softwareVersion": "0.1.2",
+        "url": "https://clementmst.github.io/search-keyboard-navigator/",
+        "downloadUrl": "https://chromewebstore.google.com/detail/arrowkey-search-navigator/eifanigljpfnmmdfeefjdioelbkgmeja",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <a class="brand" href="#main-content" aria-label="ArrowKey Search Navigator home">
+        <img src="assets/arrowkey-search-navigator-icon-128x128.png" width="40" height="40" alt="">
+        <span>ArrowKey Search Navigator</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#shortcuts">Shortcuts</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">A lightweight Chrome extension</p>
+          <h1>Move through Google results without reaching for the mouse.</h1>
+          <p class="lead">Use Arrow Up and Arrow Down to move between result titles. Open the focused link with Enter or Chrome's native new-tab shortcut.</p>
+          <div class="actions">
+            <a class="button primary" href="https://chromewebstore.google.com/detail/arrowkey-search-navigator/eifanigljpfnmmdfeefjdioelbkgmeja">Install from Chrome Web Store</a>
+            <a class="button secondary" href="#shortcuts">See the shortcuts</a>
+          </div>
+          <p class="microcopy">Free · No account · No tracking · Google.com desktop results only</p>
+        </div>
+        <img class="hero-art" src="assets/arrowkey-search-navigator-social-card-1200x630.png" width="1200" height="630" alt="Abstract illustration of Up and Down keyboard keys beside three aligned result cards, with the middle card selected">
+      </section>
+
+      <section id="shortcuts" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Five familiar controls</p>
+          <h2>Keyboard search navigation at a glance</h2>
+        </div>
+        <div class="shortcut-grid">
+          <article><kbd>↑</kbd><h3>Previous result</h3></article>
+          <article><kbd>↓</kbd><h3>Next result</h3></article>
+          <article><kbd>Enter</kbd><h3>Open result</h3></article>
+          <article><span class="keys"><kbd>Ctrl</kbd><span>+</span><kbd>Enter</kbd></span><h3>New tab where supported</h3></article>
+          <article><kbd>Esc</kbd><h3>Clear selection</h3></article>
+        </div>
+        <p class="native-note">Tab, Enter, and new-tab shortcuts remain native browser/page behavior; the extension does not intercept them. Ctrl+Enter worked in the tested Windows Chrome setup, but link disposition can vary.</p>
+      </section>
+
+      <section class="section split">
+        <div>
+          <p class="eyebrow">Simple by design</p>
+          <h2>A clear position, with no setup.</h2>
+        </div>
+        <div class="benefits">
+          <article><h3>Keyboard-first</h3><p>Move directly between recognized result titles instead of tabbing through every control.</p></article>
+          <article><h3>Easy to follow</h3><p>A visible outline and small right-pointing marker show the current result.</p></article>
+          <article><h3>Respectful of the page</h3><p>The extension stays inactive while you type or use controls that own the arrow keys.</p></article>
+        </div>
+      </section>
+
+      <section id="privacy" class="section privacy-card">
+        <div>
+          <p class="eyebrow">Privacy first</p>
+          <h2>The extension keeps its processing local.</h2>
+        </div>
+        <div>
+          <p>The extension has no accounts, analytics, telemetry, advertising, backend, or remote code. It temporarily reads the current Google Search page only to find result-title links and move focus; it does not persistently store or transmit that information.</p>
+          <a href="https://sites.google.com/view/search-keyboard-navigator-pp">Read the privacy policy</a>
+        </div>
+      </section>
+
+      <section id="faq" class="section faq">
+        <div class="section-heading">
+          <p class="eyebrow">Questions</p>
+          <h2>Frequently asked questions</h2>
+        </div>
+        <details><summary>How do I navigate Google Search results with my keyboard?</summary><p>Install the extension, open a supported Google.com search-results page, and press Arrow Down. Use Arrow Down and Arrow Up to move between recognized result titles.</p></details>
+        <details><summary>How do I open a search result in a new tab?</summary><p>Use Chrome's native new-tab shortcut after focusing a result. Ctrl+Enter worked in the tested Windows Chrome setup; the extension does not control link disposition, so behavior can vary by platform or browser configuration.</p></details>
+        <details><summary>Does ArrowKey Search Navigator collect my searches?</summary><p>No. The extension processes page information locally and does not store or transmit search queries, result content, destinations, or keyboard activity.</p></details>
+        <details><summary>Which search pages are supported?</summary><p>The current version supports compatible desktop result layouts at www.google.com/search. Regional Google domains, mobile layouts, and every rich result type are not guaranteed.</p></details>
+        <details><summary>Does it work with screen readers?</summary><p>Screen-reader compatibility has not yet been established. Unmodified arrow keys may conflict with assistive-technology browse commands.</p></details>
+      </section>
+    </main>
+
+    <footer>
+      <p>ArrowKey Search Navigator was formerly named Search Keyboard Navigator. It is independent and is not affiliated with, endorsed by, or sponsored by Google LLC.</p>
+      <div><a href="https://sites.google.com/view/search-keyboard-navigator-pp">Privacy</a><a href="mailto:searchkeyboardnavigator.support@gmail.com">Support</a></div>
+    </footer>
+  </body>
+</html>

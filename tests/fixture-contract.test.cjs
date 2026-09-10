@@ -85,3 +85,18 @@ test("role-token fixture covers fallback, recognized precedence, and container-s
     assert.equal(html.includes(token), true, `missing role-token fixture case: ${token}`);
   }
 });
+
+test("Stage 1B live-adapter fixture separates title links from incidental, ad, and rich structures", () => {
+  const html = fixture("live-google-default.html");
+  assert.match(html, /id="search"/);
+  assert.match(html, /id="rso"/);
+  assert.match(html, /data-fixture-case="ordinary-alpha"/);
+  assert.match(html, /data-fixture-case="ordinary-bravo"/);
+  assert.match(html, /data-fixture-case="sponsored" data-text-ad/);
+  assert.match(html, /data-fixture-case="localized-sponsored-outside-organic"/);
+  assert.match(html, /advertiser\.example\/ar/);
+  assert.match(html, /data-fixture-case="ordinary-with-secondary-link"/);
+  assert.match(html, /Traduire cette page/);
+  assert.match(html, /data-fixture-case="rich-grid" role="grid"/);
+  assert.doesNotMatch(html, /class=/);
+});

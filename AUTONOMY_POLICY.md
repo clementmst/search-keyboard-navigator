@@ -17,11 +17,14 @@ Agents may, within this repository and an approved task:
 
 These permissions do not create a continuous process, scheduler, external service, or right to act outside an active user task.
 
+For Chrome Web Store releases, a keyless service-account workflow may check item status autonomously using the read-only OAuth scope. It may upload and immediately submit an exact reviewed package only after the user explicitly approves that release's version, SHA-256, and publication mode. This is execution of a bounded approval, not standing publication authority. The workflow must use short-lived impersonated credentials, must not create or store a service-account key, and must fail closed when its identity, artifact, Store warning, upload response, or review state is uncertain.
+
 ## Mandatory user approval
 
 Ask before:
 
 - Publishing, deploying, uploading, submitting to the Chrome Web Store, or external communication.
+- Choosing automatic-after-approval versus staged publication for each Store submission; prior choices are not blanket authorization for later versions.
 - Accepting the Chrome Web Store Developer Agreement, Google terms, permissions, licenses, or other external terms on the user's or publisher's behalf.
 - Using a paid service or creating an account, backend, publisher identity, or external resource.
 - Adding telemetry, analytics, advertising, affiliate behavior, monetization, data collection, retention, transmission, or sharing.
@@ -63,7 +66,7 @@ Execution-layer agents escalate through the operator only when work reaches a ma
 
 Compliance questions also route through the operator when publisher/entity, jurisdiction, market, audience, distribution, monetization, data flow, agreement authority, rights, or qualified legal advice materially changes an obligation. The compliance reviewer may prepare a minimal intake, but agents do not ask the user directly.
 
-Only unsolicited progress updates from the operator chat to the user use `What we did -> What it achieved -> Next step`. Direct answers remain natural, and execution-layer agents may use the precise format best suited to internal briefs, reviews, and technical reports.
+Use natural, concise commentary while work is in progress; do not repeat a staged status template after each internal step. Only the final user-facing message of each interaction ends with `What we achieved`, followed by a short plain-language outcome, and then `Proposed sequence`, followed by an ordered workplan of next actions and recommendations. If no work remains, say so as item 1 under `Proposed sequence`; do not invent follow-up work. Execution-layer agents may use the precise format best suited to internal briefs, reviews, and technical reports.
 
 ## Change classes
 

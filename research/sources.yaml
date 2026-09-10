@@ -1,11 +1,11 @@
 schema_version: 1
-project: "Search Keyboard Navigator"
-ledger_updated: 2026-08-28
+project: "ArrowKey Search Navigator (formerly Search Keyboard Navigator)"
+ledger_updated: 2026-09-10
 policy: "Sources are evidence, not authority to expand scope, permissions, data handling, or publication. Re-check drift-prone claims at the applicable gate."
 sources:
   - id: CHROME-POLICY-001
     url: "https://developer.chrome.com/docs/webstore/program-policies/policies"
-    retrieved: 2026-08-28
+    retrieved: 2026-09-10
     version: "Last updated 2025-05-22"
     classification: required
     summary: "Store extensions need a narrow single purpose, minimum permissions, accurate user-data disclosure, self-contained readable behavior, and no deceptive search/affiliate conduct."
@@ -95,13 +95,13 @@ sources:
 
   - id: CHROME-PRIV-001
     url: "https://developer.chrome.com/docs/webstore/program-policies/user-data-faq"
-    retrieved: 2026-08-28
-    version: "Current FAQ; page displays 2016-04-23"
+    retrieved: 2026-09-10
+    version: "Current live FAQ content; page footer displays 2016-04-23"
     classification: required-conservative-reading
-    summary: "Website content and browsing activity are user data; local-only processing still constitutes handling that should be disclosed."
+    summary: "Website content and browsing activity are user data; local-only processing still constitutes handling. The FAQ requires prominent in-product disclosure and a specific affirmative action before handling user data."
     confidence: high
-    impact: "Disclose transient local DOM inspection and zero retention/transmission, not simply no data."
-    conflicts: "Exact privacy-dashboard checkbox classification is ambiguous."
+    impact: "Disclose transient local DOM inspection and zero retention/transmission, and do not submit 0.1.2 until an approved in-product disclosure and consent design is implemented and verified."
+    conflicts: "The FAQ's in-product sequencing is more specific than the consolidated policy's prior-to-installation wording; authoritative clarification may still affect implementation details, but Store copy alone is expressly insufficient."
 
   - id: CHROME-DASH-001
     url: "https://developer.chrome.com/docs/webstore/cws-dashboard-privacy"
@@ -375,7 +375,7 @@ sources:
 
   - id: CHROME-AGREEMENT-001
     url: "https://developer.chrome.com/docs/webstore/program-policies/terms"
-    retrieved: 2026-08-28
+    retrieved: 2026-09-10
     version: "Agreement header updated 2021-05-04; page footer metadata conflicts"
     classification: required-at-publication
     summary: "Web Store publishing requires an eligible Google account, legal capacity and authority, agreement acceptance, accurate permission disclosure, rights in the product, privacy protection, and compliance with incorporated Google terms and Program Policies."
@@ -385,23 +385,23 @@ sources:
 
   - id: CHROME-LIMITED-USE-001
     url: "https://developer.chrome.com/docs/webstore/program-policies/limited-use"
-    retrieved: 2026-08-28
-    version: "Current official policy as retrieved"
+    retrieved: 2026-09-10
+    version: "Last updated 2022-11-01"
     classification: required-at-publication
-    summary: "User data must be limited to the prominently disclosed user-facing purpose and may not be transferred or used for unrelated profiling, advertising, lending, or data-broker purposes."
+    summary: "User data must be limited to the prominently disclosed user-facing purpose and may not be transferred or used for unrelated profiling, advertising, lending, or data-broker purposes; the extension website or privacy policy must contain an affirmative Limited Use statement."
     confidence: high
     impact: "Keep page/query/result processing local and purpose-bound and reconcile code, privacy policy, dashboard, and listing."
     conflicts: "Final dashboard classification and disclosure wording require current Store readback."
 
   - id: CHROME-DISCLOSURE-001
-    url: "https://developer.chrome.com/docs/webstore/program-policies/disclosure-requirements"
-    retrieved: 2026-08-28
-    version: "Current official policy as retrieved"
+    url: "https://developer.chrome.com/docs/webstore/program-policies/policies#disclosure_requirements"
+    retrieved: 2026-09-10
+    version: "Program Policies last updated 2025-05-22; disclosure section displayed in current live policy"
     classification: required-at-publication
-    summary: "Handling not closely related to a prominent feature requires prominent in-product disclosure and consent, while all practices must still be accurate and transparent."
+    summary: "The current policy requires prominent disclosure and affirmative informed consent for any user-data handling before installation; the official FAQ further requires disclosure and consent in the Product UI before handling."
     confidence: high
-    impact: "Describe local result-page processing before installation and re-evaluate whether first-run disclosure or consent is required for the final implementation."
-    conflicts: "Official pages are not perfectly clear on the exact in-product consent treatment of necessary local-only content-script processing; obtain current Store guidance or counsel before release."
+    impact: "Block 0.1.2 submission until a separately approved product flow obtains consent before the current automatic content script handles page data."
+    conflicts: "The consolidated policy says prior to installation while the FAQ says the action must occur within Product UI; Store copy or an installation page alone is expressly insufficient."
 
   - id: CHROME-LISTING-001
     url: "https://developer.chrome.com/docs/webstore/program-policies/listing-requirements"
@@ -435,7 +435,7 @@ sources:
 
   - id: GOOGLE-TOS-001
     url: "https://policies.google.com/terms?gl=FR&hl=en"
-    retrieved: 2026-08-28
+    retrieved: 2026-09-10
     version: "France/EEA version effective 2026-07-30"
     classification: required-contextual-review
     summary: "Google Terms prohibit disruption or protective-measure bypass, deceptive access or origin, rights violations, and automated access contrary to machine-readable instructions, while reserving Google and third-party intellectual-property rights."
@@ -455,7 +455,7 @@ sources:
 
   - id: GOOGLE-ROBOTS-001
     url: "https://www.google.com/robots.txt"
-    retrieved: 2026-08-28
+    retrieved: 2026-09-10
     version: "Live file; no published version or last-modified date"
     classification: material-platform-signal
     summary: "The machine-readable file contains a general disallow rule for /search, subject to listed exceptions."
@@ -475,7 +475,7 @@ sources:
 
   - id: GOOGLE-BRAND-001
     url: "https://about.google/brand-resource-center/guidance/"
-    retrieved: 2026-08-28
+    retrieved: 2026-09-10
     version: "Current official guidance as retrieved"
     classification: required-rights-guidance
     summary: "Google prohibits implying endorsement, incorporating its marks into a product name, or imitating its visual identity; limited accurate plain-text references are allowed subject to trademark rules."
@@ -485,7 +485,7 @@ sources:
 
   - id: EU-GDPR-001
     url: "https://eur-lex.europa.eu/eli/reg/2016/679/oj/eng"
-    retrieved: 2026-08-28
+    retrieved: 2026-09-10
     version: "Regulation (EU) 2016/679, Official Journal 2016-05-04"
     classification: law-potentially-applicable
     summary: "Personal-data processing and territorial scope depend on the data, controller/processor role, EU establishment, and offering to or monitoring people in the EU; transient local use can still be processing."
@@ -495,7 +495,7 @@ sources:
 
   - id: EU-EPRIVACY-001
     url: "https://www.edpb.europa.eu/system/files/documents/2024-10/edpb_guidelines_202302_technical_scope_art_53_eprivacydirective_v2_en_0.pdf"
-    retrieved: 2026-08-28
+    retrieved: 2026-09-10
     version: "EDPB Guidelines 2/2023 version 2.0, adopted 2024-10-07"
     classification: authoritative-guidance-potentially-applicable
     summary: "EDPB guidance says purely local use does not constitute gaining access while information does not leave the device, but storage can include RAM/cache and national application of Article 5(3) remains contextual."
@@ -632,3 +632,203 @@ sources:
     confidence: high
     impact: "Inventory hosting, analytics, logging, support, processors, sub-processors, remote access, and backups before choosing infrastructure for worldwide telemetry."
     conflicts: "EU hosting alone may not prevent transfer if a provider or sub-processor makes data accessible elsewhere."
+
+  - id: CHROME-REGISTER-001
+    url: "https://developer.chrome.com/docs/webstore/register"
+    retrieved: 2026-08-31
+    version: "Current official registration guidance as retrieved"
+    classification: required-at-publication
+    summary: "A human publisher needs an eligible developer account, a one-time registration fee, a verified email, agreement acceptance, and applicable account verification."
+    confidence: high
+    impact: "Keep registration, payment, credentials, verification, and agreement acceptance outside agent authority and require explicit human action."
+    conflicts: "The live dashboard and country-specific account requirements can change before submission."
+
+  - id: CHROME-IMAGES-001
+    url: "https://developer.chrome.com/docs/webstore/images/"
+    retrieved: 2026-09-10
+    version: "Current live content; page footer displays 2018-06-11"
+    classification: preparation-required
+    summary: "Store preparation requires a 128x128 PNG icon, at least one 1280x800 or 640x400 actual-experience screenshot, and a 440x280 small promotional tile; artwork must render well on light and dark backgrounds."
+    confidence: high
+    impact: "Package original manifest icons, prepare an original promo tile, and keep a fresh real screenshot as a human rights/privacy-reviewed blocker."
+    conflicts: "The page is old; verify exact asset fields in the live dashboard before submission."
+
+  - id: CHROME-BRANDING-001
+    url: "https://developer.chrome.com/docs/webstore/branding"
+    retrieved: 2026-08-31
+    version: "Current official branding guidance as retrieved"
+    classification: required-rights-guidance
+    summary: "Do not use Google trademarks in the extension name or logo without permission or imply endorsement; compatibility references must be accurate and subordinate."
+    confidence: high
+    impact: "Use independent project branding, descriptive compatibility text, and an explicit non-affiliation statement."
+    conflicts: "A live Google Search screenshot also needs Search-specific brand and third-party-content review."
+
+  - id: CHROME-LISTING-GUIDE-001
+    url: "https://developer.chrome.com/docs/webstore/best-listing"
+    retrieved: 2026-08-31
+    version: "Current official listing guidance as retrieved"
+    classification: preparation-required
+    summary: "Store titles, 132-character summaries, detailed descriptions, and images should explain the product clearly and accurately without keyword stuffing or unsupported claims."
+    confidence: high
+    impact: "Use evidence-calibrated copy that states layout, advertisement, native-key, and assistive-technology limitations."
+    conflicts: "Final live-dashboard fields and localization choices remain human-reviewed."
+
+  - id: CHROME-REVIEW-2026-001
+    url: "https://developer.chrome.com/blog/cws-review-updates-2026"
+    retrieved: 2026-08-31
+    version: "Published 2026-08-20"
+    classification: current-enforcement-update
+    summary: "Chrome announced pre-submission installation testing for draft uploads, a default two-item publisher limit, and discontinuation of the Featured badge program."
+    confidence: high
+    impact: "Expect automated draft checks, avoid planning around a Featured badge, and verify publisher slot availability before upload."
+    conflicts: "Operational behavior can continue to evolve and must be checked in the live dashboard."
+
+  - id: GOOGLE-SEARCH-BRAND-001
+    url: "https://about.google/brand-resource-center/products-and-services/search-guidelines/"
+    retrieved: 2026-09-10
+    version: "Current official Google Search screenshot guidance as retrieved"
+    classification: required-rights-guidance
+    summary: "Google Search screenshots must be positive or neutral, natural and unmodified, supplemental rather than endorsement-implying; negative, violent, illegal, or controversial search terms are disallowed. Promotional use requires relevant third-party approvals, and Google requests the exact Google trademark attribution beneath images featuring Search."
+    confidence: high
+    impact: "Block the political screenshot, require manageable third-party rights for any replacement, preserve genuine UI, and resolve exact attribution placement before public submission."
+    conflicts: "The guidance does not explain how to place the requested beneath-image attribution inside the Chrome Web Store screenshot carousel; authoritative clarification or an approved presentation is required."
+
+  - id: CHROME-DISCOVERY-001
+    url: "https://developer.chrome.com/docs/webstore/discovery"
+    retrieved: 2026-09-09
+    version: "Current official discovery guidance as retrieved"
+    classification: preparation-guidance
+    summary: "Chrome Web Store discovery considers listing metadata, usage signals, and product quality; accurate, useful listings are preferable to keyword manipulation."
+    confidence: high
+    impact: "Use a clear product name, outcome-led summary, accurate descriptions and genuine visuals; measure Store outcomes without keyword stuffing or unsupported claims."
+    conflicts: "Google does not disclose a complete ranking formula and discovery behavior can change."
+
+  - id: CHROME-MANIFEST-FORMAT-001
+    url: "https://developer.chrome.com/docs/extensions/reference/manifest"
+    retrieved: 2026-09-09
+    version: "Current official manifest reference as retrieved"
+    classification: implementation-required
+    summary: "The manifest name is limited to 75 characters and the description to 132 characters."
+    confidence: high
+    impact: "Keep the approved ArrowKey Search Navigator name and the 0.1.2 package summary within exact manifest limits."
+    conflicts: "The Store dashboard can impose additional presentation constraints."
+
+  - id: GOOGLE-SOFTWARE-STRUCTURED-DATA-001
+    url: "https://developers.google.com/search/docs/appearance/structured-data/software-app"
+    retrieved: 2026-09-09
+    version: "Current official Google Search Central guidance as retrieved"
+    classification: optional-discovery-guidance
+    summary: "SoftwareApplication structured data can describe software identity, platform, version, and offer information to search systems when it matches visible page content."
+    confidence: high
+    impact: "Add matching JSON-LD to the static landing page without adding executable third-party scripts or unsupported review/rating claims."
+    conflicts: "Structured data does not guarantee a rich result or ranking improvement."
+
+  - id: GITHUB-PAGES-AUTO-001
+    url: "https://docs.github.com/en/get-started/start-your-journey/deploying-your-website-automatically"
+    retrieved: 2026-09-09
+    version: "Current official GitHub Pages guidance as retrieved"
+    classification: optional-deployment-guidance
+    summary: "GitHub Actions can automatically deploy a static site to GitHub Pages after the repository and Pages source are configured."
+    confidence: high
+    impact: "Prepare a least-privilege Pages workflow locally; require the user's one-time repository connection and Pages activation before any deployment."
+    conflicts: "The final canonical URL depends on the actual repository owner/name and Pages configuration."
+
+  - id: CHROME-STORE-API-V2-001
+    url: "https://developer.chrome.com/docs/webstore/using-api"
+    retrieved: 2026-09-09
+    version: "Current Chrome Web Store API V2 guidance as retrieved"
+    classification: deferred-automation-guidance
+    summary: "The Chrome Web Store API can upload, publish, and inspect items programmatically using Google Cloud authorization."
+    confidence: high
+    impact: "Treat automated Store updates as a later credentialed workflow with explicit authority, secret handling, failure recovery, and human-publication controls."
+    conflicts: "The required credentials and publication authority are intentionally absent from the repository and current task."
+
+  - id: CHROME-STORE-SERVICE-ACCOUNT-001
+    url: "https://developer.chrome.com/docs/webstore/service-accounts"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store service-account guidance, last updated 2025-10-15 UTC"
+    classification: official-platform-authentication
+    summary: "Chrome Web Store API V2 supports a publisher-linked service account and documents short-lived gcloud impersonation with the chromewebstore OAuth scope."
+    confidence: high
+    impact: "Use one publisher-linked service account with short-lived impersonated tokens and no downloaded JSON key."
+    conflicts: "Linking the service account grants item-management authority, so external writes remain release-specific user approval gates."
+
+  - id: CHROME-STORE-UPLOAD-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/media/upload"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 upload reference, last updated 2025-11-04 UTC"
+    classification: official-platform-api
+    summary: "The media upload endpoint accepts a package for one publisher item and returns its item ID, extension version, and upload state."
+    confidence: high
+    impact: "Bind upload to the configured item and verify the returned version when available."
+    conflicts: "Asynchronous uploads require a later status check before submission."
+
+  - id: CHROME-STORE-UPLOAD-STATE-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/UploadState"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 UploadState reference, last updated 2025-10-15 UTC"
+    classification: official-platform-api
+    summary: "UploadState distinguishes SUCCEEDED, IN_PROGRESS, FAILED, and NOT_FOUND outcomes."
+    confidence: high
+    impact: "Submit only after the same upload response reports SUCCEEDED and the exact approved extension version; stop on every other state."
+    conflicts: "A later fetchStatus result can report asynchronous state but does not identify the unsubmitted draft's version or hash."
+
+  - id: CHROME-STORE-STATUS-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/publishers.items/fetchStatus"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 status reference, last updated 2025-11-04 UTC"
+    classification: official-platform-api
+    summary: "fetchStatus returns published and submitted revision states, recent upload state, warnings, takedown status, and a public key."
+    confidence: high
+    impact: "Expose only a sanitized status summary and stop submission on warnings, takedown, an active submission, or an uncertain recent upload."
+    conflicts: "The public key is unnecessary for release decisions and is deliberately omitted from command output."
+
+  - id: CHROME-STORE-PUBLISH-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/publishers.items/publish"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 publish reference, last updated 2026-06-02 UTC"
+    classification: official-platform-api
+    summary: "The publish method submits an item for review and supports automatic-after-approval or staged publication, review skipping, and warning handling."
+    confidence: high
+    impact: "Require the publication mode explicitly, keep skipReview false, and set blockOnWarnings true for every submission."
+    conflicts: "The API method is named publish even when it is submitting for review; user-facing language must distinguish submission from final Store approval."
+
+  - id: GOOGLE-SA-IMPERSONATION-001
+    url: "https://docs.cloud.google.com/docs/authentication/use-service-account-impersonation"
+    retrieved: 2026-09-10
+    version: "Official Google Cloud authentication guidance as retrieved"
+    classification: official-cloud-security
+    summary: "Service-account impersonation creates short-lived credentials and avoids the persistent security risk of a downloaded service-account key."
+    confidence: high
+    impact: "Use gcloud impersonation in memory, grant Token Creator only on the release service account, and keep all credentials outside the repository."
+    conflicts: "The caller still needs an authenticated Google identity and the IAM Service Account Credentials API."
+
+  - id: CNIL-TRANSPARENCY-001
+    url: "https://www.cnil.fr/fr/conformite-rgpd-information-des-personnes-et-transparence"
+    retrieved: 2026-09-10
+    version: "Official CNIL guidance, updated 2019-07-26"
+    classification: official-french-guidance
+    summary: "A controller's notice should identify the controller and contact, purposes and legal basis, recipients, retention, applicable rights, and the right to complain to the CNIL."
+    confidence: high
+    impact: "Before the next public update, add the publisher's chosen public controller identity, support-mailbox legal basis and retention criteria, recipients, applicable rights, and CNIL complaint information to the hosted policy."
+    conflicts: "The project lacks the publisher identity and legal-basis/retention choices needed to finalize these statements; the AI compliance role cannot supply legal advice or certify compliance."
+
+  - id: CWS-COMPETITOR-SEARCH-NAV-001
+    url: "https://chromewebstore.google.com/detail/google-search-keyboard-na/plbfbakblkbmlpejcihefjahocmdmmni"
+    retrieved: 2026-09-09
+    version: "Live Chrome Web Store listing as retrieved"
+    classification: secondary-market-evidence
+    summary: "A currently listed extension uses the closely overlapping name Google Search Keyboard Navigator."
+    confidence: high
+    impact: "Prefer a distinctive name that avoids Google branding and communicates arrow-key behavior."
+    conflicts: "Competitor listings and availability can change; no code or creative content was copied."
+
+  - id: CWS-COMPETITOR-SEARCH-NAV-002
+    url: "https://chromewebstore.google.com/detail/search-navigator-%E2%80%93-keyboa/fpinaaaiplppifhmkjdfkimodkkdnoha"
+    retrieved: 2026-09-09
+    version: "Live Chrome Web Store listing as retrieved"
+    classification: secondary-market-evidence
+    summary: "A currently listed keyboard-search extension uses Search Navigator in its product title."
+    confidence: high
+    impact: "Lead with ArrowKey to improve immediate differentiation while preserving Search Navigator as the descriptive category phrase."
+    conflicts: "Store names are not formal trademark-clearance evidence; qualified review may still be needed."

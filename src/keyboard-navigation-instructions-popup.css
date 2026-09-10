@@ -1,0 +1,258 @@
+:root {
+  color-scheme: light dark;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #ffffff;
+  color: #202124;
+  margin: 0;
+  min-width: 360px;
+}
+
+main {
+  padding: 22px;
+}
+
+header {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin: 0;
+}
+
+h2 {
+  font-size: 18px;
+  line-height: 1.35;
+  margin: 0 0 10px;
+}
+
+h1:focus,
+h2:focus {
+  outline: 3px solid #174ea6;
+  outline-offset: 3px;
+}
+
+p {
+  color: #5f6368;
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 3px 0 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.disclosure {
+  margin: 0 0 12px;
+}
+
+.error-message {
+  background: #fce8e6;
+  border: 2px solid #c5221f;
+  border-radius: 8px;
+  color: #a50e0e;
+  font-weight: 700;
+  margin: 0 0 12px;
+  padding: 9px 11px;
+}
+
+button {
+  background: #1a73e8;
+  border: 2px solid #1a73e8;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 6px;
+  min-height: 44px;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+button:hover {
+  background: #1558b0;
+  border-color: #1558b0;
+}
+
+button:focus-visible {
+  outline: 3px solid #174ea6;
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.secondary-button {
+  background: transparent;
+  border-color: #5f6368;
+  color: #3c4043;
+  margin-top: 14px;
+}
+
+.secondary-button:hover {
+  background: #e8f0fe;
+  border-color: #174ea6;
+  color: #174ea6;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 16px;
+  width: 100%;
+}
+
+th,
+td {
+  border-top: 1px solid #dadce0;
+  padding: 12px 0;
+  text-align: left;
+  transition: background-color 120ms ease;
+}
+
+th {
+  padding-left: 10px;
+  padding-right: 16px;
+  width: 132px;
+}
+
+td {
+  padding-right: 10px;
+}
+
+tr:hover th,
+tr:hover td {
+  background: #e8f0fe;
+}
+
+tr:hover th {
+  border-radius: 8px 0 0 8px;
+}
+
+tr:hover td {
+  border-radius: 0 8px 8px 0;
+}
+
+kbd {
+  background: #162a52;
+  border: 1px solid #5f9cff;
+  border-bottom: 3px solid #0b1530;
+  border-radius: 8px;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 18%);
+  color: #ffffff;
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  min-width: 48px;
+  padding: 6px 9px;
+  text-align: center;
+  transition: background-color 120ms ease, border-color 120ms ease, box-shadow 120ms ease, color 120ms ease;
+}
+
+.key-combination {
+  align-items: center;
+  display: inline-flex;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+tr:hover kbd,
+kbd:hover {
+  background: #1a73e8;
+  border-color: #8ab4f8;
+  border-bottom-color: #0d47a1;
+  box-shadow: 0 0 0 3px rgb(26 115 232 / 18%), 0 0 14px rgb(66 133 244 / 50%), inset 0 1px 0 rgb(255 255 255 / 30%);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #202124;
+    color: #f1f3f4;
+  }
+
+  h1:focus,
+  h2:focus {
+    outline-color: #8ab4f8;
+  }
+
+  p {
+    color: #bdc1c6;
+  }
+
+  .error-message {
+    background: #4d1715;
+    border-color: #f28b82;
+    color: #f28b82;
+  }
+
+  .secondary-button {
+    border-color: #9aa0a6;
+    color: #e8eaed;
+  }
+
+  .secondary-button:hover {
+    background: #253a63;
+    border-color: #8ab4f8;
+    color: #aecbfa;
+  }
+
+  th,
+  td {
+    border-color: #5f6368;
+  }
+
+  tr:hover th,
+  tr:hover td {
+    background: #253a63;
+  }
+}
+
+@media (forced-colors: active) {
+  kbd {
+    border: 1px solid ButtonText;
+  }
+
+  tr:hover th,
+  tr:hover td {
+    background: Highlight;
+    color: HighlightText;
+  }
+
+  tr:hover kbd {
+    background: ButtonFace;
+    color: ButtonText;
+  }
+
+  button,
+  .secondary-button,
+  h1:focus,
+  h2:focus {
+    background: ButtonFace;
+    border-color: ButtonText;
+    color: ButtonText;
+  }
+}
