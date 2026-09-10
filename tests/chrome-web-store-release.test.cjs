@@ -59,6 +59,7 @@ test("Release synchronously binds the exact upload before submission", () => {
 
 test("Release blocks uncertain preflight state before upload", () => {
   assert.match(script, /preReleaseStatus\.itemId -ne \$config\.itemId/);
+  assert.match(script, /submittedItemRevisionStatus\.state -ne "CANCELLED"/);
   assert.match(script, /preReleaseStatus\.lastAsyncUploadState -eq "IN_PROGRESS"/);
   const preflightIndex = script.indexOf('$preReleaseStatus.lastAsyncUploadState -eq "IN_PROGRESS"');
   const uploadIndex = script.indexOf("$upload = Invoke-RestMethod");

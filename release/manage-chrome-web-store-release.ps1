@@ -210,7 +210,10 @@ try {
   if ($preReleaseStatus.takenDown -or $preReleaseStatus.warned) {
     throw "The Store reports a policy warning or takedown. Review the dashboard before release."
   }
-  if ($preReleaseStatus.submittedItemRevisionStatus) {
+  if (
+    $preReleaseStatus.submittedItemRevisionStatus -and
+    $preReleaseStatus.submittedItemRevisionStatus.state -ne "CANCELLED"
+  ) {
     throw "The Store already has a submitted revision. Review its status before another release."
   }
   if ($preReleaseStatus.lastAsyncUploadState -eq "IN_PROGRESS") {
