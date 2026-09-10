@@ -1,7 +1,7 @@
 # Privacy Policy — ArrowKey Search Navigator
 
 Effective date: August 31, 2026
-Last updated: September 9, 2026 (product name only)
+Last updated: September 10, 2026
 
 ArrowKey Search Navigator (formerly Search Keyboard Navigator) is a Chrome extension published by an individual developer in France. It helps users move keyboard focus among recognized result-title links on supported `https://www.google.com/search` pages.
 
@@ -33,7 +33,7 @@ The extension creates no developer-controlled user-data store and uses no persis
 
 The extension does not sell user data. It does not transfer user data to third parties, use data for purposes unrelated to its single purpose, or use data to determine creditworthiness or for lending.
 
-Information handled from supported pages is used only to provide or improve the extension's single, user-facing keyboard-navigation purpose. It is not used for unrelated purposes or transferred to third parties. These practices are designed to meet the [Chrome Web Store User Data Policy's Limited Use requirements](https://developer.chrome.com/docs/webstore/program-policies/limited-use/); this statement is not a legal-compliance certification.
+Information handled from supported pages is used only to provide or improve the extension's single, user-facing keyboard-navigation purpose. It is not used for unrelated purposes or transferred to third parties. The extension's use of this information complies with the [Chrome Web Store User Data Policy, including the Limited Use requirements](https://developer.chrome.com/docs/webstore/program-policies/limited-use/). This affirmative statement addresses those data-use restrictions; it does not claim that every separate legal or Chrome Web Store requirement has been satisfied.
 
 ## Security
 

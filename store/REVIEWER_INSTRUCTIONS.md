@@ -1,7 +1,7 @@
 # Store reviewer instructions
 
-- Version: `0.1.1`
-- Release ZIP SHA-256: `fcabfa8a583a88e48e0272e2abed4d92a27db1fd2ddca41949611d170672ac5a`
+- Version: `0.1.2`
+- Release ZIP SHA-256: `09c0ed53f0ef49d21f69452aeb339e06da9d4b81b21c34a7a4b3e674329e0aea`
 - Supported site: desktop `https://www.google.com/search` only
 - Named Chrome API permissions: none
 
@@ -18,5 +18,7 @@
 9. Verify there is no extension-originated network activity, persistent storage, account, analytics, telemetry, remote code, or background service worker.
 
 Known limits: only compatible `www.google.com` desktop layouts are recognized; Google markup can change; screen-reader compatibility, forced-colors presentation, high zoom, and broad language/layout coverage are not established.
+
+Version 0.1.2 changes the product name and popup wording only. Packaged JavaScript, CSS, and icons are byte-identical to the public 0.1.1 package; the popup clarification does not add extension-owned keyboard handling.
 
 The publisher must compare this hash with the final uploaded file. If any allowlisted source or icon changes, rebuild, re-review, and replace the hash before upload.

@@ -11,7 +11,7 @@ const robots = fs.readFileSync(path.join(root, "website", "robots.txt"), "utf8")
 const sitemap = fs.readFileSync(path.join(root, "website", "sitemap.xml"), "utf8");
 const css = fs.readFileSync(path.join(root, "website", "styles.css"), "utf8");
 const canonical = "https://clementmst.github.io/search-keyboard-navigator/";
-const storeUrl = "https://chromewebstore.google.com/detail/search-keyboard-navigator/eifanigljpfnmmdfeefjdioelblkgmeja";
+const storeUrl = "https://chromewebstore.google.com/detail/arrowkey-search-navigator/eifanigljpfnmmdfeefjdioelbkgmeja";
 
 test("website exposes consistent discovery metadata", () => {
   assert.match(html, /<title>ArrowKey Search Navigator — Keyboard navigation for Google Search<\/title>/);
@@ -20,6 +20,7 @@ test("website exposes consistent discovery metadata", () => {
   assert.match(html, /"alternateName": "Search Keyboard Navigator"/);
   assert.match(html, /"softwareVersion": "0\.1\.2"/);
   assert.match(html, new RegExp(storeUrl));
+  assert.doesNotMatch(html, /eifanigljpfnmmdfeefjdioelblkgmeja/);
   assert.match(robots, new RegExp(`${canonical.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}sitemap\\.xml`));
   assert.match(sitemap, new RegExp(`<loc>${canonical}</loc>`));
 });

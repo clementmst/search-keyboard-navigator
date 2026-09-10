@@ -1,8 +1,10 @@
-# Chrome Web Store preparation evidence
+# Historical Chrome Web Store 0.1.1 preparation evidence
+
+This file preserves the finalized 0.1.1 evidence snapshot and is not the current 0.1.2 release record. See `SEO_GEO_EVIDENCE.md`, `store/RELEASE_CHECKLIST.md`, and `release/STORE_MATERIALS_SHA256.txt` for the current candidate.
 
 Date: 2026-09-08
 
-Status: version 0.1.0 is publicly available. Version 0.1.1 is a local, user-authorized update that adds only a static instruction popup. No account was accessed and the update has not been uploaded or submitted.
+Historical status as recorded on 2026-09-08: version 0.1.0 was publicly available and version 0.1.1 was a local, unsubmitted update. This is intentionally preserved history; current status is 0.1.1 public and 0.1.2 blocked locally, as recorded in `SEO_GEO_EVIDENCE.md`.
 
 ## Exact release candidate
 
@@ -30,7 +32,7 @@ Status: version 0.1.0 is publicly available. Version 0.1.1 is a local, user-auth
 
 - The user confirmed core live behavior and the revised indicator in one Chrome/Google layout. This is not stable/previous-stable, broad-layout, forced-colors, zoom, runtime-privacy, accessibility-tree, or assistive-technology evidence.
 - Three user-supplied actual-experience screenshot candidates are preserved at 1280x800 with source captures and exact crop/resizing provenance. The preferred humorous `67` capture resolves the political/controversial-query issue, but remains blocked pending Google attribution/brand treatment and a documented permission or other defensible rights basis for depicted Wikipedia and Dictionary.com material. The political candidate remains local-only. No screenshot is currently approved for submission.
-- The privacy policy is public at `https://sites.google.com/view/search-keyboard-navigator-pp` with an August 31, 2026 effective date, monitored public support/privacy email, explicit key-event filtering disclosure, support-communication handling, and a Chrome Web Store Limited Use statement.
+- Historical 0.1.1 evidence recorded a public privacy page at `https://sites.google.com/view/search-keyboard-navigator-pp` with an August 31, 2026 effective date and the then-current disclosures. This file does not verify that the live hosted page contains the later 0.1.2 name or September 10 Limited Use wording; that requires human readback and replacement if needed.
 - The live dashboard's exact data categories, Limited Use certification, trader declaration, and publisher slot/account requirements require authorized human readback.
 - Google Search screenshot/brand/content rights and the unresolved Google Terms/robots interpretation remain public-release blockers under project governance.
 - This update package is prepared for human testing and review, not yet approved for upload, and is not a legal-compliance certification.

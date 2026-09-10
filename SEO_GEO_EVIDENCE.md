@@ -33,3 +33,14 @@ No product behavior, content-script match, browser permission, runtime dependenc
 - The existing published screenshots show the core behavior. A genuine non-personal Chrome screenshot with the popup open is an optional later improvement and does not block 0.1.2; instructions are in `store/SCREENSHOT_CAPTURE_REQUEST.md`.
 - The public Google Sites privacy page still needs the user to replace the displayed product name with the updated policy text before submitting the renamed Store version.
 - GitHub repository connection and Pages activation are one-time user actions. Chrome Web Store upload/publication and any future API credential setup remain separately controlled.
+
+## September 10 release-readiness supplement
+
+- The public GitHub remote now exists. Commit `36df63977a46679475b1b3b7b68b2d81022b4dd4` was pushed to `codex/implement-private-test-adapter-from-cloud_handoff.md`; `main`, GitHub Pages, and the Chrome Web Store were not changed.
+- Keyless Chrome Web Store status/release tooling was added and independently reviewed. It uses short-lived service-account impersonation and retains exact artifact, warning, and approval gates. This preparation grants no upload or submission authority by itself.
+- The 0.1.2 ZIP remains `dist/arrowkey-search-navigator-0.1.2.zip`, SHA-256 `09c0ed53f0ef49d21f69452aeb339e06da9d4b81b21c34a7a4b3e674329e0aea`. Compared with the accepted 0.1.1 package, JavaScript, CSS, and icons are byte-identical; only manifest identity/copy and popup HTML copy changed.
+- The repository's Store install URL was corrected to item ID `eifanigljpfnmmdfeefjdioelbkgmeja`. The website remains undeployed.
+- The completed reconciliation run contains 75 passing Node assertions across 11 test files plus 3 passing direct PowerShell release checks. This supplement does not convert those results into browser, deployed-site, privacy-runtime, visual, or assistive-technology evidence.
+- Current official Chrome user-data guidance was re-read. Because the content script handles page address, page content, focus, and key-event metadata locally, a Product-UI disclosure and affirmative action must occur before that handling. The current automatically injected 0.1.2 package has no such consent flow and therefore must not be submitted.
+- The local privacy policy now contains Chrome's required affirmative Limited Use statement. Its Google Sites copy and the exact dashboard fields still require human readback after a replacement package is prepared.
+- No new screenshot upload is proposed. The political screenshot remains excluded; other Search screenshots remain blocked for new promotional use until third-party rights and Google attribution treatment are resolved. The human publisher must confirm which screenshots are currently attached to the live listing.

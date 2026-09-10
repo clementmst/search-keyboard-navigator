@@ -1,6 +1,6 @@
 schema_version: 1
 project: "ArrowKey Search Navigator (formerly Search Keyboard Navigator)"
-assessment_version: "2026-09-10-version-0.1.2-keyless-store-workflow"
+assessment_version: "2026-09-10-version-0.1.2-release-readiness-reconciliation"
 assessed: 2026-09-10
 status: "0.1.1-public-0.1.2-update-pending-exact-review"
 disclaimer: "Engineering governance only; not legal advice or legal-compliance certification."
@@ -25,19 +25,19 @@ entries:
   - id: CWS-POLICY
     area: "Chrome Web Store Program Policies"
     jurisdiction: "Chrome Web Store distribution"
-    source_ids: "CHROME-POLICY-001, CHROME-POLICY-2026-001, CHROME-MV3-001, CHROME-PRIV-001, CHROME-STORE-SERVICE-ACCOUNT-001, CHROME-STORE-UPLOAD-V2-001, CHROME-STORE-STATUS-V2-001, CHROME-STORE-PUBLISH-V2-001"
-    reviewed: 2026-08-31
+    source_ids: "CHROME-POLICY-001, CHROME-POLICY-2026-001, CHROME-MV3-001, CHROME-PRIV-001, CHROME-DISCLOSURE-001, CHROME-LIMITED-USE-001, CHROME-STORE-SERVICE-ACCOUNT-001, CHROME-STORE-UPLOAD-V2-001, CHROME-STORE-STATUS-V2-001, CHROME-STORE-PUBLISH-V2-001"
+    reviewed: 2026-09-10
     status: unresolved
     applicability: "Likely required if the extension is submitted or published through the Chrome Web Store."
     reasoning: "Single purpose, minimum permissions, listing accuracy, user-data disclosures, Limited Use, deceptive behavior, security, and remote-code requirements must match the exact release artifact."
-    evidence: "Version 0.1.1 was submitted and published by the user. The 0.1.2 tree remains narrow, local-only, dependency-free, and unsubmitted; revised listing, privacy-name migration, visual, website, and packaging drafts exist. A publisher-linked keyless service account performed a read-only status check on 2026-09-10; no 0.1.2 upload or submission occurred."
-    unresolved: "Exact 0.1.2 artifact/listing/dashboard reconciliation, genuine popup screenshot, and current policy readback before the next update submission."
+    evidence: "Version 0.1.1 was submitted and published by the user. The 0.1.2 tree remains narrow, local-only, dependency-free, and unsubmitted. The exact package, listing, privacy fields, and reviewer instructions are reconciled locally, and a publisher-linked keyless service account performed one read-only status check on 2026-09-10. Current policy and FAQ text requires an in-Product disclosure and affirmative action before locally handling page data; the present static content script does not provide that flow."
+    unresolved: "Approve, implement, and verify an in-product disclosure/consent flow before page-data handling; then complete human dashboard/hosted-policy/screenshot readback against the rebuilt exact artifact."
 
   - id: CWS-AGREEMENT
     area: "Chrome Web Store Developer Agreement"
     jurisdiction: "Chrome Web Store publisher relationship"
     source_ids: "CHROME-AGREEMENT-001"
-    reviewed: 2026-08-31
+    reviewed: 2026-09-10
     status: unresolved
     applicability: "Applies if an authorized publisher uses the Chrome Web Store developer service."
     reasoning: "The agreement incorporates other Google terms and identifies contracting arrangements by residence; only an authorized human/entity may accept it."
@@ -48,7 +48,7 @@ entries:
     area: "Google Terms and Search interaction"
     jurisdiction: "Use of Google Search and related services"
     source_ids: "GOOGLE-TOS-001, GOOGLE-SERVICE-TERMS-001, GOOGLE-ROBOTS-001, GOOGLE-SPAM-001"
-    reviewed: 2026-08-31
+    reviewed: 2026-09-10
     status: legal-review-required
     applicability: "Google Terms apply to service use; Search-specific applicability to an extension that changes local focus behavior must be confirmed for the intended release."
     reasoning: "Current behavior is human-initiated local DOM focus, not a query bot, but the 2026 Terms prohibit automated access contrary to machine-readable instructions and the live robots.txt disallows /search; official text does not expressly resolve this extension pattern."
@@ -59,7 +59,7 @@ entries:
     area: "Google branding, intellectual property, and third-party result content"
     jurisdiction: "Trademark, copyright, and listing assets"
     source_ids: "GOOGLE-BRAND-001, GOOGLE-SEARCH-BRAND-001, GOOGLE-TOS-001"
-    reviewed: 2026-08-31
+    reviewed: 2026-09-10
     status: unresolved
     applicability: "Original project icons and an abstract promotional tile exist. The listing uses plain-text compatibility references, and three user-supplied Google Search screenshot candidates are preserved locally."
     reasoning: "The name and original assets contain no Google mark or interface imitation. Compatibility wording is non-affiliative, but a live screenshot can contain Google interface and third-party result content requiring separate rights and privacy review."
@@ -69,13 +69,13 @@ entries:
   - id: EU-GDPR
     area: "GDPR"
     jurisdiction: "EU/EEA personal-data processing"
-    source_ids: "EU-GDPR-001"
+    source_ids: "EU-GDPR-001, CNIL-TRANSPARENCY-001"
     reviewed: 2026-08-28
     status: legal-review-required
     applicability: "Potentially applicable if the developer is established in the EU/EEA or offers services to or monitors people there."
-    reasoning: "Search queries, URLs, and page content may contain personal data; local on-device processing does not by itself answer controller, purpose, legal basis, transparency, or territorial-scope questions."
-    evidence: "Current design processes URL/result DOM ephemerally and has no retention, transmission, analytics, account, or backend."
-    unresolved: "French establishment and worldwide release make EU analysis material; controller/processor roles for local processing and any future telemetry, purposes, legal basis, notice duties, and France/CNIL application remain unresolved."
+    reasoning: "The runtime keeps Search-page processing on-device and does not expose it to the developer. Voluntary support email separately sends personal data to the France-based individual publisher and Gmail, creating concrete controller-transparency questions."
+    evidence: "Current runtime has no retention, transmission, analytics, account, or backend. Support email may contain the sender address, message, timestamps, and attachments and may be forwarded between Gmail inboxes controlled by the same developer."
+    unresolved: "Provide the public controller identity/contact and confirm the support purpose/legal basis, retention period or criteria, recipients/processors, applicable rights, and CNIL complaint wording; future telemetry remains a separate full privacy gate."
 
   - id: EU-EPRIVACY
     area: "ePrivacy and terminal-equipment rules"
@@ -118,7 +118,7 @@ entries:
     status: unresolved
     applicability: "Likely applies to promotional representations in markets where the extension is offered, including free offerings where relevant."
     reasoning: "Objective and implied accessibility, privacy, compatibility, performance, and exclusion claims must be truthful, evidence-based, and appropriately qualified."
-    evidence: "Version 0.1.1 is public. The 0.1.2 listing and website qualify platform, layout, native-shortcut, privacy, and screen-reader claims; 66 dependency-free checks passed, while new browser, deployed-site, and assistive-technology validation is not claimed."
+    evidence: "Version 0.1.1 is public. The 0.1.2 listing and website qualify platform, layout, native-shortcut, privacy, and screen-reader claims; 75 Node assertions across 11 files and 3 direct PowerShell release checks pass, while new browser, deployed-site, and assistive-technology validation is not claimed."
     unresolved: "Reconcile the exact 0.1.2 listing, hosted privacy-name update, dashboard fields, screenshots, and deployed website before their external release."
 
   - id: OSS-LICENSES
@@ -140,8 +140,8 @@ entries:
     status: unresolved
     applicability: "Applies only if the user connects this repository and activates the proposed GitHub Pages workflow."
     reasoning: "The static site itself is dependency-free, but the inactive workflow references actions/checkout@v6, actions/configure-pages@v5, actions/upload-pages-artifact@v4, and actions/deploy-pages@v4 using mutable official major-version tags from GitHub's current example."
-    evidence: "`.github/workflows/deploy-pages.yml` grants only contents:read, pages:write, and id-token:write, deploys only `website/`, and has not run because no Git remote or Pages environment is configured."
-    unresolved: "Before activation, recheck action versions and licenses, choose immutable reviewed commit pins or explicitly accept the official-tag update model, verify the canonical repository URL, and review the first deployment result."
+    evidence: "`.github/workflows/deploy-pages.yml` grants only contents:read, pages:write, and id-token:write and deploys only `website/`. The public GitHub remote now exists, but the website workflow has not been activated or deployed from `main`."
+    unresolved: "Before activation, recheck action versions and licenses, choose immutable reviewed commit pins or explicitly accept the official-tag update model, verify the canonical URL, enable Pages, and review the first deployment result."
 
   - id: THIRD-PARTY-ASSETS-DATA
     area: "Third-party assets, fixtures, screenshots, and data rights"

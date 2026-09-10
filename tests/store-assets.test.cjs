@@ -133,3 +133,32 @@ test("Store screenshots preserve their sources and use the required dimensions",
     [1280, 800]
   );
 });
+
+test("0.1.2 reviewer and dashboard records identify the exact gated artifact", () => {
+  const reviewer = fs.readFileSync(path.join(root, "store", "REVIEWER_INSTRUCTIONS.md"), "utf8");
+  const dashboard = fs.readFileSync(path.join(root, "store", "DASHBOARD_RECONCILIATION.md"), "utf8");
+  const expectedHash = "09c0ed53f0ef49d21f69452aeb339e06da9d4b81b21c34a7a4b3e674329e0aea";
+  for (const document of [reviewer, dashboard]) {
+    assert.match(document, /0\.1\.2/);
+    assert.equal(document.includes(expectedHash), true);
+  }
+  assert.match(dashboard, /must not be submitted/i);
+  assert.match(dashboard, /in-product disclosure/i);
+  assert.match(dashboard, /affirmative-consent design/i);
+});
+
+test("privacy-policy copies are identical and contain the affirmative Limited Use statement", () => {
+  const localPolicy = fs.readFileSync(path.join(root, "PRIVACY_POLICY.md"), "utf8");
+  const hostedCopy = fs.readFileSync(
+    path.join(
+      root,
+      "chrome-web-store-submission-materials",
+      "privacy-policy-public-page",
+      "search-keyboard-navigator-privacy-policy-for-google-sites.md"
+    ),
+    "utf8"
+  );
+  assert.equal(hostedCopy, localPolicy);
+  assert.match(localPolicy, /use of this information complies with the \[Chrome Web Store User Data Policy, including the Limited Use requirements\]/);
+  assert.doesNotMatch(localPolicy, /designed to meet/);
+});

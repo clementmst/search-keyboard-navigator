@@ -41,4 +41,4 @@ The optional public website under `website/` is also static and dependency-free.
 
 ## Current release status
 
-The user confirmed live navigation, the visual indicator, the instruction popup, and native Ctrl+Enter behavior in one Windows Chrome setup. Those observations do not establish universal layout, platform, link-disposition, or assistive-technology compatibility. Version 0.1.2 is a local draft until its exact ZIP, listing, hosted privacy-name update, and dashboard changes are reviewed and submitted by the user; a new popup screenshot is optional.
+The user confirmed live navigation, the visual indicator, the instruction popup, and native Ctrl+Enter behavior in one Windows Chrome setup. Those observations do not establish universal layout, platform, link-disposition, or assistive-technology compatibility. Version 0.1.2 is a local draft until its exact ZIP, listing, hosted privacy-name update, and dashboard changes are reviewed and submitted through a separately approved release workflow; a new popup screenshot is optional.
