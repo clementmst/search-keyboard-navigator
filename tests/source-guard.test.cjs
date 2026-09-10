@@ -19,14 +19,15 @@ const stylesheetSource = fs.readFileSync(path.join(sourceDirectory, "navigator.c
 const fixtureScript = fs.readFileSync(path.join(__dirname, "..", "fixtures", "pointer-guard.js"), "utf8");
 const reviewedScripts = `${sources}\n${fixtureScript}`;
 
-test("static tripwire finds no listed network, persistence, messaging, remote-code, sink, or observer APIs", () => {
+test("static tripwire finds no network, page storage, messaging, remote code, unsafe sink, or observer APIs", () => {
   const forbiddenPatterns = [
     /\bfetch\s*\(/,
     /\bXMLHttpRequest\b/,
     /\bWebSocket\b/,
     /\bEventSource\b/,
     /\bsendBeacon\b/,
-    /\bchrome\s*\.\s*(runtime|storage)\b/,
+    /\bchrome\s*\.\s*(tabs|scripting|cookies|webRequest)\b/,
+    /\bchrome\s*\.\s*runtime\s*\.\s*(?:sendMessage|connect|onMessage)\b/,
     /\blocalStorage\b/,
     /\bsessionStorage\b/,
     /\bindexedDB\b/,
@@ -46,6 +47,20 @@ test("static tripwire finds no listed network, persistence, messaging, remote-co
     assert.equal(pattern.test(reviewedScripts), false, `listed tripwire matched: ${pattern}`);
   }
   assert.doesNotMatch(stylesheetSource, /@import\b|url\s*\(/i);
+});
+
+test("storage use is limited to the versioned local consent choice", () => {
+  const consentSource = fs.readFileSync(path.join(sourceDirectory, "consent-policy.js"), "utf8");
+  const popupSource = fs.readFileSync(
+    path.join(sourceDirectory, "keyboard-navigation-instructions-popup.js"),
+    "utf8"
+  );
+  assert.match(consentSource, /arrowKeyLocalPageProcessingConsentV1/);
+  assert.match(navigatorSource, /chrome\?\.storage\?\.local/);
+  assert.match(popupSource, /chrome\?\.storage\?\.local/);
+  assert.match(popupSource, /extensionStorage\.set/);
+  assert.doesNotMatch(reviewedScripts, /chrome\.storage\.(?:sync|managed|session)/);
+  assert.doesNotMatch(reviewedScripts, /acceptedAt|timestamp|Date\s*\(/);
 });
 
 test("controller does not handle Enter or stop event propagation", () => {

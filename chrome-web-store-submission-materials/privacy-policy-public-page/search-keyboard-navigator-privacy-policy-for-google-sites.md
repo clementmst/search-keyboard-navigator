@@ -21,13 +21,15 @@ Through the extension itself, the developer does not receive, retain, transmit, 
 
 The current release has no analytics, telemetry, accounts, advertising, backend, remote configuration, remote code, or extension-originated network requests.
 
+Before this page handling begins, the popup explains the local processing and asks the user to select **Enable keyboard navigation**. Until that action is taken, the content controller does not inspect the page address, page content, focus, or key events.
+
 ## Permissions and purpose
 
-The extension runs only on `https://www.google.com/search*`. This site access is used solely to provide keyboard navigation among recognized result-title links and to display the focus indicator. The extension has no named Chrome API permissions and does not request access to other websites.
+The extension runs only on `https://www.google.com/search*`. This site access is used solely to provide keyboard navigation among recognized result-title links and to display the focus indicator after consent. Its only named Chrome API permission is `storage`, used for the local consent setting. It does not request access to other websites.
 
 ## Storage and retention
 
-The extension creates no developer-controlled user-data store and uses no persistent extension storage. Temporary in-page navigation state ends when the page or extension session ends.
+The extension stores one versioned Boolean setting in Chrome on the user's device: whether keyboard navigation is enabled. It does not store searches, URLs, page content, result destinations, focus history, or keyboard activity. Temporary in-page navigation state ends when the page or extension session ends. The local choice remains until the user changes it or removes the extension.
 
 ## Sharing and sale
 
@@ -47,7 +49,7 @@ Support information is used only to answer requests, investigate reported proble
 
 ## User choices
 
-Users can stop all extension processing by disabling or uninstalling ArrowKey Search Navigator in Chrome. The extension does not create a developer-held record of on-page activity. Users who voluntarily contact support may request access, correction, or deletion of their support communication by emailing the support address, subject to applicable legal or security needs.
+Users can stop page processing by selecting **Disable keyboard navigation** in the popup, disabling the extension, or uninstalling it. Disabling from the popup removes the active page listeners and clears the extension's selection. The extension does not create a developer-held record of on-page activity. Users who voluntarily contact support may request access, correction, or deletion of their support communication by emailing the support address, subject to applicable legal or security needs.
 
 ## Future changes
 

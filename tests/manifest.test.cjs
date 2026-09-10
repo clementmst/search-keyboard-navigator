@@ -9,11 +9,11 @@ const manifest = JSON.parse(
   fs.readFileSync(path.join(__dirname, "..", "manifest.json"), "utf8")
 );
 
-test("manifest has one static site-access grant and no named API permissions", () => {
+test("manifest has one static site-access grant and only local consent storage permission", () => {
   assert.equal(manifest.manifest_version, 3);
   assert.deepEqual(
     Object.keys(manifest).sort(),
-    ["action", "content_scripts", "description", "icons", "manifest_version", "name", "version"].sort()
+    ["action", "content_scripts", "description", "icons", "manifest_version", "name", "permissions", "version"].sort()
   );
   assert.equal(manifest.name, "ArrowKey Search Navigator");
   assert.equal(manifest.version, "0.1.2");
@@ -31,8 +31,8 @@ test("manifest has one static site-access grant and no named API permissions", (
   for (const iconPath of Object.values(manifest.icons)) {
     assert.equal(fs.existsSync(path.join(__dirname, "..", iconPath)), true);
   }
+  assert.deepEqual(manifest.permissions, ["storage"]);
   for (const forbidden of [
-    "permissions",
     "host_permissions",
     "optional_permissions",
     "optional_host_permissions",
@@ -57,6 +57,7 @@ test("manifest has one static site-access grant and no named API permissions", (
   assert.equal(manifest.content_scripts.length, 1);
   assert.deepEqual(manifest.content_scripts[0].matches, ["https://www.google.com/search*"]);
   assert.deepEqual(manifest.content_scripts[0].js, [
+    "src/consent-policy.js",
     "src/policy.js",
     "src/result-policy.js",
     "src/google-adapter-policy.js",

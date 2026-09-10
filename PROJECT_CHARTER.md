@@ -12,7 +12,7 @@ On Google Search result pages, a user can move predictably among visible result-
 
 ## Current release-improvement scope
 
-Version 0.1.1 is public after a user-run Chrome Web Store submission. The current bounded pass prepares version 0.1.2 with clearer naming, accurate Store copy, a genuine-screenshot request, and a static tracker-free discovery website. It does not broaden product behavior, permissions, domains, data flows, dependencies, or accessibility claims, and it does not authorize external deployment or Store publication by an agent.
+Version 0.1.1 is public after a user-run Chrome Web Store submission. The current bounded pass prepares version 0.1.2 with clearer naming, accurate Store copy, a static tracker-free discovery website, and an explicit first-use consent gate. The only permission change is Chrome `storage`, used for one versioned local consent Boolean. It does not broaden the supported domain, collect or transmit page data, add dependencies, or expand accessibility claims, and it does not authorize external deployment or Store publication by an agent.
 
 ## MVP scope boundary
 
@@ -22,7 +22,7 @@ Version 0.1.1 is public after a user-run Chrome Web Store submission. The curren
 - Visible native links containing one `h3` result title, in DOM order.
 - Arrow navigation, native link activation, escape/clear behavior, visible focus, and dynamic-result handling.
 - Deterministic fixtures, real-Chrome automation, accessibility checks, security review, and documented live manual testing.
-- Manifest V3, packaged logic, one narrow content-script site-access grant, and zero named Chrome API permissions or separate host permissions unless later evidence proves otherwise.
+- Manifest V3, packaged logic, one narrow content-script site-access grant, the `storage` permission only for one versioned local consent Boolean, and no separate host permissions.
 
 ### Out of scope
 
@@ -38,7 +38,7 @@ The MVP is successful when:
 1. All required gates in [QUALITY_GATES.md](QUALITY_GATES.md) pass on the exact reviewed artifact.
 2. The acceptance matrix passes on versioned fixtures and documented live layouts.
 3. Native `Tab`, `Shift+Tab`, and link `Enter` behavior is not intercepted or reimplemented.
-4. No extension network request or persistent write occurs during representative sessions.
+4. No extension network request or persistent page/activity-data write occurs during representative sessions; the only approved persistent write is the local consent Boolean.
 5. Arrow movement selects visible result-title links and never selects non-title controls in the test corpus.
 6. The focus indicator remains perceivable under zoom, forced colors, and representative themes.
 7. The Store permission, privacy, single-purpose, and remote-code declarations match the code and artifact.

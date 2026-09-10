@@ -18,7 +18,7 @@ The unmodified-arrow design can conflict with native page scrolling and screen-r
 
 ## Architecture
 
-The extension uses packaged content scripts plus a static, script-free instruction popup. It has no service worker, named Chrome API permissions, separate `host_permissions`, storage, extension network activity, or runtime dependencies. The static content-script match is still persistent site access and must not be described as permission-free.
+The extension uses packaged content scripts plus an instruction-and-consent popup. Its only named Chrome API permission is `storage`, used for one versioned local consent choice. It has no service worker, separate `host_permissions`, page-data storage, extension network activity, or runtime dependencies. The static content-script match is persistent site access, but page handling stays inactive until the user enables it.
 
 The optional public website under `website/` is also static and dependency-free. It includes structured data, social metadata, a sitemap, and no scripts other than inert JSON-LD metadata. It has no analytics, forms, cookies, or tracking.
 

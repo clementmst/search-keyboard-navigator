@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $releaseScript = Join-Path $projectRoot "release/manage-chrome-web-store-release.ps1"
 $packagePath = Join-Path $projectRoot "dist/arrowkey-search-navigator-0.1.2.zip"
-$approvedHash = "09C0ED53F0EF49D21F69452AEB339E06DA9D4B81B21C34A7A4B3E674329E0AEA"
+$approvedHash = "627CF4D2CA24ADC6DBA6FC75AAD1E825E0BD23213D6BAD58C0E5AAEDBABA163E"
 $passed = 0
 
 function Assert-Equal {

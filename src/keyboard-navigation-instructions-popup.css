@@ -27,11 +27,103 @@ h1 {
   margin: 0;
 }
 
+h2 {
+  font-size: 18px;
+  line-height: 1.35;
+  margin: 0 0 10px;
+}
+
+h2:focus,
+.enabled-state:focus {
+  outline: 3px solid #174ea6;
+  outline-offset: 3px;
+}
+
 p {
   color: #5f6368;
   font-size: 14px;
   line-height: 1.4;
   margin: 3px 0 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.disclosure {
+  margin: 0 0 12px;
+}
+
+.error-message {
+  background: #fce8e6;
+  border: 2px solid #c5221f;
+  border-radius: 8px;
+  color: #a50e0e;
+  font-weight: 700;
+  margin: 0 0 12px;
+  padding: 9px 11px;
+}
+
+.enabled-state {
+  background: #e6f4ea;
+  border-radius: 8px;
+  color: #137333;
+  font-weight: 700;
+  margin: 0 0 10px;
+  padding: 9px 11px;
+}
+
+button {
+  background: #1a73e8;
+  border: 2px solid #1a73e8;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 6px;
+  min-height: 44px;
+  padding: 10px 14px;
+  width: 100%;
+}
+
+button:hover {
+  background: #1558b0;
+  border-color: #1558b0;
+}
+
+button:focus-visible {
+  outline: 3px solid #174ea6;
+  outline-offset: 3px;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.secondary-button {
+  background: transparent;
+  border-color: #5f6368;
+  color: #3c4043;
+  margin-top: 14px;
+}
+
+.secondary-button:hover {
+  background: #e8f0fe;
+  border-color: #174ea6;
+  color: #174ea6;
 }
 
 table {
@@ -115,6 +207,28 @@ kbd:hover {
     color: #bdc1c6;
   }
 
+  .enabled-state {
+    background: #183b2b;
+    color: #81c995;
+  }
+
+  .error-message {
+    background: #4d1715;
+    border-color: #f28b82;
+    color: #f28b82;
+  }
+
+  .secondary-button {
+    border-color: #9aa0a6;
+    color: #e8eaed;
+  }
+
+  .secondary-button:hover {
+    background: #253a63;
+    border-color: #8ab4f8;
+    color: #aecbfa;
+  }
+
   th,
   td {
     border-color: #5f6368;
@@ -139,6 +253,15 @@ kbd:hover {
 
   tr:hover kbd {
     background: ButtonFace;
+    color: ButtonText;
+  }
+
+  button,
+  .secondary-button,
+  h2:focus,
+  .enabled-state:focus {
+    background: ButtonFace;
+    border-color: ButtonText;
     color: ButtonText;
   }
 }

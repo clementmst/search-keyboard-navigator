@@ -8,7 +8,11 @@ Enable keyboard movement among recognized result-title links on supported deskto
 
 ## Site-access justification
 
-The packaged content script needs access to `https://www.google.com/search*` so it can recognize visible result-title links, move native focus among them when the user presses an unmodified arrow key, and display the focus indicator. Runtime code requires the exact `https://www.google.com` origin and `/search` pathname. No other origin or named Chrome API permission is requested.
+The packaged content script needs access to `https://www.google.com/search*` so, after consent, it can recognize visible result-title links, move native focus among them when the user presses an unmodified arrow key, and display the focus indicator. Runtime code requires the exact `https://www.google.com` origin and `/search` pathname. The only named Chrome API permission is `storage`, used solely for one versioned local consent Boolean. No other origin or named Chrome API permission is requested.
+
+## Storage permission justification
+
+The `storage` permission is used only to remember one versioned Boolean indicating whether the user enabled keyboard navigation. It does not store page addresses, searches, result links, page content, focus history, or key activity. The setting is not synced or transmitted by the extension.
 
 ## Remote code
 
@@ -17,6 +21,8 @@ No. All executable JavaScript and CSS is included in the submitted package. The 
 ## User-data handling
 
 Prominent disclosure: the extension temporarily processes the current Google Search page address, visible result-title link text and destinations, surrounding page structure, visibility and focus state, and key-event metadata on the user's device to provide navigation. On supported pages, a document-level listener briefly examines each keydown event only long enough to determine whether it is an eligible Arrow Up, Arrow Down, or active-session Escape command and whether the current context is safe. Other keys are immediately ignored. Typed text and keystrokes are not recorded, retained, or transmitted. Through the extension itself, the developer does not receive, retain, transmit, sell, or share the page or key-event information.
+
+The popup presents this disclosure before page handling begins and requires the specific **Enable keyboard navigation** action. Until the versioned local consent value is exactly true, the content controller does not inspect the URL, DOM, focus, or key events. The popup also provides **Disable keyboard navigation**, which removes active page listeners and clears extension selection. Only that consent choice is stored; no page or activity data is stored.
 
 Conservative classification for final dashboard review:
 

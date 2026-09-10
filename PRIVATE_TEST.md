@@ -9,7 +9,7 @@ Status: ready only after the final frozen-tree reviews reported by the operator.
 - Use one non-personal query, such as `keyboard navigation accessibility`.
 - The adapter does not restrict language, result type, or surrounding Google layout modules.
 - Do not use personal, medical, financial, work, or account-specific searches.
-- The extension asks for access to `www.google.com` search pages because its packaged content script runs there. It has no named Chrome API permissions, backend, telemetry, storage, or extension network activity.
+- The extension asks for access to `www.google.com` search pages because its packaged content script is available there. Its only named Chrome API permission is `storage`, used for one local consent choice. It has no backend, telemetry, page-data storage, or extension network activity.
 
 ## Install the unpacked extension
 
@@ -20,21 +20,23 @@ Status: ready only after the final frozen-tree reviews reported by the operator.
 
    `C:\Users\68810\Documents\Codex\search-keyboard-navigator`
 
-5. Confirm that **Search Keyboard Navigator** appears. If Chrome reports any permission beyond access to `www.google.com`, stop and report it.
+5. Confirm that **ArrowKey Search Navigator** appears. Expected access is `www.google.com` plus local storage for the consent setting. Stop if Chrome reports any other permission.
 
 ## Run the live test
 
-1. Open `https://www.google.com`, keep your preferred interface language, and submit the non-personal query from the search box.
-2. While the search box still has the cursor, press `ArrowDown` and `ArrowUp`. They must keep their normal search-box behavior; the extension must not move focus to a result.
-3. First test keyboard entry: press `Tab` once to leave the search field for any ordinary page control, then press `ArrowDown`. The first visible result-title link should receive focus.
-4. Separately, click any blank part of the page and press `ArrowDown`. It should produce the same first-result behavior.
-5. The first visible result-title link inside the Google results area receives real keyboard focus and a clear blue outline. The page may scroll just enough to show it.
-6. Press `ArrowDown` once more, then `ArrowUp` once. Focus should move by one visible result title each time. Translation links, menus, and other non-title controls must not receive focus.
-7. Hold an arrow briefly. The active session must not race through many results.
-8. Press `Tab`. Chrome must continue its normal tab order from the focused result. The extension does not intercept Tab.
-9. Return to a focused ordinary result, press `Enter`, and observe native browser navigation. Use Back to return. The extension does not handle or guarantee Enter disposition.
-10. Start arrow navigation again and press `Escape`. The blue outline must clear. Focus restoration is best-effort and must never create a trap.
-11. At the first or last reachable eligible result, another outward arrow must not wrap. Native page scrolling may occur.
+1. Before enabling the extension, open `https://www.google.com`, submit the non-personal query, and press `ArrowDown` from ordinary page focus. The extension must remain inactive.
+2. Click the extension icon. Read the disclosure, choose **Enable keyboard navigation**, close the popup, and reopen it once to confirm that the enabled choice persisted.
+3. While the search box has the cursor, press `ArrowDown` and `ArrowUp`. They must keep their normal search-box behavior; the extension must not move focus to a result.
+4. First test keyboard entry: press `Tab` once to leave the search field for any ordinary page control, then press `ArrowDown`. The first visible result-title link should receive focus.
+5. Separately, click any blank part of the page and press `ArrowDown`. It should produce the same first-result behavior.
+6. The first visible result-title link inside the Google results area receives real keyboard focus and a clear blue outline. The page may scroll just enough to show it.
+7. Press `ArrowDown` once more, then `ArrowUp` once. Focus should move by one visible result title each time. Translation links, menus, and other non-title controls must not receive focus.
+8. Hold an arrow briefly. The active session must not race through many results.
+9. Press `Tab`. Chrome must continue its normal tab order from the focused result. The extension does not intercept Tab.
+10. Return to a focused ordinary result, press `Enter`, and observe native browser navigation. Use Back to return. The extension does not handle or guarantee Enter disposition.
+11. Start arrow navigation again and press `Escape`. The blue outline must clear. Focus restoration is best-effort and must never create a trap.
+12. At the first or last reachable eligible result, another outward arrow must not wrap. Native page scrolling may occur.
+13. Use the popup to select **Disable keyboard navigation**. The outline must clear, arrows must become native immediately, and reopening the popup must show the disabled state.
 
 ## Stop immediately if
 

@@ -1,10 +1,10 @@
 # Store release checklist
 
-Status: version 0.1.1 is public; version 0.1.2 rename and discovery-update preparation is in progress. Upload and submission of 0.1.2 remain release-specific approval gates and are currently blocked by the missing in-product disclosure/consent flow.
+Status: version 0.1.1 is public; version 0.1.2 now includes the authorized local consent gate and is undergoing package review. Upload and submission remain separate release-specific approval gates.
 
 ## Prepared locally
 
-- [x] MV3 manifest name, description, icons, exact Google Search content-script scope, and no named API permissions
+- [x] MV3 manifest name, description, icons, exact Google Search content-script scope, and only the approved `storage` permission for one local consent Boolean
 - [x] Original 16/32/48/128 icons, 440x280 small promotional tile, and 1400x560 marquee promotional tile
 - [x] Listing, single-purpose, privacy-practices, reviewer, screenshot, provenance, and rollback drafts
 - [x] Privacy-policy draft with effective date, monitored public support/privacy email, and affirmative Limited Use statement; publication readiness remains gated by consent handling and hosted-page verification
@@ -16,7 +16,7 @@ Status: version 0.1.1 is public; version 0.1.2 rename and discovery-update prepa
 - [x] Publisher account, contact verification, and initial dashboard submission completed by the user
 - [x] Exact version 0.1.2 package/listing/privacy readback sheet prepared in `store/DASHBOARD_RECONCILIATION.md`
 - [ ] Human dashboard readback and hosted privacy-policy verification
-- [ ] In-product user-data disclosure and affirmative consent, approved and completed before any page data is handled
+- [x] In-product user-data disclosure and affirmative consent, approved and implemented before page handling; browser verification remains pending
 - [ ] Current-stable Chrome smoke check on the exact replacement package, including 200% zoom and a quick forced-colors check
 - [ ] Non-blocking quality debt: previous-stable Chrome, broader zoom/forced-colors, accessibility-tree, and assistive-technology evidence
 - [ ] Screenshot dashboard identity and third-party-rights/Google-attribution treatment; no new screenshot upload is proposed for 0.1.2
@@ -28,7 +28,7 @@ Only the user may register or interactively access the publisher dashboard, enab
 
 The guarded command is `release/manage-chrome-web-store-release.ps1`; its operating notes are in `release/CHROME_WEB_STORE_AUTOMATION.md`. Its default `Status` action uses the read-only OAuth scope and omits the Store public key from output. `Validate` checks the exact artifact without authentication or an external write. `Release` requires an explicit confirmation switch, version, SHA-256, and publication mode; it uploads and submits in one bounded operation only if Google synchronously confirms the same version. Submission always uses `skipReview: false` and `blockOnWarnings: true`, and stops on Store warnings or uncertainty.
 
-Before any upload, independently compare the exact ZIP, hash, manifest, listing, privacy policy, dashboard answers, screenshots, rights/provenance, and test evidence. Record the live policy versions and all residual risks. The currently prepared 0.1.2 ZIP must not be submitted: Chrome's current user-data guidance requires a Product-UI disclosure and affirmative action before local page data is handled, and the present content script starts automatically.
+Before any upload, independently compare the exact ZIP, hash, manifest, listing, privacy policy, dashboard answers, screenshots, rights/provenance, and test evidence. Record the live policy versions and all residual risks. Version 0.1.2 now gates page handling on the versioned local consent Boolean, but it must not be uploaded until independent static review and the required human checks are complete.
 
 ## Rollback
 

@@ -24,7 +24,7 @@ Exit: dependency-free G1-G4 static subset passes, five independent read-only rev
 
 ## Stage 2 — Hardened MVP
 
-Add adversarial fixtures, a validated pinned Chrome for Testing automation lane, mutation/performance controls, URL/DOM hardening, privacy assertions, branded-Chrome/manual AT evidence, and independent security/code/accessibility review. Keep zero runtime dependencies and zero named Chrome API permissions or separate host permissions unless separately approved; continue to disclose the static content-script site access.
+Add adversarial fixtures, a validated pinned Chrome for Testing automation lane, mutation/performance controls, URL/DOM hardening, privacy assertions, branded-Chrome/manual AT evidence, and independent security/code/accessibility review. Keep zero runtime dependencies and no named Chrome API permission beyond the approved `storage` permission for one local consent Boolean; retain no separate host permissions unless separately approved and continue to disclose the static content-script site access.
 
 Exit: G2-G6 pass and no high/critical risk lacks an effective control.
 
@@ -36,7 +36,7 @@ Exit: G7-G8 pass with independent review.
 
 ## Stage 4 — Store preparation only (current; authorized)
 
-Prepare accurate listing copy, icons/screenshots, reviewer instructions, permission rationale, privacy policy, dashboard-answer draft, ownership/2SV plan, artifact hash, and rollback notes. Do not upload or submit.
+Prepare accurate listing copy, icons/screenshots, reviewer instructions, permission rationale, first-use consent, privacy policy, dashboard-answer draft, ownership/2SV plan, artifact hash, and rollback notes. Do not upload or submit without the exact separate approval.
 
 Exit: G9 passes and unresolved dashboard/privacy interpretation questions are documented.
 

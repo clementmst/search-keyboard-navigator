@@ -1,6 +1,51 @@
 (function initializeNavigator() {
   "use strict";
 
+  const consentPolicy = globalThis.ArrowKeyConsentPolicy;
+  const extensionStorage = globalThis.chrome?.storage?.local;
+  const storageEvents = globalThis.chrome?.storage?.onChanged;
+  let stopActiveNavigator = null;
+  let settingChangedSinceInitialRead = false;
+
+  if (!consentPolicy || !extensionStorage || !storageEvents) {
+    return;
+  }
+
+  function setNavigatorEnabled(enabled) {
+    if (enabled && !stopActiveNavigator) {
+      stopActiveNavigator = startNavigator();
+      return;
+    }
+
+    if (!enabled && stopActiveNavigator) {
+      stopActiveNavigator();
+      stopActiveNavigator = null;
+    }
+  }
+
+  storageEvents.addListener((changes, areaName) => {
+    if (areaName !== "local" || !changes[consentPolicy.storageKey]) {
+      return;
+    }
+
+    settingChangedSinceInitialRead = true;
+    setNavigatorEnabled(
+      consentPolicy.isGranted(changes[consentPolicy.storageKey].newValue)
+    );
+  });
+
+  extensionStorage.get(consentPolicy.storageKey, (storedValues) => {
+    if (globalThis.chrome.runtime.lastError || settingChangedSinceInitialRead) {
+      return;
+    }
+
+    setNavigatorEnabled(
+      consentPolicy.isGranted(storedValues[consentPolicy.storageKey])
+    );
+  });
+
+  function startNavigator() {
+
   const policy = globalThis.SearchKeyboardNavigatorPolicy;
   const resultPolicy = globalThis.SearchKeyboardNavigatorResultPolicy;
   const googleAdapterPolicy =
@@ -503,4 +548,11 @@
     passive: false
   });
   document.addEventListener("focusin", onFocusIn);
+
+  return function stopNavigator() {
+    document.removeEventListener("keydown", onKeyDown, { capture: true });
+    document.removeEventListener("focusin", onFocusIn);
+    clearSession();
+  };
+  }
 })();

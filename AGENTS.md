@@ -26,11 +26,12 @@ For a complex change, the orchestrator selects three to five relevant roles from
 
 Hard guardrails:
 
-- No accounts, backend, storage, extension network activity, analytics, telemetry, advertising, affiliate links, data retention/transmission, or remote executable code.
+- No accounts, backend, extension network activity, analytics, telemetry, advertising, affiliate links, page-data retention/transmission, or remote executable code. The only approved persistent storage is one versioned local boolean recording the user's consent choice.
 - No broadened named API permission, separate host permission, content-script domain, or other authority without user approval. The approved static match itself is site access and must not be described as permission-free.
 - No result URL/content/order rewriting or implication of Google endorsement.
 - Treat local URL/DOM inspection as user-data handling that requires accurate disclosure.
 - Native Tab/Shift+Tab and every Enter/modifier variant are not intercepted or synthesized.
+- Page URL, DOM, focus, and key-event handling must remain completely inactive until the locally stored consent value is exactly `true`; revocation must remove listeners and clear extension selection.
 
 The Stage 1A interaction hypotheses remain authorized only for falsification, and Stage 1B may test them on one narrow live-page adapter:
 

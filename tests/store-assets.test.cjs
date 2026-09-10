@@ -50,13 +50,15 @@ test("Store promotional image and release allowlist have the expected boundary",
     "assets/icons/icon32.png",
     "assets/icons/icon48.png",
     "assets/icons/icon128.png",
+    "src/consent-policy.js",
     "src/policy.js",
     "src/result-policy.js",
     "src/google-adapter-policy.js",
     "src/navigator.js",
     "src/navigator.css",
     "src/keyboard-navigation-instructions-popup.html",
-    "src/keyboard-navigation-instructions-popup.css"
+    "src/keyboard-navigation-instructions-popup.css",
+    "src/keyboard-navigation-instructions-popup.js"
   ]);
 });
 
@@ -79,7 +81,7 @@ test("marketing and website images use their declared exact dimensions", () => {
   );
 });
 
-test("instruction popup is static, concise, and keyboard-readable", () => {
+test("instruction popup contains concise consent and keyboard-readable controls", () => {
   const html = fs.readFileSync(
     path.join(root, "src", "keyboard-navigation-instructions-popup.html"),
     "utf8"
@@ -91,7 +93,11 @@ test("instruction popup is static, concise, and keyboard-readable", () => {
   assert.match(html, /<kbd>Ctrl<\/kbd>[\s\S]*?<kbd>Enter<\/kbd>/);
   assert.match(html, /New tab where supported/);
   assert.match(html, /<kbd>Esc<\/kbd>/);
-  assert.doesNotMatch(html, /<script[\s>]/i);
+  assert.match(html, /Enable keyboard navigation/);
+  assert.match(html, /does not record typed text or send your searches/);
+  assert.match(html, /Disable keyboard navigation/);
+  assert.match(html, /<script src="consent-policy\.js"><\/script>/);
+  assert.match(html, /<script src="keyboard-navigation-instructions-popup\.js"><\/script>/);
   assert.doesNotMatch(html, /https?:\/\//i);
 });
 
@@ -137,14 +143,15 @@ test("Store screenshots preserve their sources and use the required dimensions",
 test("0.1.2 reviewer and dashboard records identify the exact gated artifact", () => {
   const reviewer = fs.readFileSync(path.join(root, "store", "REVIEWER_INSTRUCTIONS.md"), "utf8");
   const dashboard = fs.readFileSync(path.join(root, "store", "DASHBOARD_RECONCILIATION.md"), "utf8");
-  const expectedHash = "09c0ed53f0ef49d21f69452aeb339e06da9d4b81b21c34a7a4b3e674329e0aea";
+  const expectedHash = "627cf4d2ca24adc6dba6fc75aad1e825e0bd23213d6bad58c0e5aaedbaba163e";
   for (const document of [reviewer, dashboard]) {
     assert.match(document, /0\.1\.2/);
     assert.equal(document.includes(expectedHash), true);
   }
-  assert.match(dashboard, /must not be submitted/i);
+  assert.match(dashboard, /do not upload or submit/i);
   assert.match(dashboard, /in-product disclosure/i);
-  assert.match(dashboard, /affirmative-consent design/i);
+  assert.match(dashboard, /authorized the minimal in-product disclosure and consent design/i);
+  assert.match(dashboard, /storage.*local consent Boolean/i);
 });
 
 test("privacy-policy copies are identical and contain the affirmative Limited Use statement", () => {

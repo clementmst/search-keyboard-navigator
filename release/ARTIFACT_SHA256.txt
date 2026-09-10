@@ -1,1 +1,1 @@
-09c0ed53f0ef49d21f69452aeb339e06da9d4b81b21c34a7a4b3e674329e0aea  dist/arrowkey-search-navigator-0.1.2.zip
+627cf4d2ca24adc6dba6fc75aad1e825e0bd23213d6bad58c0e5aaedbaba163e  dist/arrowkey-search-navigator-0.1.2.zip

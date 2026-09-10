@@ -84,13 +84,13 @@ The selected anchor receives real native DOM focus. Because Google's inline titl
 
 - Process the current supported page URL and result DOM locally and ephemerally only for eligibility and focus control.
 - Do not retain, transmit, log, analyze, monetize, sell, or share queries, URLs, result text, interactions, or identifiers.
-- No fetch/XHR/WebSocket/beacon, storage, cookies, analytics, telemetry, backend, accounts, messaging, remote configuration, or remote executable code.
+- No fetch/XHR/WebSocket/beacon, page-data storage, cookies, analytics, telemetry, backend, accounts, messaging, remote configuration, or remote executable code. Persist only one versioned local boolean for the user's consent choice.
 - No `eval`, `new Function`, string timers, dynamic remote import, unsafe HTML sinks, implicit globals, or named `window`/`document` property access.
 - Keep state in extension-owned lexical variables/collections, never in page-controlled attributes.
 
 ## Proposed MV3 architecture
 
-1. `manifest.json`: MV3, narrow static content-script prefix, top frame, isolated world, `document_idle`, no named API permissions, separate `host_permissions`, optional permissions, background context, action, or web-accessible resource. The content-script match still grants persistent site access and may produce a warning.
+1. `manifest.json`: MV3, narrow static content-script prefix, top frame, isolated world, `document_idle`, only the approved `storage` API permission, and no separate `host_permissions`, optional permissions, background context, or web-accessible resource. The content-script match still grants persistent site access and may produce a warning.
 2. Key policy: pure guards for modifiers, composition, prior cancellation, editing/widget contexts, boundaries, and repeat.
 3. Result policy: the minimal positive `#search a[href] h3` title-link rule plus genuine-link usability and URL validation.
 4. DOM adapter: enumeration, visibility/connection checks, focus styling, and minimal scrolling.
@@ -111,7 +111,7 @@ Unmodified arrows are native scroll keys and screen readers may reserve them for
 - Complete editing/widget/modifier/composition/default-prevented guards.
 - The adapter avoids layout-specific exclusions; missing genuine title-link markup yields zero candidates, and dynamic replacement never transfers focus.
 - Perceivable focus at required zoom/theme/forced-color conditions.
-- Zero persistent data, extension network activity, runtime dependencies, and unnecessary permissions.
+- Zero persistent page/user activity data, extension network activity, runtime dependencies, and unnecessary permissions; only the consent boolean persists locally.
 - Deterministic fixture, real-Chrome, accessibility, performance, security, artifact, and live manual gates pass.
 
 See [ACCEPTANCE_TEST_MATRIX.md](ACCEPTANCE_TEST_MATRIX.md) for executable coverage.

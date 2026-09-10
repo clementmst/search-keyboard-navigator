@@ -1,6 +1,6 @@
 # Cloud handoff
 
-This is a local handoff record. It does not make the project cloud-hosted and cannot continue work while the computer is off by itself. No repository push, external account, deployment, publication, or secret transfer is authorized or performed.
+This is a local handoff record. It does not make the project cloud-hosted and cannot continue work while the computer is off by itself. The reviewed working branch exists on the public GitHub repository; no merge to `main`, website deployment, Store publication, or secret transfer is authorized by this file.
 
 ## Current objective
 
@@ -10,13 +10,13 @@ Obtain one meaningful private Chrome observation of the bounded Stage 1B adapter
 
 - Stage 1A governance and static baseline preserved by local commit `5b26eb7`.
 - Stage 1B remains MV3 and `https://www.google.com/search*` only, with exact runtime origin/path/default-web guards.
-- No named Chrome API permission, separate host permission, dependency, service worker, storage, backend, telemetry, account, monetization, or publication work.
+- The only named Chrome API permission is `storage`, authorized on 2026-09-10 solely for one versioned local consent Boolean. There is no separate host permission, dependency, service worker, page-data storage, backend, telemetry, account, monetization, or publication work.
 - Dependency-free policy, manifest, fixture, selector, source-tripwire, syntax, configuration, link, integrity, and permission-boundary checks are recorded in `STAGE1B_EVIDENCE.md`.
 - Final independent review results and the exact Stage 1B snapshot commit are reported by the operator; this document must not be read as a substitute for that report.
 
 ## Exact next task
 
-Follow `PRIVATE_TEST.md` in a fresh unsigned Chrome profile, record the small pass/fail set, and return it to the operator. If no movement occurs, provide only the minimum sanitized observation listed there. Do not broaden selectors from guesswork.
+Follow `PRIVATE_TEST.md` in a fresh unsigned Chrome profile. Verify the pre-consent inactive state, enable action, persisted choice, navigation behavior, and immediate disable/revocation behavior; return the small pass/fail set to the operator. If no movement occurs, provide only the minimum sanitized observation listed there. Do not broaden selectors from guesswork.
 
 ## Required setup and local checks
 

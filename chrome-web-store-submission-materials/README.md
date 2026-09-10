@@ -6,7 +6,7 @@ This folder contains clearly named, human-facing copies of assets used while com
 
 Folder: `privacy-policy-public-page`
 
-- `search-keyboard-navigator-privacy-policy-for-google-sites.md` — copy this publication-ready policy into a public Google Sites page, publish it, and place the resulting public URL in the Store dashboard.
+- `search-keyboard-navigator-privacy-policy-for-google-sites.md` — draft policy copy for the public Google Sites page; reconcile it with the exact package and current Store fields before publishing the update.
 
 ## Store icon — 128 x 128
 

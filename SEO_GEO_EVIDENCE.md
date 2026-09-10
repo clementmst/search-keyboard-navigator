@@ -2,7 +2,7 @@
 
 Date: 2026-09-09
 
-Status: local release candidate prepared; external website deployment, Store upload, submission, and publication have not been performed in this pass.
+Status: historical September 9 snapshot, superseded by the consent-correction supplement below. External website deployment, Store upload, submission, and publication had not been performed.
 
 ## Authorized changes
 
@@ -14,7 +14,7 @@ Status: local release candidate prepared; external website deployment, Store upl
 
 No product behavior, content-script match, browser permission, runtime dependency, data collection, backend, telemetry, monetization, or account feature changed.
 
-## Validation
+## Initial validation snapshot (historical; superseded below)
 
 - Dependency-free Node policy and artifact tests: **66 passed, 0 failed**, run by direct file invocation because this Windows sandbox denied the test runner's child-process spawning with `EPERM`.
 - Manifest JSON parsed and exact name/version/description/permission boundary passed.
@@ -34,7 +34,7 @@ No product behavior, content-script match, browser permission, runtime dependenc
 - The public Google Sites privacy page still needs the user to replace the displayed product name with the updated policy text before submitting the renamed Store version.
 - GitHub repository connection and Pages activation are one-time user actions. Chrome Web Store upload/publication and any future API credential setup remain separately controlled.
 
-## September 10 release-readiness supplement
+## September 10 pre-consent reconciliation snapshot (historical; superseded below)
 
 - The public GitHub remote now exists. Commit `36df63977a46679475b1b3b7b68b2d81022b4dd4` was pushed to `codex/implement-private-test-adapter-from-cloud_handoff.md`; `main`, GitHub Pages, and the Chrome Web Store were not changed.
 - Keyless Chrome Web Store status/release tooling was added and independently reviewed. It uses short-lived service-account impersonation and retains exact artifact, warning, and approval gates. This preparation grants no upload or submission authority by itself.
@@ -44,3 +44,11 @@ No product behavior, content-script match, browser permission, runtime dependenc
 - Current official Chrome user-data guidance was re-read. Because the content script handles page address, page content, focus, and key-event metadata locally, a Product-UI disclosure and affirmative action must occur before that handling. The current automatically injected 0.1.2 package has no such consent flow and therefore must not be submitted.
 - The local privacy policy now contains Chrome's required affirmative Limited Use statement. Its Google Sites copy and the exact dashboard fields still require human readback after a replacement package is prepared.
 - No new screenshot upload is proposed. The political screenshot remains excluded; other Search screenshots remain blocked for new promotional use until third-party rights and Google attribution treatment are resolved. The human publisher must confirm which screenshots are currently attached to the live listing.
+
+## September 10 consent-correction supplement
+
+- The user approved one accessible first-use popup disclosure and Chrome's `storage` permission solely for a versioned local consent Boolean.
+- Before consent, the content controller does not inspect the page URL, DOM, focus state, or key events. **Enable keyboard navigation** is the required affirmative action. **Disable keyboard navigation** removes the page listeners and clears extension selection.
+- No search, URL, result content, focus history, keyboard activity, identifier, timestamp, analytics, telemetry, or backend data is stored or transmitted.
+- The consent-corrected package contains 14 allowlisted files. Its exact SHA-256 is `627cf4d2ca24adc6dba6fc75aad1e825e0bd23213d6bad58c0e5aaedbaba163e`.
+- The final consent-corrected tree passes 84 Node assertions across 12 files plus 3 direct PowerShell release checks. Independent review is recorded after the tree is frozen. This supplement does not claim Chrome, visual, deployed-site, runtime-privacy, or assistive-technology validation; the user performs the next Chrome step.

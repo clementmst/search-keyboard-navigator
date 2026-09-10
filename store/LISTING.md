@@ -26,7 +26,7 @@ ArrowKey Search Navigator gives you a clear keyboard position and keeps Chrome's
 
 The selected title receives a clear outline and a small right-pointing marker. The extension stays inactive while you type in the search box or interact with controls that use arrow keys. Tab, Shift+Tab, Enter, and new-tab shortcuts remain handled by Chrome and the page; link disposition can vary by browser setup.
 
-Privacy comes first. The extension works locally on your device. It has no accounts, analytics, telemetry, advertising, backend, remote configuration, or remote code. It does not persistently store or transmit your searches, browsing activity, page content, or keyboard activity.
+Privacy comes first. Before navigation begins, the popup explains the local page processing and asks you to enable it. Your choice is stored locally in Chrome and can be disabled from the popup. The extension has no accounts, analytics, telemetry, advertising, backend, remote configuration, or remote code. It does not store or transmit your searches, browsing activity, page content, or keyboard activity.
 
 Current scope and limitations:
 

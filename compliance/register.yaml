@@ -1,13 +1,13 @@
 schema_version: 1
 project: "ArrowKey Search Navigator (formerly Search Keyboard Navigator)"
-assessment_version: "2026-09-10-version-0.1.2-release-readiness-reconciliation"
+assessment_version: "2026-09-10-version-0.1.2-local-consent-gate"
 assessed: 2026-09-10
 status: "0.1.1-public-0.1.2-update-pending-exact-review"
 disclaimer: "Engineering governance only; not legal advice or legal-compliance certification."
 user_facts_recorded: 2026-08-28
 user_supplied_facts:
   publisher: "Individual publishing personally; resident and legally established in France; states authority to accept agreements."
-  distribution: "Version 0.1.1 is publicly listed in the Chrome Web Store; version 0.1.2 is a local rename and discovery-update draft."
+  distribution: "Version 0.1.1 is publicly listed in the Chrome Web Store; version 0.1.2 is a local consent-corrected rename and discovery-update candidate awaiting human validation."
   markets: "Worldwide public availability intended immediately after readiness/compliance review."
   audience: "General public; not specifically directed at children under 16."
   v1_data: "Optional privacy-minimized first-party analytics selected as a deferred future direction; current Stage 1B private-test build remains local-only/backend-free because no collection design or authorization exists."
@@ -30,8 +30,8 @@ entries:
     status: unresolved
     applicability: "Likely required if the extension is submitted or published through the Chrome Web Store."
     reasoning: "Single purpose, minimum permissions, listing accuracy, user-data disclosures, Limited Use, deceptive behavior, security, and remote-code requirements must match the exact release artifact."
-    evidence: "Version 0.1.1 was submitted and published by the user. The 0.1.2 tree remains narrow, local-only, dependency-free, and unsubmitted. The exact package, listing, privacy fields, and reviewer instructions are reconciled locally, and a publisher-linked keyless service account performed one read-only status check on 2026-09-10. Current policy and FAQ text requires an in-Product disclosure and affirmative action before locally handling page data; the present static content script does not provide that flow."
-    unresolved: "Approve, implement, and verify an in-product disclosure/consent flow before page-data handling; then complete human dashboard/hosted-policy/screenshot readback against the rebuilt exact artifact."
+    evidence: "Version 0.1.1 was submitted and published by the user. Version 0.1.2 is narrow, local-only, dependency-free, and unsubmitted. Its popup now presents the page-data disclosure and requires an explicit Enable action; the content controller stays inert until the exact versioned local consent Boolean is true and removes its listeners on Disable. The only named API permission is storage for that Boolean."
+    unresolved: "Complete independent frozen-tree review, then human Chrome consent/revocation testing and dashboard/hosted-policy/screenshot readback against the exact rebuilt artifact."
 
   - id: CWS-AGREEMENT
     area: "Chrome Web Store Developer Agreement"
@@ -84,8 +84,8 @@ entries:
     reviewed: 2026-08-28
     status: legal-review-required
     applicability: "EDPB guidance indicates purely local use is not gaining access while information stays on-device, but installation/state and Member State implementation remain contextual."
-    reasoning: "No cookie, persistent storage, tracking, or transmission exists; extension installation and essential transient memory may still require a necessity/exemption assessment."
-    evidence: "Current source has no persistent storage, cookie access, telemetry, or extension network activity."
+    reasoning: "No cookie, tracking, page-data storage, or transmission exists. One versioned local Boolean persists the user's enable/disable choice; extension installation, that preference, and essential transient memory may still require a necessity/exemption assessment."
+    evidence: "Current source has no cookie or page-data storage, telemetry, or extension network activity. It persists only one versioned local consent Boolean."
     unresolved: "Markets, Member State law, installation/request model, scope of terminal-equipment access, and necessity/consent analysis."
 
   - id: EU-PROVIDER-GPSR
@@ -118,7 +118,7 @@ entries:
     status: unresolved
     applicability: "Likely applies to promotional representations in markets where the extension is offered, including free offerings where relevant."
     reasoning: "Objective and implied accessibility, privacy, compatibility, performance, and exclusion claims must be truthful, evidence-based, and appropriately qualified."
-    evidence: "Version 0.1.1 is public. The 0.1.2 listing and website qualify platform, layout, native-shortcut, privacy, and screen-reader claims; 75 Node assertions across 11 files and 3 direct PowerShell release checks pass, while new browser, deployed-site, and assistive-technology validation is not claimed."
+    evidence: "Version 0.1.1 is public. The consent-corrected 0.1.2 listing and website qualify platform, layout, native-shortcut, privacy, and screen-reader claims; 84 Node assertions across 12 files and 3 direct PowerShell release checks pass, while new browser, deployed-site, and assistive-technology validation is not claimed."
     unresolved: "Reconcile the exact 0.1.2 listing, hosted privacy-name update, dashboard fields, screenshots, and deployed website before their external release."
 
   - id: OSS-LICENSES
