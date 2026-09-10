@@ -1,7 +1,7 @@
 schema_version: 1
 project: "ArrowKey Search Navigator (formerly Search Keyboard Navigator)"
-assessment_version: "2026-09-09-version-0.1.2-discovery-update"
-assessed: 2026-09-09
+assessment_version: "2026-09-10-version-0.1.2-keyless-store-workflow"
+assessed: 2026-09-10
 status: "0.1.1-public-0.1.2-update-pending-exact-review"
 disclaimer: "Engineering governance only; not legal advice or legal-compliance certification."
 user_facts_recorded: 2026-08-28
@@ -25,12 +25,12 @@ entries:
   - id: CWS-POLICY
     area: "Chrome Web Store Program Policies"
     jurisdiction: "Chrome Web Store distribution"
-    source_ids: "CHROME-POLICY-001, CHROME-POLICY-2026-001, CHROME-MV3-001, CHROME-PRIV-001"
+    source_ids: "CHROME-POLICY-001, CHROME-POLICY-2026-001, CHROME-MV3-001, CHROME-PRIV-001, CHROME-STORE-SERVICE-ACCOUNT-001, CHROME-STORE-UPLOAD-V2-001, CHROME-STORE-STATUS-V2-001, CHROME-STORE-PUBLISH-V2-001"
     reviewed: 2026-08-31
     status: unresolved
     applicability: "Likely required if the extension is submitted or published through the Chrome Web Store."
     reasoning: "Single purpose, minimum permissions, listing accuracy, user-data disclosures, Limited Use, deceptive behavior, security, and remote-code requirements must match the exact release artifact."
-    evidence: "Version 0.1.1 was submitted and published by the user. The 0.1.2 tree remains narrow, local-only, dependency-free, and unsubmitted; revised listing, privacy-name migration, visual, website, and packaging drafts exist."
+    evidence: "Version 0.1.1 was submitted and published by the user. The 0.1.2 tree remains narrow, local-only, dependency-free, and unsubmitted; revised listing, privacy-name migration, visual, website, and packaging drafts exist. A publisher-linked keyless service account performed a read-only status check on 2026-09-10; no 0.1.2 upload or submission occurred."
     unresolved: "Exact 0.1.2 artifact/listing/dashboard reconciliation, genuine popup screenshot, and current policy readback before the next update submission."
 
   - id: CWS-AGREEMENT
@@ -41,7 +41,7 @@ entries:
     status: unresolved
     applicability: "Applies if an authorized publisher uses the Chrome Web Store developer service."
     reasoning: "The agreement incorporates other Google terms and identifies contracting arrangements by residence; only an authorized human/entity may accept it."
-    evidence: "User identifies as an individual publisher resident/established in France, states authority to accept, and reports completing the account/agreement/submission steps for public version 0.1.1. No agent accessed the account or accepted terms."
+    evidence: "User identifies as an individual publisher resident/established in France, states authority to accept, and reports completing the account/agreement/submission steps for public version 0.1.1. No agent has interactive dashboard access or accepted terms; a publisher-linked service account now has bounded API item-management authority and was used for one read-only status check."
     unresolved: "Recheck the current agreement and dashboard requirements before any future submission where terms or publisher facts changed."
 
   - id: GOOGLE-TERMS

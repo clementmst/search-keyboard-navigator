@@ -1,6 +1,6 @@
 # Store release checklist
 
-Status: version 0.1.1 is public; version 0.1.2 rename and discovery-update preparation is in progress. Upload, submission, and publication of 0.1.2 remain human actions.
+Status: version 0.1.1 is public; version 0.1.2 rename and discovery-update preparation is in progress. Upload and submission of 0.1.2 remain release-specific approval gates, and have not been authorized.
 
 ## Prepared locally
 
@@ -18,9 +18,11 @@ Status: version 0.1.1 is public; version 0.1.2 rename and discovery-update prepa
 - [ ] Stable and previous-stable Chrome, zoom, forced-colors, accessibility-tree, and assistive-technology evidence
 - [ ] Final compliance/legal-risk resolution for worldwide release
 
-## Human account and external actions
+## Account, approval, and external actions
 
-Only the user may register or access the publisher account, enable/verify 2-Step Verification, pay the registration fee, accept the current Developer Agreement, enter legal/payment/tax details, upload the ZIP/assets, certify dashboard statements, submit, publish, halt, or unpublish.
+Only the user may register or interactively access the publisher dashboard, enable/verify 2-Step Verification, pay the registration fee, accept agreements, enter legal/payment/tax details, or certify dashboard statements. The user must explicitly approve each exact ZIP version and SHA-256 and choose `DEFAULT_PUBLISH` or `STAGED_PUBLISH` before an agent releases it. After that bounded approval, the agent may upload the exact package and immediately submit it through the configured keyless service account; it may never create or store a service-account key. Halting, unpublishing, or changing a live rollout remains a separate user decision.
+
+The guarded command is `release/manage-chrome-web-store-release.ps1`; its operating notes are in `release/CHROME_WEB_STORE_AUTOMATION.md`. Its default `Status` action uses the read-only OAuth scope and omits the Store public key from output. `Validate` checks the exact artifact without authentication or an external write. `Release` requires an explicit confirmation switch, version, SHA-256, and publication mode; it uploads and submits in one bounded operation only if Google synchronously confirms the same version. Submission always uses `skipReview: false` and `blockOnWarnings: true`, and stops on Store warnings or uncertainty.
 
 Before any upload, independently compare the exact ZIP, hash, manifest, listing, privacy policy, dashboard answers, screenshots, rights/provenance, and test evidence. Record the live policy versions and all residual risks.
 

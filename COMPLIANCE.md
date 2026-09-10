@@ -58,7 +58,7 @@ These are conservative project controls, not legal conclusions:
 
 ### Not currently active in the current 0.1.2 source tree
 
-- Chrome Web Store account, agreement, and initial publication steps were completed by the user for version 0.1.1. No agent has account access, and the current 0.1.2 update has not been uploaded or submitted; exact artifact and listing review still apply before that human action.
+- Chrome Web Store account, agreement, and initial publication steps were completed by the user for version 0.1.1. No agent has interactive dashboard access or authority to accept terms or certify disclosures. One publisher-linked service account now permits bounded API item management, and an agent performed a read-only status check on 2026-09-10. The current 0.1.2 update has not been uploaded or submitted; exact artifact, listing, dashboard, and compliance review still apply before any approved API release action.
 - Telemetry, advertising, affiliate, payment, cookie, cross-device sync, sale, and data-sharing controls have no active feature to govern because those behaviors are absent. Any addition reopens privacy, consumer, permission, and approval review before implementation.
 - Third-party software notice obligations are not currently triggered by a dependency or copied code because none is present. This is a repository observation, not a permanent exemption.
 - Google brand-asset permission is not currently needed for the original icon or abstract promotional tile because neither uses Google marks or interface content. A real Google Search screenshot is still required by the Store and its branding, third-party-content, and privacy treatment remains unresolved.

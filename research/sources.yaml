@@ -743,6 +743,66 @@ sources:
     impact: "Treat automated Store updates as a later credentialed workflow with explicit authority, secret handling, failure recovery, and human-publication controls."
     conflicts: "The required credentials and publication authority are intentionally absent from the repository and current task."
 
+  - id: CHROME-STORE-SERVICE-ACCOUNT-001
+    url: "https://developer.chrome.com/docs/webstore/service-accounts"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store service-account guidance, last updated 2025-10-15 UTC"
+    classification: official-platform-authentication
+    summary: "Chrome Web Store API V2 supports a publisher-linked service account and documents short-lived gcloud impersonation with the chromewebstore OAuth scope."
+    confidence: high
+    impact: "Use one publisher-linked service account with short-lived impersonated tokens and no downloaded JSON key."
+    conflicts: "Linking the service account grants item-management authority, so external writes remain release-specific user approval gates."
+
+  - id: CHROME-STORE-UPLOAD-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/media/upload"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 upload reference, last updated 2025-11-04 UTC"
+    classification: official-platform-api
+    summary: "The media upload endpoint accepts a package for one publisher item and returns its item ID, extension version, and upload state."
+    confidence: high
+    impact: "Bind upload to the configured item and verify the returned version when available."
+    conflicts: "Asynchronous uploads require a later status check before submission."
+
+  - id: CHROME-STORE-UPLOAD-STATE-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/UploadState"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 UploadState reference, last updated 2025-10-15 UTC"
+    classification: official-platform-api
+    summary: "UploadState distinguishes SUCCEEDED, IN_PROGRESS, FAILED, and NOT_FOUND outcomes."
+    confidence: high
+    impact: "Submit only after the same upload response reports SUCCEEDED and the exact approved extension version; stop on every other state."
+    conflicts: "A later fetchStatus result can report asynchronous state but does not identify the unsubmitted draft's version or hash."
+
+  - id: CHROME-STORE-STATUS-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/publishers.items/fetchStatus"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 status reference, last updated 2025-11-04 UTC"
+    classification: official-platform-api
+    summary: "fetchStatus returns published and submitted revision states, recent upload state, warnings, takedown status, and a public key."
+    confidence: high
+    impact: "Expose only a sanitized status summary and stop submission on warnings, takedown, an active submission, or an uncertain recent upload."
+    conflicts: "The public key is unnecessary for release decisions and is deliberately omitted from command output."
+
+  - id: CHROME-STORE-PUBLISH-V2-001
+    url: "https://developer.chrome.com/docs/webstore/api/reference/rest/v2/publishers.items/publish"
+    retrieved: 2026-09-10
+    version: "Official Chrome Web Store API V2 publish reference, last updated 2026-06-02 UTC"
+    classification: official-platform-api
+    summary: "The publish method submits an item for review and supports automatic-after-approval or staged publication, review skipping, and warning handling."
+    confidence: high
+    impact: "Require the publication mode explicitly, keep skipReview false, and set blockOnWarnings true for every submission."
+    conflicts: "The API method is named publish even when it is submitting for review; user-facing language must distinguish submission from final Store approval."
+
+  - id: GOOGLE-SA-IMPERSONATION-001
+    url: "https://docs.cloud.google.com/docs/authentication/use-service-account-impersonation"
+    retrieved: 2026-09-10
+    version: "Official Google Cloud authentication guidance as retrieved"
+    classification: official-cloud-security
+    summary: "Service-account impersonation creates short-lived credentials and avoids the persistent security risk of a downloaded service-account key."
+    confidence: high
+    impact: "Use gcloud impersonation in memory, grant Token Creator only on the release service account, and keep all credentials outside the repository."
+    conflicts: "The caller still needs an authenticated Google identity and the IAM Service Account Credentials API."
+
   - id: CWS-COMPETITOR-SEARCH-NAV-001
     url: "https://chromewebstore.google.com/detail/google-search-keyboard-na/plbfbakblkbmlpejcihefjahocmdmmni"
     retrieved: 2026-09-09

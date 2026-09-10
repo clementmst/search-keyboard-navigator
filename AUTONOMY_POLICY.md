@@ -17,11 +17,14 @@ Agents may, within this repository and an approved task:
 
 These permissions do not create a continuous process, scheduler, external service, or right to act outside an active user task.
 
+For Chrome Web Store releases, a keyless service-account workflow may check item status autonomously using the read-only OAuth scope. It may upload and immediately submit an exact reviewed package only after the user explicitly approves that release's version, SHA-256, and publication mode. This is execution of a bounded approval, not standing publication authority. The workflow must use short-lived impersonated credentials, must not create or store a service-account key, and must fail closed when its identity, artifact, Store warning, upload response, or review state is uncertain.
+
 ## Mandatory user approval
 
 Ask before:
 
 - Publishing, deploying, uploading, submitting to the Chrome Web Store, or external communication.
+- Choosing automatic-after-approval versus staged publication for each Store submission; prior choices are not blanket authorization for later versions.
 - Accepting the Chrome Web Store Developer Agreement, Google terms, permissions, licenses, or other external terms on the user's or publisher's behalf.
 - Using a paid service or creating an account, backend, publisher identity, or external resource.
 - Adding telemetry, analytics, advertising, affiliate behavior, monetization, data collection, retention, transmission, or sharing.
