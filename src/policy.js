@@ -19,11 +19,13 @@
   const ARROW_DOWN = "ArrowDown";
 
   function isSupportedLocation(locationLike) {
-    return Boolean(
-      locationLike &&
-      locationLike.origin === "https://www.google.com" &&
-      locationLike.pathname === "/search"
-    );
+    if (!locationLike) return false;
+    if (locationLike.origin === "https://www.google.com" && locationLike.pathname === "/search") return true;
+    if (locationLike.origin === "https://www.youtube.com" && locationLike.pathname === "/results") return true;
+    if (locationLike.origin === "https://github.com" && locationLike.pathname === "/search") {
+      return new URLSearchParams(locationLike.search || "").get("type") === "repositories";
+    }
+    return false;
   }
 
   function hasDisallowedModifier(eventLike) {

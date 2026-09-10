@@ -1,13 +1,13 @@
 schema_version: 1
 project: "ArrowKey Search Navigator (formerly Search Keyboard Navigator)"
-assessment_version: "2026-09-10-version-0.1.2-local-consent-gate"
+assessment_version: "2026-09-10-version-0.2.0-optional-sites-candidate"
 assessed: 2026-09-10
-status: "0.1.1-public-0.1.2-update-pending-exact-review"
+status: "0.1.1-public-0.1.2-pending-review-0.2.0-candidate"
 disclaimer: "Engineering governance only; not legal advice or legal-compliance certification."
 user_facts_recorded: 2026-08-28
 user_supplied_facts:
   publisher: "Individual publishing personally; resident and legally established in France; states authority to accept agreements."
-  distribution: "Version 0.1.1 is publicly listed in the Chrome Web Store; version 0.1.2 is a local consent-corrected rename and discovery-update candidate awaiting human validation."
+  distribution: "Version 0.1.1 is public; version 0.1.2 is pending Store review; version 0.2.0 is an unsubmitted optional-sites candidate."
   markets: "Worldwide public availability intended immediately after readiness/compliance review."
   audience: "General public; not specifically directed at children under 16."
   v1_data: "Optional privacy-minimized first-party analytics selected as a deferred future direction; current Stage 1B private-test build remains local-only/backend-free because no collection design or authorization exists."
@@ -30,8 +30,8 @@ entries:
     status: unresolved
     applicability: "Likely required if the extension is submitted or published through the Chrome Web Store."
     reasoning: "Single purpose, minimum permissions, listing accuracy, user-data disclosures, Limited Use, deceptive behavior, security, and remote-code requirements must match the exact release artifact."
-    evidence: "Version 0.1.1 was submitted and published by the user. Version 0.1.2 is narrow, local-only, dependency-free, and unsubmitted. Its popup now presents the page-data disclosure and requires an explicit Enable action; the content controller stays inert until the exact versioned local consent Boolean is true and removes its listeners on Disable. The only named API permission is storage for that Boolean."
-    unresolved: "Complete independent frozen-tree review, then human Chrome consent/revocation testing and dashboard/hosted-policy/screenshot readback against the exact rebuilt artifact."
+    evidence: "Version 0.1.2 is pending review. The 0.2.0 candidate is local-only and dependency-free; storage is required for one local consent Boolean, while scripting and YouTube/GitHub origins are separately optional. The popup discloses processing before access, and revocation tears down open-page listeners before removing registrations and permission."
+    unresolved: "Complete frozen-tree review, live Chrome optional-site and revocation testing, and dashboard/hosted-policy readback against the exact 0.2.0 artifact."
 
   - id: CWS-AGREEMENT
     area: "Chrome Web Store Developer Agreement"
@@ -70,7 +70,7 @@ entries:
     area: "GDPR"
     jurisdiction: "EU/EEA personal-data processing"
     source_ids: "EU-GDPR-001, CNIL-TRANSPARENCY-001"
-    reviewed: 2026-08-28
+    reviewed: 2026-09-10
     status: legal-review-required
     applicability: "Potentially applicable if the developer is established in the EU/EEA or offers services to or monitors people there."
     reasoning: "The runtime keeps Search-page processing on-device and does not expose it to the developer. Voluntary support email separately sends personal data to the France-based individual publisher and Gmail, creating concrete controller-transparency questions."
@@ -114,12 +114,12 @@ entries:
     area: "Consumer protection and marketing claims"
     jurisdiction: "Launch-market dependent"
     source_ids: "US-FTC-CLAIMS-001, EU-UCPD-001"
-    reviewed: 2026-08-28
+    reviewed: 2026-09-10
     status: unresolved
     applicability: "Likely applies to promotional representations in markets where the extension is offered, including free offerings where relevant."
     reasoning: "Objective and implied accessibility, privacy, compatibility, performance, and exclusion claims must be truthful, evidence-based, and appropriately qualified."
-    evidence: "Version 0.1.1 is public. The consent-corrected 0.1.2 listing and website qualify platform, layout, native-shortcut, privacy, and screen-reader claims; 84 Node assertions across 12 files and 3 direct PowerShell release checks pass, while new browser, deployed-site, and assistive-technology validation is not claimed."
-    unresolved: "Reconcile the exact 0.1.2 listing, hosted privacy-name update, dashboard fields, screenshots, and deployed website before their external release."
+    evidence: "Version 0.1.1 is public and 0.1.2 is pending review. The 0.2.0 draft listing qualifies platform, route, privacy, and screen-reader claims; 105 Node assertions across 13 files and 3 direct PowerShell checks pass on Windows 11 with Node, while live YouTube/GitHub, visual, assistive-technology, dashboard, and hosted-policy validation is not claimed."
+    unresolved: "Reconcile the exact 0.2.0 listing, hosted privacy policy, dashboard fields, live optional-site behavior, screenshots, and public claims before release."
 
   - id: OSS-LICENSES
     area: "Open-source licenses and notices"
@@ -164,3 +164,14 @@ entries:
     reasoning: "Keep v1 local-only/backend-free; never sell browsing/search/user data; require a separate opt-in privacy design for telemetry and a separate provider/platform/tax review for an optional external donation link."
     evidence: "Manifest/source/static boundary checks."
     unresolved: "Future first-party telemetry still needs a complete separately authorized design; donation is post-live and needs provider/payment/tax jurisdiction review; neither data nor payment implementation is authorized."
+
+  - id: OPTIONAL-SITES-PLATFORM
+    area: "YouTube and GitHub platform terms"
+    jurisdiction: "Worldwide optional-site feature"
+    source_ids: "YOUTUBE-TERMS-2023-001, YOUTUBE-BRAND-2026-001, GITHUB-TERMS-2026-001, GITHUB-AUP-2026-001, GITHUB-BRAND-2026-001"
+    reviewed: 2026-09-10
+    status: unresolved
+    applicability: "Applies when a user separately enables the YouTube or GitHub adapter."
+    reasoning: "The extension reacts only to individual user key presses, moves focus among links already rendered for that user, and performs no automated retrieval, scraping, API call, storage, or transmission. This is likely distinguishable from automated access, but the platforms do not expressly address this extension behavior."
+    evidence: "Optional origin grants, narrow route guards, packaged scripts, local-only processing, immediate listener teardown, and no network APIs."
+    unresolved: "Monitor policy changes and avoid affiliation, endorsement, scraping, bulk-action, or content-reuse claims; this assessment is not legal certification."

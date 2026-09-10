@@ -54,6 +54,7 @@ test("Store promotional image and release allowlist have the expected boundary",
     "src/policy.js",
     "src/result-policy.js",
     "src/google-adapter-policy.js",
+    "src/site-adapter-policy.js",
     "src/navigator.js",
     "src/navigator.css",
     "src/keyboard-navigation-instructions-popup.html",
@@ -96,6 +97,10 @@ test("instruction popup contains concise consent and keyboard-readable controls"
   assert.match(html, /Enable keyboard navigation/);
   assert.match(html, /does not record typed text or send your searches/);
   assert.match(html, /Disable keyboard navigation/);
+  assert.match(html, /personalized YouTube results or private GitHub repositories/);
+  assert.match(html, /loads ArrowKey's packaged code across that site/);
+  assert.match(html, /id="enable-youtube"/);
+  assert.match(html, /id="enable-github"/);
   assert.match(html, /<script src="consent-policy\.js"><\/script>/);
   assert.match(html, /<script src="keyboard-navigation-instructions-popup\.js"><\/script>/);
   assert.doesNotMatch(html, /https?:\/\//i);

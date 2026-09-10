@@ -832,3 +832,73 @@ sources:
     confidence: high
     impact: "Lead with ArrowKey to improve immediate differentiation while preserving Search Navigator as the descriptive category phrase."
     conflicts: "Store names are not formal trademark-clearance evidence; qualified review may still be needed."
+
+  - id: CHROME-OPTIONAL-PERMISSIONS-001
+    url: "https://developer.chrome.com/docs/extensions/develop/concepts/declare-permissions"
+    retrieved: 2026-09-10
+    version: "Official Chrome Extensions permissions guidance as retrieved"
+    classification: official-platform-documentation
+    summary: "Optional host permissions can be requested at runtime so users grant additional site access in context."
+    confidence: high
+    impact: "Keep YouTube and GitHub as separate, user-initiated optional origin grants rather than install-time access."
+    conflicts: "Each origin grant is constrained further by an exact runtime route guard."
+
+  - id: CHROME-DYNAMIC-CONTENT-SCRIPTS-001
+    url: "https://developer.chrome.com/docs/extensions/reference/api/scripting"
+    retrieved: 2026-09-10
+    version: "Official chrome.scripting API reference as retrieved"
+    classification: official-platform-api
+    summary: "The scripting API can register packaged content scripts for approved match patterns and persist registrations."
+    confidence: high
+    impact: "Use one reviewed packaged script set for each optional site, with no dynamic or remote code."
+    conflicts: "A page already open when access changes must be reloaded once."
+
+  - id: YOUTUBE-TERMS-2023-001
+    url: "https://www.youtube.com/static?template=terms"
+    retrieved: 2026-09-10
+    version: "YouTube Terms of Service effective 2023-12-15"
+    classification: official-platform-terms
+    summary: "YouTube restricts automated access, interference, harvesting, and unauthorized use of Service content."
+    confidence: high
+    impact: "The adapter must remain user-triggered, local, non-scraping, non-networked, and limited to moving focus among links already displayed to the user."
+    conflicts: "The Terms do not expressly classify a user-triggered local keyboard accessibility aid; this project records that interpretation without legal certification."
+
+  - id: GITHUB-TERMS-2026-001
+    url: "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service"
+    retrieved: 2026-09-10
+    version: "GitHub Terms of Service effective 2026-04-27"
+    classification: official-platform-terms
+    summary: "GitHub's terms govern account use, private repositories, acceptable use, intellectual property, and API access."
+    confidence: high
+    impact: "The adapter must not transmit, retain, reproduce, or claim rights in repository results, including private results visible to an authenticated user."
+    conflicts: "The extension uses the rendered user interface rather than GitHub's API and does not automate retrieval."
+
+  - id: GITHUB-AUP-2026-001
+    url: "https://docs.github.com/en/site-policy/acceptable-use-policies/github-acceptable-use-policies"
+    retrieved: 2026-09-10
+    version: "GitHub Acceptable Use Policies as retrieved"
+    classification: official-platform-policy
+    summary: "GitHub prohibits abuse, disruption, unauthorized access, and misuse of platform resources."
+    confidence: high
+    impact: "Keep navigation user-paced and local, with no crawling, bulk action, or service interaction beyond native link focus."
+    conflicts: "No conflict identified for the narrow user-triggered behavior; platform interpretation can change."
+
+  - id: YOUTUBE-BRAND-2026-001
+    url: "https://brand.youtube/"
+    retrieved: 2026-09-10
+    version: "Official YouTube brand resources as retrieved"
+    classification: official-brand-guidance
+    summary: "YouTube publishes controlled resources for naming, logos, icons, color, and promotional use."
+    confidence: high
+    impact: "Use plain compatibility text only; do not place YouTube marks in the extension icon or artwork or imply endorsement."
+    conflicts: "No YouTube brand asset is included in the package."
+
+  - id: GITHUB-BRAND-2026-001
+    url: "https://brand.github.com/foundations/logo"
+    retrieved: 2026-09-10
+    version: "Official GitHub Brand Toolkit as retrieved"
+    classification: official-brand-guidance
+    summary: "GitHub permits limited descriptive integration references but prohibits implied affiliation and unauthorized or modified logo use."
+    confidence: high
+    impact: "Use GitHub only as plain compatibility text with an explicit non-affiliation statement; include no GitHub logo or artwork."
+    conflicts: "No GitHub brand asset is included in the package."

@@ -1,12 +1,17 @@
 # Product Specification
 
-Status: Stage 1B bounded live-page private-test adapter authorized and implemented; deterministic and independent-review evidence pending; live Chrome and assistive-technology evidence not yet run.
+Status: version 0.2.0 optional YouTube/GitHub implementation under correction and review; live Chrome and assistive-technology evidence not yet run.
 
 ## User problem
 
 Keyboard-oriented users must repeatedly traverse or point at search results. The extension should make movement between ordinary results fast without taking over native tab navigation, changing search providers, or observing users beyond transient local DOM processing.
 
 ## Supported environment
+
+- Google Search remains enabled by default.
+- YouTube support is individually optional and limited to ordinary video-title links on `/results`.
+- GitHub support is individually optional and limited to repository-title links on `/search?type=repositories`.
+- Gmail and other search engines are outside scope.
 
 - Desktop Google Chrome, current stable plus the previous stable release during release qualification.
 - Top-level documents injected by `https://www.google.com/search*` only when a runtime guard confirms origin `https://www.google.com` and pathname exactly `/search`.
@@ -84,13 +89,13 @@ The selected anchor receives real native DOM focus. Because Google's inline titl
 
 - Process the current supported page URL and result DOM locally and ephemerally only for eligibility and focus control.
 - Do not retain, transmit, log, analyze, monetize, sell, or share queries, URLs, result text, interactions, or identifiers.
-- No fetch/XHR/WebSocket/beacon, page-data storage, cookies, analytics, telemetry, backend, accounts, messaging, remote configuration, or remote executable code. Persist only one versioned local boolean for the user's consent choice.
+- No fetch/XHR/WebSocket/beacon, page-data storage, cookies, analytics, telemetry, backend, accounts, external or network messaging, remote configuration, or remote executable code. Local extension-to-content-script messages are used only to stop active controllers when an optional site is disabled. Persist only one versioned local boolean for the user's consent choice.
 - No `eval`, `new Function`, string timers, dynamic remote import, unsafe HTML sinks, implicit globals, or named `window`/`document` property access.
 - Keep state in extension-owned lexical variables/collections, never in page-controlled attributes.
 
 ## Proposed MV3 architecture
 
-1. `manifest.json`: MV3, narrow static content-script prefix, top frame, isolated world, `document_idle`, only the approved `storage` API permission, and no separate `host_permissions`, optional permissions, background context, or web-accessible resource. The content-script match still grants persistent site access and may produce a warning.
+1. `manifest.json`: MV3, narrow static Google content script, top frame, isolated world, and `document_idle`. `storage` records one local consent Boolean. Optional `scripting` and separate YouTube/GitHub origin grants register only packaged scripts across each enabled origin so SPA navigation works; exact runtime guards remain inert outside the supported search routes. There is no background context or web-accessible resource.
 2. Key policy: pure guards for modifiers, composition, prior cancellation, editing/widget contexts, boundaries, and repeat.
 3. Result policy: the minimal positive `#search a[href] h3` title-link rule plus genuine-link usability and URL validation.
 4. DOM adapter: enumeration, visibility/connection checks, focus styling, and minimal scrolling.

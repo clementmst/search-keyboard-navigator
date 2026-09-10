@@ -7,6 +7,7 @@ src/consent-policy.js
 src/policy.js
 src/result-policy.js
 src/google-adapter-policy.js
+src/site-adapter-policy.js
 src/navigator.js
 src/navigator.css
 src/keyboard-navigation-instructions-popup.html

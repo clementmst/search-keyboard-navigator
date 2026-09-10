@@ -9,18 +9,15 @@ const manifest = JSON.parse(
   fs.readFileSync(path.join(__dirname, "..", "manifest.json"), "utf8")
 );
 
-test("manifest has one static site-access grant and only local consent storage permission", () => {
+test("manifest keeps Google static and exposes only approved optional site grants", () => {
   assert.equal(manifest.manifest_version, 3);
   assert.deepEqual(
     Object.keys(manifest).sort(),
-    ["action", "content_scripts", "description", "icons", "manifest_version", "name", "permissions", "version"].sort()
+    ["action", "content_scripts", "description", "icons", "manifest_version", "minimum_chrome_version", "name", "optional_host_permissions", "optional_permissions", "permissions", "version"].sort()
   );
   assert.equal(manifest.name, "ArrowKey Search Navigator");
-  assert.equal(manifest.version, "0.1.2");
-  assert.equal(
-    manifest.description,
-    "Navigate Google Search results with Arrow Up and Arrow Down. Open links with Enter or Chrome's native new-tab shortcut."
-  );
+  assert.equal(manifest.version, "0.2.0");
+  assert.equal(manifest.minimum_chrome_version, "105");
   assert.ok(manifest.description.length <= 132);
   assert.deepEqual(manifest.icons, {
     16: "assets/icons/icon16.png",
@@ -32,10 +29,10 @@ test("manifest has one static site-access grant and only local consent storage p
     assert.equal(fs.existsSync(path.join(__dirname, "..", iconPath)), true);
   }
   assert.deepEqual(manifest.permissions, ["storage"]);
+  assert.deepEqual(manifest.optional_permissions, ["scripting"]);
+  assert.deepEqual(manifest.optional_host_permissions, ["https://www.youtube.com/*", "https://github.com/*"]);
   for (const forbidden of [
     "host_permissions",
-    "optional_permissions",
-    "optional_host_permissions",
     "background",
     "web_accessible_resources",
     "externally_connectable"
@@ -61,6 +58,7 @@ test("manifest has one static site-access grant and only local consent storage p
     "src/policy.js",
     "src/result-policy.js",
     "src/google-adapter-policy.js",
+    "src/site-adapter-policy.js",
     "src/navigator.js"
   ]);
   assert.deepEqual(manifest.content_scripts[0].css, ["src/navigator.css"]);

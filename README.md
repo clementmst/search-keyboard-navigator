@@ -1,6 +1,6 @@
 # ArrowKey Search Navigator
 
-ArrowKey Search Navigator (formerly Search Keyboard Navigator) is a Manifest V3 Chrome extension for moving through supported result-title links on desktop Google Search with the arrow keys.
+ArrowKey Search Navigator is a Manifest V3 Chrome extension for moving through supported search-result links with the arrow keys. Version 0.2.0 adds optional YouTube video-search and GitHub repository-search support while keeping Google Search enabled by default.
 
 Version 0.1.1 is publicly available in the Chrome Web Store under the former name. This repository now contains the 0.1.2 rename, revised Store materials, a static instruction popup, and a tracker-free landing-page draft. Store updates, external deployment, and publication remain human-approved actions.
 
@@ -18,7 +18,7 @@ The unmodified-arrow design can conflict with native page scrolling and screen-r
 
 ## Architecture
 
-The extension uses packaged content scripts plus an instruction-and-consent popup. Its only named Chrome API permission is `storage`, used for one versioned local consent choice. It has no service worker, separate `host_permissions`, page-data storage, extension network activity, or runtime dependencies. The static content-script match is persistent site access, but page handling stays inactive until the user enables it.
+The extension uses packaged content scripts plus an instruction-and-consent popup. `storage` remembers the local consent choice; `scripting` registers packaged code only after the user grants optional YouTube or GitHub access. It has no service worker, page-data storage, extension network activity, or runtime dependencies. Google Search remains the only static site grant.
 
 The optional public website under `website/` is also static and dependency-free. It includes structured data, social metadata, a sitemap, and no scripts other than inert JSON-LD metadata. It has no analytics, forms, cookies, or tracking.
 

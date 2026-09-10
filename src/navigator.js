@@ -6,12 +6,14 @@
   const storageEvents = globalThis.chrome?.storage?.onChanged;
   let stopActiveNavigator = null;
   let settingChangedSinceInitialRead = false;
+  let siteRevoked = false;
 
   if (!consentPolicy || !extensionStorage || !storageEvents) {
     return;
   }
 
   function setNavigatorEnabled(enabled) {
+    if (siteRevoked && enabled) return;
     if (enabled && !stopActiveNavigator) {
       stopActiveNavigator = startNavigator();
       return;
@@ -34,6 +36,13 @@
     );
   });
 
+  globalThis.chrome.runtime.onMessage?.addListener((message) => {
+    if (message?.type === "arrowkey-revoke-site") {
+      siteRevoked = true;
+      setNavigatorEnabled(false);
+    }
+  });
+
   extensionStorage.get(consentPolicy.storageKey, (storedValues) => {
     if (globalThis.chrome.runtime.lastError || settingChangedSinceInitialRead) {
       return;
@@ -50,6 +59,12 @@
   const resultPolicy = globalThis.SearchKeyboardNavigatorResultPolicy;
   const googleAdapterPolicy =
     globalThis.SearchKeyboardNavigatorGoogleAdapterPolicy;
+  const siteAdapterPolicy = globalThis.ArrowKeySiteAdapterPolicy || {
+    siteForLocation: (locationLike) =>
+      googleAdapterPolicy?.isSupportedDefaultWebContext(locationLike) ? "google" : "",
+    isSupportedLocation: (locationLike) =>
+      Boolean(googleAdapterPolicy?.isSupportedDefaultWebContext(locationLike))
+  };
   const INDICATOR_CLASS = "skn-focused";
   const ARROW_OWNING_SELECTOR = [
     "input",
@@ -275,13 +290,13 @@
   }
 
   function supportedLiveRoot() {
-    if (
-      !googleAdapterPolicy.isSupportedDefaultWebContext(location)
-    ) {
+    const site = siteAdapterPolicy.siteForLocation(location);
+    if (!site) {
       return null;
     }
-
-    const roots = Array.from(document.querySelectorAll("#search"));
+    const selectors = siteAdapterPolicy.selectorsForSite?.(site) ||
+      { root: "#search", titles: "a[href]" };
+    const roots = Array.from(document.querySelectorAll(selectors.root));
     if (roots.length !== 1) {
       return null;
     }
@@ -298,10 +313,17 @@
       return null;
     }
 
-    return searchRoot;
+    return { root: searchRoot, site };
   }
 
-  function liveTitleAnchors(root) {
+  function liveTitleAnchors(root, site) {
+    const selectors = siteAdapterPolicy.selectorsForSite?.(site);
+    if (site === "youtube") {
+      return Array.from(root.querySelectorAll(selectors.titles));
+    }
+    if (site === "github") {
+      return Array.from(root.querySelectorAll(selectors.titles));
+    }
     return Array.from(root.querySelectorAll("a[href]")).filter((anchor) => {
       const headings = Array.from(anchor.querySelectorAll("h3"));
       return (
@@ -311,38 +333,59 @@
     });
   }
 
-  function candidateFromLiveTitle(root, headingLink) {
+  function hasBlockedResultAncestor(root, headingLink) {
+    let current = headingLink.parentElement;
+    while (current && root.contains(current)) {
+      if (resultPolicy.isBlockedResultRole(roleEvidence(current))) {
+        return true;
+      }
+      current = current.parentElement;
+    }
+    return false;
+  }
+
+  function candidateFromLiveTitle(root, headingLink, site) {
     if (!headingLink) {
       return null;
     }
 
-    const evidence = {
+    const commonEvidence = {
       accessibleName: accessibleNameFor(headingLink),
       baseUrl: document.baseURI,
       connected: headingLink.isConnected,
       disabled: isDisabled(headingLink),
-      excludedContext: false,
       hasDownload: headingLink.hasAttribute("download"),
       hiddenBySemantics: hasHiddenSemantics(headingLink),
       href: headingLink.getAttribute("href") || "",
       inert: Boolean(headingLink.closest("[inert]")),
       rendered: isRendered(headingLink),
-      supportedRoot: root.contains(headingLink),
-      tabIndex: 0
+      supportedRoot: root.contains(headingLink)
     };
-    const classification = googleAdapterPolicy.classifyEvidence(evidence);
+    const classification = site === "google"
+      ? googleAdapterPolicy.classifyEvidence({
+          ...commonEvidence,
+          excludedContext: false,
+          tabIndex: 0
+        })
+      : siteAdapterPolicy.classifyOptionalTitleEvidence(site, {
+          ...commonEvidence,
+          effectiveTarget: headingLink.getAttribute("target") || "",
+          excludedContext: hasBlockedResultAncestor(root, headingLink),
+          explicitRole: headingLink.getAttribute("role") || "",
+          tabIndex: headingLink.tabIndex
+        });
 
     return classification.eligible ? headingLink : null;
   }
 
   function candidatesInFreshOrder() {
-    const liveRoot = supportedLiveRoot();
-    if (!liveRoot) {
+    const context = supportedLiveRoot();
+    if (!context) {
       return [];
     }
 
-    return liveTitleAnchors(liveRoot)
-      .map((anchor) => candidateFromLiveTitle(liveRoot, anchor))
+    return liveTitleAnchors(context.root, context.site)
+      .map((anchor) => candidateFromLiveTitle(context.root, anchor, context.site))
       .filter(Boolean);
   }
 
@@ -433,8 +476,7 @@
     const commitAllowed = policy.canCommitFocus({
       focusStayedOnTarget: document.activeElement === target,
       supportedLocation:
-        policy.isSupportedLocation(location) &&
-        googleAdapterPolicy.isSupportedDefaultWebContext(location),
+        siteAdapterPolicy.isSupportedLocation(location),
       targetConnected: target.isConnected,
       targetStillEligible: freshCandidates.includes(target)
     });
@@ -454,7 +496,7 @@
   }
 
   function onKeyDown(event) {
-    if (!policy.isSupportedLocation(location)) {
+    if (!siteAdapterPolicy.isSupportedLocation(location)) {
       if (state.active) {
         clearSession();
       }

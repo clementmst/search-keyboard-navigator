@@ -12,7 +12,7 @@ On Google Search result pages, a user can move predictably among visible result-
 
 ## Current release-improvement scope
 
-Version 0.1.1 is public after a user-run Chrome Web Store submission. The current bounded pass prepares version 0.1.2 with clearer naming, accurate Store copy, a static tracker-free discovery website, and an explicit first-use consent gate. The only permission change is Chrome `storage`, used for one versioned local consent Boolean. It does not broaden the supported domain, collect or transmit page data, add dependencies, or expand accessibility claims, and it does not authorize external deployment or Store publication by an agent.
+Version 0.1.2 is pending Chrome Web Store review. The current bounded 0.2.0 pass adds separately enabled YouTube video-search and GitHub repository-search adapters. Google remains the only static site grant; optional origins and optional `scripting` authority are requested only through the popup. No page data is retained or transmitted, and no dependency, backend, telemetry, or account is added.
 
 ## MVP scope boundary
 
@@ -22,7 +22,7 @@ Version 0.1.1 is public after a user-run Chrome Web Store submission. The curren
 - Visible native links containing one `h3` result title, in DOM order.
 - Arrow navigation, native link activation, escape/clear behavior, visible focus, and dynamic-result handling.
 - Deterministic fixtures, real-Chrome automation, accessibility checks, security review, and documented live manual testing.
-- Manifest V3, packaged logic, one narrow content-script site-access grant, the `storage` permission only for one versioned local consent Boolean, and no separate host permissions.
+- Manifest V3, packaged logic, one narrow static Google grant, `storage` for one versioned local consent Boolean, and user-controlled optional YouTube/GitHub origins plus optional `scripting` registration.
 
 ### Out of scope
 

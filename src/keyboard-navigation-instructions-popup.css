@@ -111,6 +111,23 @@ button:disabled {
   margin-top: 14px;
 }
 
+.site-options {
+  margin: 18px 0;
+  padding: 14px;
+  border: 1px solid #b9c7dc;
+  border-radius: 10px;
+}
+
+.site-options label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.site-options input { inline-size: 20px; block-size: 20px; accent-color: #1a73e8; }
+.site-message { min-height: 1.4em; margin: 8px 0 0; font-size: 0.9rem; }
+
 .secondary-button:hover {
   background: #e8f0fe;
   border-color: #174ea6;

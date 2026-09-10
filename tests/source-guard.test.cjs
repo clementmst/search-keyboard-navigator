@@ -19,15 +19,15 @@ const stylesheetSource = fs.readFileSync(path.join(sourceDirectory, "navigator.c
 const fixtureScript = fs.readFileSync(path.join(__dirname, "..", "fixtures", "pointer-guard.js"), "utf8");
 const reviewedScripts = `${sources}\n${fixtureScript}`;
 
-test("static tripwire finds no network, page storage, messaging, remote code, unsafe sink, or observer APIs", () => {
+test("static tripwire finds no network, page storage, persistent messaging, remote code, unsafe sink, or observer APIs", () => {
   const forbiddenPatterns = [
     /\bfetch\s*\(/,
     /\bXMLHttpRequest\b/,
     /\bWebSocket\b/,
     /\bEventSource\b/,
     /\bsendBeacon\b/,
-    /\bchrome\s*\.\s*(tabs|scripting|cookies|webRequest)\b/,
-    /\bchrome\s*\.\s*runtime\s*\.\s*(?:sendMessage|connect|onMessage)\b/,
+    /\bchrome\s*\.\s*(cookies|webRequest)\b/,
+    /\bchrome\s*\.\s*runtime\s*\.\s*(?:connect)\b/,
     /\blocalStorage\b/,
     /\bsessionStorage\b/,
     /\bindexedDB\b/,
@@ -61,6 +61,18 @@ test("storage use is limited to the versioned local consent choice", () => {
   assert.match(popupSource, /extensionStorage\.set/);
   assert.doesNotMatch(reviewedScripts, /chrome\.storage\.(?:sync|managed|session)/);
   assert.doesNotMatch(reviewedScripts, /acceptedAt|timestamp|Date\s*\(/);
+});
+
+test("optional scripting is limited to reviewed local files and approved sites", () => {
+  const popupSource = fs.readFileSync(path.join(sourceDirectory, "keyboard-navigation-instructions-popup.js"), "utf8");
+  assert.match(popupSource, /chrome\.permissions\.request/);
+  assert.match(popupSource, /chrome\.scripting\.registerContentScripts/);
+  assert.doesNotMatch(popupSource, /executeScript|insertCSS|func\s*:/);
+  assert.doesNotMatch(navigatorSource, /chrome\s*\.\s*scripting/);
+  assert.match(popupSource, /chrome\.tabs\.sendMessage/);
+  assert.match(navigatorSource, /arrowkey-revoke-site/);
+  assert.match(popupSource, /https:\/\/www\.youtube\.com\/\*/);
+  assert.match(popupSource, /https:\/\/github\.com\/\*/);
 });
 
 test("controller does not handle Enter or stop event propagation", () => {
@@ -99,6 +111,10 @@ test("controller contains the specified instant-scroll and fail-closed static gu
   assert.doesNotMatch(navigatorSource, /liveSecondaryLinkCount/);
   assert.doesNotMatch(navigatorSource, /hasUnsupportedExplicitRole/);
   assert.match(navigatorSource, /excludedContext:\s*false/);
+  assert.match(navigatorSource, /excludedContext:\s*hasBlockedResultAncestor/);
+  assert.match(navigatorSource, /explicitRole:\s*headingLink\.getAttribute\("role"\)/);
+  assert.match(navigatorSource, /tabIndex:\s*0/);
+  assert.match(navigatorSource, /tabIndex:\s*headingLink\.tabIndex/);
   assert.match(sources, /effectiveAriaRole/);
   assert.doesNotMatch(sources, /explicitRole[\s\S]{0,160}split\(\/\\s\+\/\)\[0\]/);
 });
@@ -126,7 +142,7 @@ test("production controller does not depend on fixture metadata", () => {
 });
 
 test("Stage 1B adapter uses a minimal language-neutral title-link contract", () => {
-  assert.match(navigatorSource, /querySelectorAll\("#search"\)/);
+  assert.match(navigatorSource, /selectorsForSite/);
   assert.match(navigatorSource, /querySelectorAll\("a\[href\]"\)/);
   assert.match(navigatorSource, /querySelectorAll\("h3"\)/);
   assert.doesNotMatch(navigatorSource, /secondaryLinkCount:/);
@@ -139,7 +155,7 @@ test("Stage 1B adapter uses a minimal language-neutral title-link contract", () 
   assert.doesNotMatch(navigatorSource, /document\.documentElement\.lang/);
   assert.doesNotMatch(navigatorSource, /supportedSyntheticRoot/);
   assert.doesNotMatch(googleAdapterSource, /isKnownAdDestination/);
-  assert.match(navigatorSource, /tabIndex:\s*0/);
+  assert.match(navigatorSource, /tabIndex:\s*headingLink\.tabIndex/);
   assert.match(navigatorSource, /capture:\s*true/);
   assert.doesNotMatch(navigatorSource, /INTERACTIVE_OR_FOCUSABLE_SELECTOR/);
   assert.doesNotMatch(
@@ -152,6 +168,7 @@ test("Stage 1B adapter uses a minimal language-neutral title-link contract", () 
 test("focus indicator targets the title and includes a non-layout arrow marker", () => {
   assert.match(stylesheetSource, /\.skn-focused:focus h3\s*\{/);
   assert.match(stylesheetSource, /\.skn-focused:focus h3::before\s*\{/);
+  assert.match(stylesheetSource, /\.skn-focused:focus:not\(:has\(h3\)\)::before\s*\{/);
   assert.match(stylesheetSource, /border-left:\s*9px solid/);
   assert.match(stylesheetSource, /pointer-events:\s*none/);
   assert.match(stylesheetSource, /prefers-color-scheme:\s*dark/);

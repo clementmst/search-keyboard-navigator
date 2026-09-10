@@ -51,6 +51,12 @@ Only after those reminders may the user consider a marketing/SEO role, which req
 
 ## Future candidates (not commitments)
 
+## Version 0.2.0 — optional sites (implementation in progress)
+
+Add individually enabled YouTube video-search and GitHub repository-search adapters. Google remains the default; Gmail and other search engines are excluded. Exit requires deterministic policy checks, independent review, and live user validation on both optional sites before any Store submission.
+
+## Future candidates (not commitments)
+
 - Explicit navigation mode or remappable shortcut for screen-reader and native-scroll compatibility.
 - Named regional Google domains after per-domain fixtures, disclosure, and approval.
 - Sitelink policy, configurable indicator, onboarding/help, other result verticals, and other search engines.

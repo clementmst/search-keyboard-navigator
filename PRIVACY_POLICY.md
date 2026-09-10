@@ -3,13 +3,13 @@
 Effective date: August 31, 2026
 Last updated: September 10, 2026
 
-ArrowKey Search Navigator (formerly Search Keyboard Navigator) is a Chrome extension published by an individual developer in France. It helps users move keyboard focus among recognized result-title links on supported `https://www.google.com/search` pages.
+ArrowKey Search Navigator (formerly Search Keyboard Navigator) is a Chrome extension published by an individual developer in France. It helps users move keyboard focus among recognized result links on supported Google Search pages and, only when individually enabled by the user, YouTube video-search and GitHub repository-search pages.
 
 ## Information handled on the device
 
 To provide keyboard navigation, the extension temporarily handles the following information on the user's device:
 
-- **Web history:** the address of the current Google Search page, solely to confirm that the page is within the extension's supported site and route.
+- **Web history:** the address of the current supported search page, solely to confirm that the page is within an enabled site and route.
 - **Website content:** visible result-title link text and destinations, surrounding page structure, and element visibility.
 - **User activity:** key-event metadata and current focus state. On supported pages, the extension briefly examines each keydown event only long enough to determine whether it is an eligible Arrow Up, Arrow Down, or active-session Escape command and whether the current page context is safe. All other keys are immediately ignored. The extension does not record typed text, retain keystrokes, or transmit key events.
 
@@ -25,7 +25,7 @@ Before this page handling begins, the popup explains the local processing and as
 
 ## Permissions and purpose
 
-The extension runs only on `https://www.google.com/search*`. This site access is used solely to provide keyboard navigation among recognized result-title links and to display the focus indicator after consent. Its only named Chrome API permission is `storage`, used for the local consent setting. It does not request access to other websites.
+The extension runs by default only on `https://www.google.com/search*`. Users may separately grant or remove access to `https://www.youtube.com/*` and `https://github.com/*` from the popup. Packaged code loads across an enabled optional origin so it remains available through that site's in-page navigation, but exact runtime guards return without selecting results or moving focus except on YouTube `/results` and GitHub `/search?type=repositories`. `storage` keeps the local consent setting, and optional `scripting` registers only packaged files. No remote code is fetched.
 
 ## Storage and retention
 
