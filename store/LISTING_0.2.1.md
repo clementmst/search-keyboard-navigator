@@ -2,7 +2,7 @@
 
 ## Summary
 
-Navigate Google Search results and YouTube videos with arrow keys—locally, without tracking.
+Navigate supported Google Search results and YouTube videos with your keyboard.
 
 ## Single purpose
 
