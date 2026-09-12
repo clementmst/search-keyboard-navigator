@@ -71,17 +71,13 @@ function createPopupElements() {
   const elements = new Map();
   for (const id of [
     "loading-panel",
-    "consent-panel",
     "instructions-panel",
-    "enable-navigation",
-    "disable-navigation",
     "status-message",
     "error-message",
     "main-heading",
-    "consent-heading",
     "instructions-heading"
+    ,"enable-google"
     ,"enable-youtube"
-    ,"enable-github"
     ,"site-message"
   ]) {
     elements.set(id, {
@@ -202,6 +198,23 @@ test("optional-site revocation message immediately removes page listeners", () =
   assert.deepEqual(removed, ["keydown", "focusin"]);
 });
 
+test("an explicitly permitted optional site starts independently of Google access", () => {
+  const storage = createStorage(false);
+  const added = [];
+  const context = vm.createContext({
+    chrome: storage.chrome,
+    location: { origin: "https://www.youtube.com" },
+    document: { addEventListener(type) { added.push(type); }, removeEventListener() {} },
+    Element: class Element {}, HTMLElement: class HTMLElement {},
+    SearchKeyboardNavigatorPolicy: {}, SearchKeyboardNavigatorResultPolicy: {},
+    SearchKeyboardNavigatorGoogleAdapterPolicy: {}
+  });
+  vm.runInContext(consentSource, context);
+  vm.runInContext(navigatorSource, context);
+  assert.deepEqual(added, ["keydown", "focusin"]);
+  assert.equal(storage.listeners.length, 0);
+});
+
 test("a storage change wins over a stale initial consent read", () => {
   const storage = createStorage(true, { delayGet: true });
   const added = [];
@@ -224,7 +237,7 @@ test("a storage change wins over a stale initial consent read", () => {
   assert.deepEqual(added, []);
 });
 
-test("popup requires an explicit enable action and supports disabling", () => {
+test("popup presents independent Google and YouTube access toggles", () => {
   const storage = createStorage(false);
   const elements = createPopupElements();
   const context = vm.createContext({
@@ -234,16 +247,25 @@ test("popup requires an explicit enable action and supports disabling", () => {
   vm.runInContext(consentSource, context);
   vm.runInContext(popupSource, context);
 
-  assert.equal(elements.get("consent-panel").hidden, false);
-  assert.equal(elements.get("instructions-panel").hidden, true);
-  elements.get("enable-navigation").listeners.click();
-  assert.equal(storage.writes[0].arrowKeyLocalPageProcessingConsentV1, true);
   assert.equal(elements.get("instructions-panel").hidden, false);
-  assert.equal(elements.get("main-heading").focusCount, 1);
-  elements.get("disable-navigation").listeners.click();
+  assert.equal(elements.get("enable-google").checked, false);
+  elements.get("enable-google").checked = true;
+  elements.get("enable-google").listeners.change();
+  assert.equal(storage.writes[0].arrowKeyLocalPageProcessingConsentV1, true);
+  elements.get("enable-google").checked = false;
+  elements.get("enable-google").listeners.change();
   assert.equal(storage.writes[1].arrowKeyLocalPageProcessingConsentV1, false);
-  assert.equal(elements.get("consent-panel").hidden, false);
-  assert.equal(elements.get("consent-heading").focusCount, 1);
+});
+
+test("popup discloses local page handling before either access switch", () => {
+  const disclosureIndex = popupHtml.indexOf('class="access-disclosure"');
+  const googleSwitchIndex = popupHtml.indexOf('id="enable-google"');
+  const youtubeSwitchIndex = popupHtml.indexOf('id="enable-youtube"');
+  assert.ok(disclosureIndex >= 0);
+  assert.ok(disclosureIndex < googleSwitchIndex);
+  assert.ok(disclosureIndex < youtubeSwitchIndex);
+  assert.match(popupHtml, /page address, visible links and layout, focus, and arrow-key presses/);
+  assert.match(popupHtml, /stores none of that information and sends nothing/);
 });
 
 test("post-enable focus uses a visible target with a focus indicator", () => {
@@ -256,25 +278,17 @@ test("post-enable focus uses a visible target with a focus indicator", () => {
   );
 });
 
-for (const scenario of [
-  { name: "Enable", initialValue: false, button: "enable-navigation", activePanel: "consent-panel" },
-  { name: "Disable", initialValue: true, button: "disable-navigation", activePanel: "instructions-panel" }
-]) {
-  test(`a failed ${scenario.name} write preserves the visible actual state`, () => {
-    const storage = createStorage(scenario.initialValue, { failWrites: true });
-    const elements = createPopupElements();
-    const context = vm.createContext({
-      chrome: storage.chrome,
-      document: { getElementById(id) { return elements.get(id); } }
-    });
-    vm.runInContext(consentSource, context);
-    vm.runInContext(popupSource, context);
-    elements.get(scenario.button).listeners.click();
-    assert.equal(elements.get(scenario.activePanel).hidden, false);
-    assert.equal(elements.get("error-message").hidden, false);
-    assert.match(elements.get("error-message").textContent, /Nothing changed/);
-  });
-}
+test("a failed Google toggle write restores its actual state", () => {
+  const storage = createStorage(false, { failWrites: true });
+  const elements = createPopupElements();
+  const context = vm.createContext({ chrome: storage.chrome, document: { getElementById(id) { return elements.get(id); } } });
+  vm.runInContext(consentSource, context);
+  vm.runInContext(popupSource, context);
+  elements.get("enable-google").checked = true;
+  elements.get("enable-google").listeners.change();
+  assert.equal(elements.get("enable-google").checked, false);
+  assert.equal(elements.get("error-message").hidden, false);
+});
 
 test("an initial read failure shows a visible neutral state", () => {
   const storage = createStorage(true, { failGet: true });
@@ -285,8 +299,7 @@ test("an initial read failure shows a visible neutral state", () => {
   });
   vm.runInContext(consentSource, context);
   vm.runInContext(popupSource, context);
-  assert.equal(elements.get("consent-panel").hidden, true);
-  assert.equal(elements.get("instructions-panel").hidden, true);
+  assert.equal(elements.get("instructions-panel").hidden, false);
   assert.equal(elements.get("error-message").hidden, false);
   assert.match(elements.get("error-message").textContent, /could not be read/);
 });
@@ -325,11 +338,11 @@ test("registration failure rolls back a newly granted origin", async () => {
   const context = vm.createContext({ chrome: fake.chrome, document: { getElementById(id) { return elements.get(id); } } });
   vm.runInContext(consentSource, context);
   vm.runInContext(popupSource, context);
-  elements.get("enable-github").checked = true;
-  elements.get("enable-github").listeners.change();
+  elements.get("enable-youtube").checked = true;
+  elements.get("enable-youtube").listeners.change();
   await settle();
-  assert.equal(fake.origins.has("https://github.com/*"), false);
-  assert.equal(elements.get("enable-github").checked, false);
+  assert.equal(fake.origins.has("https://www.youtube.com/*"), false);
+  assert.equal(elements.get("enable-youtube").checked, false);
   assert.equal(fake.scriptingGranted(), false);
 });
 
@@ -344,7 +357,7 @@ test("failed registration plus failed rollback keeps the host grant visible", as
   await settle();
   assert.equal(fake.origins.has("https://www.youtube.com/*"), true);
   assert.equal(elements.get("enable-youtube").checked, true);
-  assert.match(elements.get("site-message").textContent, /setup is incomplete/);
+  assert.match(elements.get("site-message").textContent, /switched off and on again/);
 });
 
 test("teardown message failure preserves permission and registration", async () => {
@@ -382,6 +395,17 @@ test("opening the popup retries cleanup of orphaned scripting authority", async 
   vm.runInContext(popupSource, context);
   await settle();
   assert.equal(fake.scriptingGranted(), false);
+});
+
+test("opening the popup removes a legacy GitHub content-script registration", async () => {
+  const legacy = { id: "arrowkey-github", matches: ["https://github.com/*"], js: [], css: [] };
+  const fake = createOptionalChrome({ scriptingGranted: true, registrations: [[legacy.id, legacy]] });
+  const elements = createPopupElements();
+  const context = vm.createContext({ chrome: fake.chrome, document: { getElementById(id) { return elements.get(id); } } });
+  vm.runInContext(consentSource, context);
+  vm.runInContext(popupSource, context);
+  await settle();
+  assert.equal(fake.registrations.has("arrowkey-github"), false);
 });
 
 test("revocation stops open tabs and removal failure restores registration", async () => {

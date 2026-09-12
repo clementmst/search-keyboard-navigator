@@ -20,23 +20,45 @@
     if (!locationLike) return "";
     if (locationLike.origin === "https://www.google.com" && locationLike.pathname === "/search") return "google";
     if (locationLike.origin === "https://www.youtube.com" && locationLike.pathname === "/results") return "youtube";
-    if (locationLike.origin === "https://github.com" && locationLike.pathname === "/search") {
-      const params = new URLSearchParams(locationLike.search || "");
-      return params.get("type") === "repositories" ? "github" : "";
-    }
+    if (locationLike.origin === "https://www.youtube.com" && locationLike.pathname === "/") return "youtube-home";
     return "";
   }
 
   function selectorsForSite(site) {
     if (site === "google") return { root: "#search", titles: "a[href]" };
-    if (site === "youtube") return { root: "ytd-search", titles: "ytd-video-renderer a#video-title[href^='/watch']" };
-    if (site === "github") return { root: "[data-testid='results-list']", titles: "h3 a[href]" };
+    if (site === "youtube") {
+      return {
+        root: "ytd-search",
+        titles: "ytd-video-renderer a#video-title[href], ytd-video-renderer h3 a[href]"
+      };
+    }
+    if (site === "youtube-home") {
+      return {
+        root: "ytd-browse[page-subtype='home']",
+        titles: "ytd-rich-item-renderer a#video-title-link[href], ytd-rich-item-renderer h3 a[href]"
+      };
+    }
     return null;
   }
 
   function classifyOptionalTitleEvidence(site, evidence) {
-    if (!resultPolicy || (site !== "youtube" && site !== "github")) {
+    if (!resultPolicy || (site !== "youtube" && site !== "youtube-home")) {
       return { eligible: false, reason: "unsupported-site" };
+    }
+
+    if (site === "youtube" || site === "youtube-home") {
+      try {
+        const destination = new URL(evidence.href, evidence.baseUrl);
+        if (
+          destination.origin !== "https://www.youtube.com" ||
+          destination.pathname !== "/watch" ||
+          !destination.searchParams.get("v")
+        ) {
+          return { eligible: false, reason: "unsafe-url" };
+        }
+      } catch {
+        return { eligible: false, reason: "unsafe-url" };
+      }
     }
 
     return resultPolicy.classifyEvidence({

@@ -1,6 +1,6 @@
 # ArrowKey Search Navigator
 
-ArrowKey Search Navigator is a Manifest V3 Chrome extension for moving through supported search-result links with the arrow keys. Version 0.2.0 adds optional YouTube video-search and GitHub repository-search support while keeping Google Search enabled by default.
+ArrowKey Search Navigator is a Manifest V3 Chrome extension for moving through supported result links with the arrow keys. Version 0.2.1 adds optional YouTube search and responsive two-dimensional homepage navigation while keeping Google Search enabled by default.
 
 Version 0.1.1 is publicly available in the Chrome Web Store under the former name. This repository now contains the 0.1.2 rename, revised Store materials, a static instruction popup, and a tracker-free landing-page draft. Store updates, external deployment, and publication remain human-approved actions.
 
@@ -18,7 +18,7 @@ The unmodified-arrow design can conflict with native page scrolling and screen-r
 
 ## Architecture
 
-The extension uses packaged content scripts plus an instruction-and-consent popup. `storage` remembers the local consent choice; `scripting` registers packaged code only after the user grants optional YouTube or GitHub access. It has no service worker, page-data storage, extension network activity, or runtime dependencies. Google Search remains the only static site grant.
+The extension uses packaged content scripts plus an instruction-and-consent popup. `storage` remembers the local Google choice; `scripting` registers packaged code only after the user grants optional YouTube access. It has no service worker, page-data storage, extension network activity, or runtime dependencies. Google Search remains the only static site grant.
 
 The optional public website under `website/` is also static and dependency-free. It includes structured data, social metadata, a sitemap, and no scripts other than inert JSON-LD metadata. It has no analytics, forms, cookies, or tracking.
 
@@ -41,4 +41,4 @@ The optional public website under `website/` is also static and dependency-free.
 
 ## Current release status
 
-The user confirmed live navigation, the visual indicator, the instruction popup, and native Ctrl+Enter behavior in one Windows Chrome setup. Those observations do not establish universal layout, platform, link-disposition, or assistive-technology compatibility. Version 0.1.2 is a local draft until its exact ZIP, listing, hosted privacy-name update, and dashboard changes are reviewed and submitted through a separately approved release workflow; a new popup screenshot is optional.
+The user confirmed Google Search and YouTube navigation, the visual indicator, responsive homepage movement, full-card scrolling, the instruction popup, and native Ctrl+Enter behavior in one Windows Chrome setup. Those observations do not establish universal layout, platform, link-disposition, or assistive-technology compatibility. Version 0.2.1 remains a local candidate until its final disclosure-bearing popup, exact ZIP, listing, hosted privacy policy, and dashboard changes are read back and submitted through the approved release workflow.

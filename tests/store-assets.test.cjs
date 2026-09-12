@@ -82,7 +82,7 @@ test("marketing and website images use their declared exact dimensions", () => {
   );
 });
 
-test("instruction popup contains concise consent and keyboard-readable controls", () => {
+test("instruction popup contains two simple access toggles and keyboard-readable controls", () => {
   const html = fs.readFileSync(
     path.join(root, "src", "keyboard-navigation-instructions-popup.html"),
     "utf8"
@@ -90,17 +90,18 @@ test("instruction popup contains concise consent and keyboard-readable controls"
   assert.match(html, /<table[\s>]/);
   assert.match(html, /<kbd>↑<\/kbd>/);
   assert.match(html, /<kbd>↓<\/kbd>/);
+  assert.match(html, /<kbd>←<\/kbd><kbd>→<\/kbd>/);
+  assert.match(html, /Across YouTube home/);
   assert.match(html, /<kbd>Enter<\/kbd>/);
   assert.match(html, /<kbd>Ctrl<\/kbd>[\s\S]*?<kbd>Enter<\/kbd>/);
   assert.match(html, /New tab where supported/);
   assert.match(html, /<kbd>Esc<\/kbd>/);
-  assert.match(html, /Enable keyboard navigation/);
-  assert.match(html, /does not record typed text or send your searches/);
-  assert.match(html, /Disable keyboard navigation/);
-  assert.match(html, /personalized YouTube results or private GitHub repositories/);
-  assert.match(html, /loads ArrowKey's packaged code across that site/);
-  assert.match(html, /id="enable-youtube"/);
-  assert.match(html, /id="enable-github"/);
+  assert.match(html, /<legend>Access<\/legend>/);
+  assert.match(html, /id="enable-google"[^>]*role="switch"/);
+  assert.match(html, /id="enable-youtube"[^>]*role="switch"/);
+  assert.doesNotMatch(html, /GitHub|enable-github/);
+  assert.match(html, /page address, visible links and layout, focus, and arrow-key presses/);
+  assert.match(html, /stores none of that information and sends nothing/);
   assert.match(html, /<script src="consent-policy\.js"><\/script>/);
   assert.match(html, /<script src="keyboard-navigation-instructions-popup\.js"><\/script>/);
   assert.doesNotMatch(html, /https?:\/\//i);

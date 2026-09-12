@@ -1,6 +1,6 @@
 # Product Specification
 
-Status: version 0.2.0 optional YouTube/GitHub implementation under correction and review; live Chrome and assistive-technology evidence not yet run.
+Status: version 0.2.1 optional YouTube implementation under live user testing; assistive-technology evidence not yet run.
 
 ## User problem
 
@@ -9,8 +9,7 @@ Keyboard-oriented users must repeatedly traverse or point at search results. The
 ## Supported environment
 
 - Google Search remains enabled by default.
-- YouTube support is individually optional and limited to ordinary video-title links on `/results`.
-- GitHub support is individually optional and limited to repository-title links on `/search?type=repositories`.
+- YouTube support is individually optional and limited to ordinary video-title links on `/results` and the `/` homepage. Search remains a one-dimensional list; any unmodified arrow enters the homepage grid at its first eligible video, then Left/Right move within a row and Up/Down move to the closest column in the adjacent row. Shorts, advertisements, shelves, playlists, channels, and ambiguous units remain excluded.
 - Gmail and other search engines are outside scope.
 
 - Desktop Google Chrome, current stable plus the previous stable release during release qualification.
@@ -37,7 +36,7 @@ The current result is the native anchor that owns real DOM focus. There is no se
 
 - Call `focus({ preventScroll: true })` on the eligible native link.
 - Apply a namespaced supplemental focus class or attribute only for styling; it is never authoritative state.
-- Scroll with `scrollIntoView({ behavior: "instant", block: "nearest", inline: "nearest" })`.
+- Scroll instantly. Google uses nearest-title scrolling. YouTube search keeps the selected title visible; the YouTube homepage keeps the complete selected video card, including its preview and title, within a viewport area that reserves space above and below for fixed page chrome.
 - Do not add or change `tabindex`, roles, accessible names, `aria-selected`, `aria-current`, or `aria-activedescendant`.
 - Do not create `role="application"` or recast the document as a composite widget.
 
@@ -95,7 +94,7 @@ The selected anchor receives real native DOM focus. Because Google's inline titl
 
 ## Proposed MV3 architecture
 
-1. `manifest.json`: MV3, narrow static Google content script, top frame, isolated world, and `document_idle`. `storage` records one local consent Boolean. Optional `scripting` and separate YouTube/GitHub origin grants register only packaged scripts across each enabled origin so SPA navigation works; exact runtime guards remain inert outside the supported search routes. There is no background context or web-accessible resource.
+1. `manifest.json`: MV3, narrow static Google content script, top frame, isolated world, and `document_idle`. `storage` records one local Google-access choice. Optional `scripting` and the YouTube origin grant register only packaged scripts across YouTube so SPA navigation works; exact runtime guards remain inert outside Google Search and YouTube search/home routes. There is no background context or web-accessible resource.
 2. Key policy: pure guards for modifiers, composition, prior cancellation, editing/widget contexts, boundaries, and repeat.
 3. Result policy: the minimal positive `#search a[href] h3` title-link rule plus genuine-link usability and URL validation.
 4. DOM adapter: enumeration, visibility/connection checks, focus styling, and minimal scrolling.

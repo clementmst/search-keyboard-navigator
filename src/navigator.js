@@ -7,6 +7,8 @@
   let stopActiveNavigator = null;
   let settingChangedSinceInitialRead = false;
   let siteRevoked = false;
+  const optionalSiteOrigin =
+    globalThis.location?.origin === "https://www.youtube.com";
 
   if (!consentPolicy || !extensionStorage || !storageEvents) {
     return;
@@ -25,16 +27,18 @@
     }
   }
 
-  storageEvents.addListener((changes, areaName) => {
-    if (areaName !== "local" || !changes[consentPolicy.storageKey]) {
-      return;
-    }
+  if (!optionalSiteOrigin) {
+    storageEvents.addListener((changes, areaName) => {
+      if (areaName !== "local" || !changes[consentPolicy.storageKey]) {
+        return;
+      }
 
-    settingChangedSinceInitialRead = true;
-    setNavigatorEnabled(
-      consentPolicy.isGranted(changes[consentPolicy.storageKey].newValue)
-    );
-  });
+      settingChangedSinceInitialRead = true;
+      setNavigatorEnabled(
+        consentPolicy.isGranted(changes[consentPolicy.storageKey].newValue)
+      );
+    });
+  }
 
   globalThis.chrome.runtime.onMessage?.addListener((message) => {
     if (message?.type === "arrowkey-revoke-site") {
@@ -43,15 +47,21 @@
     }
   });
 
-  extensionStorage.get(consentPolicy.storageKey, (storedValues) => {
-    if (globalThis.chrome.runtime.lastError || settingChangedSinceInitialRead) {
-      return;
-    }
+  if (optionalSiteOrigin) {
+    // The optional host grant is the user's per-site enable choice. The script
+    // cannot be present on this origin until that permission has been granted.
+    setNavigatorEnabled(true);
+  } else {
+    extensionStorage.get(consentPolicy.storageKey, (storedValues) => {
+      if (globalThis.chrome.runtime.lastError || settingChangedSinceInitialRead) {
+        return;
+      }
 
-    setNavigatorEnabled(
-      consentPolicy.isGranted(storedValues[consentPolicy.storageKey])
-    );
-  });
+      setNavigatorEnabled(
+        consentPolicy.isGranted(storedValues[consentPolicy.storageKey])
+      );
+    });
+  }
 
   function startNavigator() {
 
@@ -318,10 +328,7 @@
 
   function liveTitleAnchors(root, site) {
     const selectors = siteAdapterPolicy.selectorsForSite?.(site);
-    if (site === "youtube") {
-      return Array.from(root.querySelectorAll(selectors.titles));
-    }
-    if (site === "github") {
+    if (site === "youtube" || site === "youtube-home") {
       return Array.from(root.querySelectorAll(selectors.titles));
     }
     return Array.from(root.querySelectorAll("a[href]")).filter((anchor) => {
@@ -342,6 +349,15 @@
       current = current.parentElement;
     }
     return false;
+  }
+
+  function hasBlockedSiteContainer(headingLink, site) {
+    if (site !== "youtube" && site !== "youtube-home") {
+      return false;
+    }
+    return Boolean(headingLink.closest(
+      "ytd-ad-slot-renderer, ytd-display-ad-renderer, ytd-promoted-video-renderer, ytd-reel-shelf-renderer, grid-shelf-view-model"
+    ));
   }
 
   function candidateFromLiveTitle(root, headingLink, site) {
@@ -370,7 +386,9 @@
       : siteAdapterPolicy.classifyOptionalTitleEvidence(site, {
           ...commonEvidence,
           effectiveTarget: headingLink.getAttribute("target") || "",
-          excludedContext: hasBlockedResultAncestor(root, headingLink),
+          excludedContext:
+            hasBlockedResultAncestor(root, headingLink) ||
+            hasBlockedSiteContainer(headingLink, site),
           explicitRole: headingLink.getAttribute("role") || "",
           tabIndex: headingLink.tabIndex
         });
@@ -491,12 +509,31 @@
     state.previousFocus = previousFocus;
     state.selected = target;
     target.classList.add(INDICATOR_CLASS);
-    target.scrollIntoView({ behavior: "instant", block: "nearest", inline: "nearest" });
+    const site = siteAdapterPolicy.siteForLocation(location);
+    if (site === "youtube" || site === "youtube-home") {
+      const visualTarget = site === "youtube-home"
+        ? target.closest("ytd-rich-item-renderer") || target
+        : target.querySelector("h3") || target.closest("h3") || target;
+      const rect = visualTarget.getBoundingClientRect();
+      const scrollDelta = policy.scrollDeltaForVisibility({
+        top: rect.top,
+        bottom: rect.bottom,
+        viewportHeight: globalThis.innerHeight,
+        topRoom: 96,
+        bottomRoom: 72
+      });
+      if (scrollDelta !== 0) {
+        globalThis.scrollBy({ top: scrollDelta, left: 0, behavior: "instant" });
+      }
+    } else {
+      target.scrollIntoView({ behavior: "instant", block: "nearest", inline: "nearest" });
+    }
     return true;
   }
 
   function onKeyDown(event) {
-    if (!siteAdapterPolicy.isSupportedLocation(location)) {
+    const currentSite = siteAdapterPolicy.siteForLocation(location);
+    if (!currentSite) {
       if (state.active) {
         clearSession();
       }
@@ -518,7 +555,10 @@
       return;
     }
 
-    if (!policy.directionForKey(event.key) || policy.shouldIgnoreKeyboardEvent(event)) {
+    const homepageGridKey =
+      currentSite === "youtube-home" &&
+      ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key);
+    if ((!homepageGridKey && !policy.directionForKey(event.key)) || policy.shouldIgnoreKeyboardEvent(event)) {
       return;
     }
 
@@ -550,15 +590,24 @@
     const neutralFocus =
       isNeutralDocumentFocus(activeElement) || activeEligibleIndex < 0;
 
-    const decision = policy.decideMovement({
-      activeEligibleIndex,
-      candidateCount: candidates.length,
-      key: event.key,
-      neutralFocus,
-      repeat: event.repeat,
-      sessionActive: state.active,
-      supportedLocation: true
-    });
+    const commonMovementInput = {
+      activeEligibleIndex, key: event.key, neutralFocus,
+      repeat: event.repeat, sessionActive: state.active, supportedLocation: true
+    };
+    const decision = homepageGridKey
+      ? policy.decideGridMovement({
+          ...commonMovementInput,
+          rects: candidates.map((candidate) => {
+            const geometryElement =
+              candidate.closest("ytd-rich-item-renderer") || candidate;
+            const rect = geometryElement.getBoundingClientRect();
+            return { top: rect.top, left: rect.left, width: rect.width, height: rect.height };
+          })
+        })
+      : policy.decideMovement({
+          ...commonMovementInput,
+          candidateCount: candidates.length
+        });
 
     if (decision.action === "suppress-repeat") {
       event.preventDefault();

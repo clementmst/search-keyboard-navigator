@@ -51,9 +51,9 @@ Only after those reminders may the user consider a marketing/SEO role, which req
 
 ## Future candidates (not commitments)
 
-## Version 0.2.0 — optional sites (implementation in progress)
+## Version 0.2.1 — optional YouTube (live user testing)
 
-Add individually enabled YouTube video-search and GitHub repository-search adapters. Google remains the default; Gmail and other search engines are excluded. Exit requires deterministic policy checks, independent review, and live user validation on both optional sites before any Store submission.
+Add individually enabled YouTube search and responsive homepage navigation. Google remains the default; GitHub, Gmail, and other search engines are excluded. Exit requires deterministic policy checks, independent review, and live user validation on YouTube before any Store submission.
 
 ## Future candidates (not commitments)
 

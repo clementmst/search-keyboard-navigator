@@ -2,15 +2,14 @@
   "manifest_version": 3,
   "minimum_chrome_version": "105",
   "name": "ArrowKey Search Navigator",
-  "version": "0.2.0",
-  "description": "Navigate supported Google, YouTube, and GitHub search results with your keyboard.",
+  "version": "0.2.1",
+  "description": "Navigate supported Google Search results and YouTube videos with your keyboard.",
   "permissions": [
     "storage"
   ],
   "optional_permissions": ["scripting"],
   "optional_host_permissions": [
-    "https://www.youtube.com/*",
-    "https://github.com/*"
+    "https://www.youtube.com/*"
   ],
   "icons": {
     "16": "assets/icons/icon16.png",

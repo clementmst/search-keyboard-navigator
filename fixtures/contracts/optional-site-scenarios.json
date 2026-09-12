@@ -22,29 +22,5 @@
     "site": "youtube",
     "evidence": { "href": "/watch?v=fixture", "excludedContext": true },
     "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
-  },
-  {
-    "id": "github-legitimate-title",
-    "site": "github",
-    "evidence": { "href": "/owner/repository" },
-    "expected": { "eligible": true, "reason": "eligible" }
-  },
-  {
-    "id": "github-negative-tabindex",
-    "site": "github",
-    "evidence": { "href": "/owner/repository", "tabIndex": -1 },
-    "expected": { "eligible": false, "reason": "not-sequentially-focusable" }
-  },
-  {
-    "id": "github-role-overridden-title",
-    "site": "github",
-    "evidence": { "href": "/owner/repository", "explicitRole": "button link" },
-    "expected": { "eligible": false, "reason": "excluded-or-ambiguous" }
-  },
-  {
-    "id": "github-link-fallback-role",
-    "site": "github",
-    "evidence": { "href": "/owner/repository", "explicitRole": "foo link" },
-    "expected": { "eligible": true, "reason": "eligible" }
   }
 ]

@@ -12,29 +12,15 @@
         <img src="../assets/icons/icon48.png" width="44" height="44" alt="">
         <div>
           <h1 id="main-heading" tabindex="-1">Keyboard navigation</h1>
-          <p>Use these keys on supported search pages</p>
+          <p>Use these keys on supported pages</p>
         </div>
       </header>
 
       <p id="status-message" class="visually-hidden" role="status" aria-live="polite"></p>
       <p id="error-message" class="error-message" role="alert" hidden></p>
 
-      <section id="loading-panel" aria-label="Loading setting">
+      <section id="loading-panel" aria-label="Loading access settings">
         <p>Checking your local setting…</p>
-      </section>
-
-      <section id="consent-panel" aria-labelledby="consent-heading" hidden>
-        <h2 id="consent-heading" tabindex="-1">Enable keyboard navigation?</h2>
-        <p class="disclosure">
-          To move among results, ArrowKey temporarily examines the current enabled search page address,
-          visible result links and page structure, focus state, and briefly checks keyboard events only to
-          recognize eligible Arrow or Escape commands on your device.
-        </p>
-        <p class="disclosure">
-          This same local processing applies to Google and any optional site you enable below. It does not record typed text or send your searches, page content, or keyboard activity anywhere.
-          Your choice is stored only in Chrome on this device.
-        </p>
-        <button id="enable-navigation" type="button">Enable keyboard navigation</button>
       </section>
 
       <section id="instructions-panel" aria-labelledby="instructions-heading" hidden>
@@ -48,6 +34,10 @@
             <tr>
               <th scope="row"><kbd>↓</kbd></th>
               <td>Next result</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="key-combination"><kbd>←</kbd><kbd>→</kbd></span></th>
+              <td>Across YouTube home</td>
             </tr>
             <tr>
               <th scope="row"><kbd>Enter</kbd></th>
@@ -66,13 +56,13 @@
           </tbody>
         </table>
         <fieldset class="site-options">
-          <legend>Optional sites</legend>
-          <p>Enabling a site loads ArrowKey's packaged code across that site so it works after in-page navigation, but it moves focus only on supported search routes. Displayed results can include personalized YouTube results or private GitHub repositories already visible to you. Nothing is sent to us.</p>
-          <label><input id="enable-youtube" type="checkbox"> YouTube search</label>
-          <label><input id="enable-github" type="checkbox"> GitHub repository search</label>
+          <legend>Access</legend>
+          <p class="access-disclosure">To navigate, ArrowKey briefly checks the enabled page address, visible links and layout, focus, and arrow-key presses on this device. It stores none of that information and sends nothing.</p>
+          <label><span>Google Search</span><input id="enable-google" type="checkbox" role="switch"></label>
+          <label><span>YouTube</span><input id="enable-youtube" type="checkbox" role="switch"></label>
           <p id="site-message" class="site-message" role="status" aria-live="polite"></p>
+          <p class="privacy-note">Turn either switch off to stop access.</p>
         </fieldset>
-        <button id="disable-navigation" class="secondary-button" type="button">Disable keyboard navigation</button>
       </section>
     </main>
     <script src="consent-policy.js"></script>

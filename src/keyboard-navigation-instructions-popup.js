@@ -4,103 +4,50 @@
   const consentPolicy = globalThis.ArrowKeyConsentPolicy;
   const extensionStorage = globalThis.chrome?.storage?.local;
   const loadingPanel = document.getElementById("loading-panel");
-  const consentPanel = document.getElementById("consent-panel");
   const instructionsPanel = document.getElementById("instructions-panel");
-  const enableButton = document.getElementById("enable-navigation");
-  const disableButton = document.getElementById("disable-navigation");
+  const googleCheckbox = document.getElementById("enable-google");
   const statusMessage = document.getElementById("status-message");
   const errorMessage = document.getElementById("error-message");
-  const mainHeading = document.getElementById("main-heading");
-  const consentHeading = document.getElementById("consent-heading");
   const siteMessage = document.getElementById("site-message");
   const optionalSites = [
-    { checkbox: document.getElementById("enable-youtube"), id: "arrowkey-youtube", origin: "https://www.youtube.com/*", matches: ["https://www.youtube.com/*"] },
-    { checkbox: document.getElementById("enable-github"), id: "arrowkey-github", origin: "https://github.com/*", matches: ["https://github.com/*"] }
+    { checkbox: document.getElementById("enable-youtube"), id: "arrowkey-youtube", origin: "https://www.youtube.com/*", matches: ["https://www.youtube.com/*"] }
   ];
   const siteScripts = [
     "src/consent-policy.js", "src/policy.js", "src/result-policy.js",
     "src/google-adapter-policy.js", "src/site-adapter-policy.js", "src/navigator.js"
   ];
   const siteCss = ["src/navigator.css"];
-  let currentEnabled = false;
 
-  function showPanel(enabled, moveFocus = false) {
-    currentEnabled = enabled;
+  function showReady() {
     loadingPanel.hidden = true;
-    consentPanel.hidden = enabled;
-    instructionsPanel.hidden = !enabled;
+    instructionsPanel.hidden = false;
     errorMessage.hidden = true;
-    statusMessage.textContent = enabled
-      ? "Keyboard navigation is enabled."
-      : "Keyboard navigation is off.";
-    if (moveFocus) {
-      (enabled ? mainHeading : consentHeading).focus();
-    }
   }
 
-  function showError(stateKnown = true) {
+  function showError(message) {
     loadingPanel.hidden = true;
-    consentPanel.hidden = stateKnown ? currentEnabled : true;
-    instructionsPanel.hidden = stateKnown ? !currentEnabled : true;
+    instructionsPanel.hidden = false;
     errorMessage.hidden = false;
-    errorMessage.textContent = stateKnown
-      ? "The setting could not be saved. Nothing changed. Close the popup and try again."
-      : "The current setting could not be read. Close the popup and try again.";
+    errorMessage.textContent = message;
     statusMessage.textContent = "";
   }
 
-  function saveConsent(enabled, button) {
-    button.disabled = true;
-    extensionStorage.set(
-      { [consentPolicy.storageKey]: enabled },
-      () => {
-        button.disabled = false;
-        if (globalThis.chrome.runtime.lastError) {
-          showError();
-          return;
-        }
-        showPanel(enabled, true);
+  function saveGoogleAccess(enabled) {
+    googleCheckbox.disabled = true;
+    extensionStorage.set({ [consentPolicy.storageKey]: enabled }, () => {
+      googleCheckbox.disabled = false;
+      if (globalThis.chrome.runtime.lastError) {
+        googleCheckbox.checked = !enabled;
+        showError("Google Search access could not be changed. Try again.");
+        return;
       }
-    );
-  }
-
-  async function refreshOptionalSites() {
-    if (!chrome.permissions) return;
-    for (const site of optionalSites) {
-      if (!site.checkbox) continue;
-      const [originGranted, scriptingGranted] = await Promise.all([
-        chrome.permissions.contains({ origins: [site.origin] }),
-        chrome.permissions.contains({ permissions: ["scripting"] })
-      ]);
-      const registrations = scriptingGranted
-        ? await chrome.scripting.getRegisteredContentScripts({ ids: [site.id] })
-        : [];
-      const registration = registrations[0];
-      const setupComplete = Boolean(
-        originGranted && scriptingGranted && registrations.length === 1 &&
-        JSON.stringify(registration.matches) === JSON.stringify(site.matches) &&
-        JSON.stringify(registration.js) === JSON.stringify(siteScripts) &&
-        JSON.stringify(registration.css) === JSON.stringify(siteCss) &&
-        registration.allFrames === false && registration.runAt === "document_idle"
-      );
-      site.checkbox.checked = originGranted;
-      if (originGranted && !setupComplete) {
-        siteMessage.textContent = "Site access exists, but setup is incomplete. Switch it off to remove access.";
-      }
-    }
-    await removeScriptingIfUnused(null);
+      statusMessage.textContent = `Google Search access ${enabled ? "enabled" : "disabled"}.`;
+    });
   }
 
   function registrationFor(site) {
-    return {
-      id: site.id,
-      matches: site.matches,
-      js: siteScripts,
-      css: siteCss,
-      runAt: "document_idle",
-      allFrames: false,
-      persistAcrossSessions: true
-    };
+    return { id: site.id, matches: site.matches, js: siteScripts, css: siteCss,
+      runAt: "document_idle", allFrames: false, persistAcrossSessions: true };
   }
 
   async function removeScriptingIfUnused(excludedSite) {
@@ -113,6 +60,40 @@
       const removed = await chrome.permissions.remove({ permissions: ["scripting"] });
       if (!removed) throw new Error("Scripting permission was not removed");
     }
+  }
+
+  async function refreshOptionalSites() {
+    if (!chrome.permissions) return;
+    const scriptingGranted = await chrome.permissions.contains({ permissions: ["scripting"] });
+    if (scriptingGranted) {
+      const removedSiteRegistrations = await chrome.scripting.getRegisteredContentScripts({
+        ids: ["arrowkey-github"]
+      });
+      if (removedSiteRegistrations.length) {
+        await chrome.scripting.unregisterContentScripts({ ids: ["arrowkey-github"] });
+      }
+    }
+    for (const site of optionalSites) {
+      const [originGranted, siteScriptingGranted] = await Promise.all([
+        chrome.permissions.contains({ origins: [site.origin] }),
+        chrome.permissions.contains({ permissions: ["scripting"] })
+      ]);
+      const registrations = siteScriptingGranted
+        ? await chrome.scripting.getRegisteredContentScripts({ ids: [site.id] }) : [];
+      const registration = registrations[0];
+      const setupComplete = Boolean(
+        originGranted && siteScriptingGranted && registrations.length === 1 &&
+        JSON.stringify(registration.matches) === JSON.stringify(site.matches) &&
+        JSON.stringify(registration.js) === JSON.stringify(siteScripts) &&
+        JSON.stringify(registration.css) === JSON.stringify(siteCss) &&
+        registration.allFrames === false && registration.runAt === "document_idle"
+      );
+      site.checkbox.checked = originGranted;
+      if (originGranted && !setupComplete) {
+        siteMessage.textContent = "One site needs to be switched off and on again.";
+      }
+    }
+    await removeScriptingIfUnused(null);
   }
 
   async function stopInjectedController(tabId) {
@@ -135,7 +116,7 @@
         const granted = await chrome.permissions.request({ permissions: ["scripting"], origins: [site.origin] });
         if (!granted) {
           site.checkbox.checked = false;
-          siteMessage.textContent = "Site access was not enabled.";
+          siteMessage.textContent = "Access was not enabled.";
           return;
         }
         try {
@@ -150,7 +131,7 @@
           if (!alreadyScripting) await removeScriptingIfUnused(site);
           throw error;
         }
-        siteMessage.textContent = "Enabled. Reload an open matching page once.";
+        siteMessage.textContent = "Enabled. Reload an open page once.";
       } else {
         const tabs = await chrome.tabs.query({ url: site.matches });
         await Promise.all(tabs.map((tab) => stopInjectedController(tab.id)));
@@ -162,7 +143,7 @@
           throw new Error("Site access was not removed");
         }
         await removeScriptingIfUnused(site);
-        siteMessage.textContent = "Site access removed.";
+        siteMessage.textContent = "Access removed.";
       }
     } catch {
       siteMessage.textContent = "The site setting could not be changed.";
@@ -173,30 +154,22 @@
   }
 
   if (!consentPolicy || !extensionStorage) {
-    showError(false);
+    showError("Access settings could not be read. Close the popup and try again.");
     return;
   }
 
-  enableButton.addEventListener("click", () => {
-    saveConsent(true, enableButton);
-  });
-
-  disableButton.addEventListener("click", () => {
-    saveConsent(false, disableButton);
-  });
-
+  googleCheckbox.addEventListener("change", () => saveGoogleAccess(googleCheckbox.checked));
   for (const site of optionalSites) {
-    if (site.checkbox) {
-      site.checkbox.addEventListener("change", () => setOptionalSite(site, site.checkbox.checked));
-    }
+    site.checkbox.addEventListener("change", () => setOptionalSite(site, site.checkbox.checked));
   }
 
   extensionStorage.get(consentPolicy.storageKey, (storedValues) => {
     if (globalThis.chrome.runtime.lastError) {
-      showError(false);
+      showError("Access settings could not be read. Close the popup and try again.");
       return;
     }
-    showPanel(consentPolicy.isGranted(storedValues[consentPolicy.storageKey]));
+    googleCheckbox.checked = consentPolicy.isGranted(storedValues[consentPolicy.storageKey]);
+    showReady();
     refreshOptionalSites().catch(() => {
       siteMessage.textContent = "Optional site settings could not be read.";
     });

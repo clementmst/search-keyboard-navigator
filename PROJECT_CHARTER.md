@@ -12,7 +12,7 @@ On Google Search result pages, a user can move predictably among visible result-
 
 ## Current release-improvement scope
 
-Version 0.1.2 is pending Chrome Web Store review. The current bounded 0.2.0 pass adds separately enabled YouTube video-search and GitHub repository-search adapters. Google remains the only static site grant; optional origins and optional `scripting` authority are requested only through the popup. No page data is retained or transmitted, and no dependency, backend, telemetry, or account is added.
+Version 0.2.0 is public in the Chrome Web Store. The current bounded 0.2.1 pass adds separately enabled YouTube search and responsive homepage navigation; GitHub support has been removed. Google remains the only static site grant, while the optional YouTube origin and optional `scripting` authority are requested only through the popup. No page data is retained or transmitted, and no dependency, backend, telemetry, or account is added.
 
 ## MVP scope boundary
 
@@ -22,7 +22,7 @@ Version 0.1.2 is pending Chrome Web Store review. The current bounded 0.2.0 pass
 - Visible native links containing one `h3` result title, in DOM order.
 - Arrow navigation, native link activation, escape/clear behavior, visible focus, and dynamic-result handling.
 - Deterministic fixtures, real-Chrome automation, accessibility checks, security review, and documented live manual testing.
-- Manifest V3, packaged logic, one narrow static Google grant, `storage` for one versioned local consent Boolean, and user-controlled optional YouTube/GitHub origins plus optional `scripting` registration.
+- Manifest V3, packaged logic, one narrow static Google grant, `storage` for one versioned local Google-access Boolean, and a user-controlled optional YouTube origin plus optional `scripting` registration.
 
 ### Out of scope
 

@@ -8,11 +8,11 @@ The initial assessment was reviewed on 2026-08-28 and Store-preparation sources 
 
 ## Confirmed project facts
 
-- Version 0.1.1 is publicly listed; version 0.1.2 is pending Chrome Web Store review. Version 0.2.0 is an unsubmitted implementation candidate.
-- The manifest keeps one static Google content-script match. `storage` records one local consent Boolean; optional `scripting` plus separate YouTube/GitHub origin grants are requested only when the user enables those sites.
+- Version 0.2.0 is publicly listed; version 0.2.1 is an unsubmitted release candidate.
+- The manifest keeps one static Google content-script match. `storage` records one local Google-access Boolean; optional `scripting` plus the YouTube origin grant are requested only when the user enables YouTube. GitHub access is absent.
 - Current source has no account, backend, analytics, telemetry, advertising, monetization, page-data storage, extension network activity, remote configuration, or remotely hosted executable code.
 - Current behavior necessarily inspects the page URL and result DOM locally and ephemerally. Project wording does not call that “no data handling.”
-- Current Chrome Web Store guidance treats that local handling as user-data handling and requires a prominent in-product disclosure plus an affirmative action before handling begins. The current popup presents that disclosure, requires an explicit global Enable action, describes optional-site processing before each origin grant, and keeps page handling inactive until the exact local consent value is true. Browser observation and dashboard/hosted-policy reconciliation remain pending.
+- Current Chrome Web Store guidance treats that local handling as user-data handling and requires a prominent in-product disclosure plus an affirmative action before handling begins. The current popup describes the locally handled categories and exposes separate Google and YouTube access switches; optional YouTube code cannot load until the user grants that origin. Final disclosure-bearing popup observation and dashboard/hosted-policy reconciliation remain pending.
 - The extension contains no package-manager manifest, lockfile, runtime dependency, or copied third-party code. The proposed GitHub Pages workflow separately references four official GitHub Actions by the major-version tags shown in GitHub's current Pages example; this external CI supply-chain surface must be reviewed again before activation. Original generated icon and promotional assets have recorded prompts and provenance. Synthetic fixtures contain no real queries or result pages. Three user-supplied live Google Search screenshots are preserved; the user reports that selected screenshots were used for public version 0.1.1, but their third-party rights are not certified and the political candidate remains prohibited from future submission under the recorded Google Search screenshot guidance.
 - Native `Tab`, `Shift+Tab`, and Enter behavior is not intercepted or reimplemented. The unmodified-arrow interaction is still an experiment and has no accessibility-compliance claim.
 
@@ -23,7 +23,7 @@ These are repository facts, not conclusions about every runtime, distribution ch
 Recorded 2026-08-28; unanswered details remain unknown rather than inferred.
 
 - The intended publisher is an individual in France, publishing personally, who states they have authority to accept agreements.
-- Version 0.1.1 is public and version 0.1.2 is pending Store review. The intended availability remains worldwide; version 0.2.0 has not been submitted.
+- Version 0.2.0 is public. The intended availability remains worldwide; version 0.2.1 has not been submitted.
 - The intended audience is the general public, and the product will not be specifically directed at children under 16.
 - Optional privacy-minimized first-party analytics is the chosen future direction, but no categories, purpose, lawful basis/consent, retention, processors, infrastructure, or implementation authority exists. It is deferred and must not delay private testing, so current Stage 1B remains local-only and backend-free.
 - The preferred operation is simple, mostly non-commercial, ideally free and cash-neutral. Donations are desired. Data sales and affiliate links were mentioned as possibilities, not approved features.
@@ -57,9 +57,9 @@ These are conservative project controls, not legal conclusions:
 - The current runtime's purely local processing is likely outside ePrivacy “gaining access” while information remains on-device, but future storage or telemetry reopens that gate. An EU-facing release still needs qualified assessment of GDPR support-mailbox transparency, provider identity, and whether the General Product Safety Regulation applies to this free personal software distribution model.
 - Open-source license/notice and third-party asset/data-rights review must run on the exact release artifact, listing screenshots, icons, copy, and provenance even though the current tree has no identified third-party dependency or production asset.
 
-### Not currently active in the current 0.2.0 source tree
+### Not currently active in the current 0.2.1 source tree
 
-- Chrome Web Store account, agreement, and initial publication steps were completed by the user for version 0.1.1. No agent has interactive dashboard access or authority to accept terms or certify disclosures. A publisher-linked service account submitted version 0.1.2 after explicit authorization; it is pending review. Exact artifact, listing, dashboard, and compliance review still apply before version 0.2.0 can be submitted.
+- Chrome Web Store account, agreement, and initial publication steps were completed by the user; version 0.2.0 is public. No agent has interactive dashboard access or authority to accept terms or certify disclosures. A publisher-linked service account has bounded Store API access. Exact artifact, listing, dashboard, and compliance review still apply before version 0.2.1 can be submitted.
 - Telemetry, advertising, affiliate, payment, cookie, cross-device sync, sale, and data-sharing controls have no active feature to govern because those behaviors are absent. Any addition reopens privacy, consumer, permission, and approval review before implementation.
 - Third-party software notice obligations are not currently triggered by a dependency or copied code because none is present. This is a repository observation, not a permanent exemption.
 - Google brand-asset permission is not currently needed for the original icon or abstract promotional tile because neither uses Google marks or interface content. A real Google Search screenshot is still required by the Store and its branding, third-party-content, and privacy treatment remains unresolved.

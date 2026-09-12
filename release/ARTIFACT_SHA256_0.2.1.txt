@@ -1,0 +1,1 @@
+33f19600d2613bc9fbaa6c81dbdcadbf625310819d87c81d6dbe49f45ec76282  dist/arrowkey-search-navigator-0.2.1.zip

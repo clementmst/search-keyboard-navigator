@@ -2,7 +2,7 @@
 
 ## Mission and current phase
 
-Build ArrowKey Search Navigator as a narrow, accessible, privacy-preserving Manifest V3 Chrome extension. Version 0.1.2 is pending Store review; the current authorized work is version 0.2.0 with individually optional YouTube video-search and GitHub repository-search support. Do not add browser automation, dependencies, telemetry, other origins, or broader site features without separate approval.
+Build ArrowKey Search Navigator as a narrow, accessible, privacy-preserving Manifest V3 Chrome extension. The current authorized work is version 0.2.1 with individually optional YouTube search and homepage navigation; GitHub support has been removed by user decision. Do not add browser automation, dependencies, telemetry, other origins, or broader site features without separate approval.
 
 ## Instruction order
 

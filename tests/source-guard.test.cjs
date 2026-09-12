@@ -72,7 +72,7 @@ test("optional scripting is limited to reviewed local files and approved sites",
   assert.match(popupSource, /chrome\.tabs\.sendMessage/);
   assert.match(navigatorSource, /arrowkey-revoke-site/);
   assert.match(popupSource, /https:\/\/www\.youtube\.com\/\*/);
-  assert.match(popupSource, /https:\/\/github\.com\/\*/);
+  assert.doesNotMatch(popupSource, /github\.com/);
 });
 
 test("controller does not handle Enter or stop event propagation", () => {
@@ -165,9 +165,19 @@ test("Stage 1B adapter uses a minimal language-neutral title-link contract", () 
   );
 });
 
+test("YouTube homepage grid geometry comes from complete video cards", () => {
+  assert.match(navigatorSource, /candidate\.closest\("ytd-rich-item-renderer"\) \|\| candidate/);
+  assert.match(navigatorSource, /geometryElement\.getBoundingClientRect\(\)/);
+  assert.match(
+    navigatorSource,
+    /site === "youtube-home"\s*\? target\.closest\("ytd-rich-item-renderer"\) \|\| target/,
+    "homepage scrolling must keep the complete selected video card visible"
+  );
+});
+
 test("focus indicator targets the title and includes a non-layout arrow marker", () => {
-  assert.match(stylesheetSource, /\.skn-focused:focus h3\s*\{/);
-  assert.match(stylesheetSource, /\.skn-focused:focus h3::before\s*\{/);
+  assert.match(stylesheetSource, /\.skn-focused:focus h3,\s*h3:has\(\.skn-focused:focus\)\s*\{/);
+  assert.match(stylesheetSource, /\.skn-focused:focus h3::before,\s*h3:has\(\.skn-focused:focus\)::before\s*\{/);
   assert.match(stylesheetSource, /\.skn-focused:focus:not\(:has\(h3\)\)::before\s*\{/);
   assert.match(stylesheetSource, /border-left:\s*9px solid/);
   assert.match(stylesheetSource, /pointer-events:\s*none/);

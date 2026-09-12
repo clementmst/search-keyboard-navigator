@@ -14,6 +14,7 @@ Stage 1B private-test applicability: pure policy/static fixture checks plus one 
 | KEY-06 | C,M | Plain Enter on focused supported result | No extension Enter handler/cancellation/synthetic click; observed native activation/disposition is recorded without claiming atomic URL validation or universal current-tab behavior. |
 | KEY-07 | U,C | Modified ArrowUp/ArrowDown | Ctrl/Meta/Alt/AltGraph/Shift arrows cause no extension focus, cancellation, or scroll. |
 | KEY-08 | U,C | defaultPrevented, composition, untrusted event, and repeat | No extension action for prevented/composing/untrusted events; active available-direction repeats do not move or scroll, while neutral/boundary repeats remain fail-open. |
+| KEY-09 | U,C,M | YouTube viewport positioning | Up and Down scroll instantly and symmetrically only when needed, retaining enough space above and below to show the complete selected title. |
 | KEY-09 | C | Native Tab or pointer already focused eligible result | Up/Down moves relative to that result rather than restarting at the first. |
 | KEY-10 | C | A non-arrow-owning page link, button, disclosure, checkbox, switch, or custom focusable control owns focus | ArrowDown may start at the first title result; controls that genuinely own arrow behavior remain inert. |
 | KEY-11 | C,M | Search submission, search input retention, suggestion dismissal, and back navigation | Entry behavior is recorded; arrows remain native while editing; inability to reach a predictable start state is treated as failed product evidence, not bypassed by stealing focus. |

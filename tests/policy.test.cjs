@@ -22,6 +22,58 @@ test("runtime scope is exact origin and pathname", () => {
   assert.equal(policy.isSupportedLocation({ origin: "https://google.com", pathname: "/search" }), false);
   assert.equal(policy.isSupportedLocation({ origin: "https://www.google.com", pathname: "/search/" }), false);
   assert.equal(policy.isSupportedLocation({ origin: "https://www.google.com", pathname: "/" }), false);
+  assert.equal(policy.isSupportedLocation({ origin: "https://www.youtube.com", pathname: "/" }), true);
+});
+
+function grid(columns, count = columns * 3) {
+  return Array.from({ length: count }, (_, index) => ({
+    left: (index % columns) * 240,
+    top: Math.floor(index / columns) * 180,
+    width: 220,
+    height: 40
+  }));
+}
+
+test("YouTube homepage vertical movement adapts to the rendered column count", () => {
+  for (const columns of [1, 3, 4]) {
+    const rects = grid(columns);
+    assert.equal(policy.gridTargetIndex({ rects, activeEligibleIndex: 0, key: "ArrowDown" }), columns);
+    assert.equal(policy.gridTargetIndex({ rects, activeEligibleIndex: columns, key: "ArrowUp" }), 0);
+  }
+});
+
+test("YouTube homepage horizontal movement stays within the visual row", () => {
+  const rects = grid(3, 8);
+  assert.equal(policy.gridTargetIndex({ rects, activeEligibleIndex: 3, key: "ArrowRight" }), 4);
+  assert.equal(policy.gridTargetIndex({ rects, activeEligibleIndex: 4, key: "ArrowLeft" }), 3);
+  assert.equal(policy.gridTargetIndex({ rects, activeEligibleIndex: 5, key: "ArrowRight" }), -1);
+});
+
+test("YouTube homepage chooses the closest column in an incomplete row", () => {
+  const rects = grid(4, 6);
+  assert.equal(policy.gridTargetIndex({ rects, activeEligibleIndex: 3, key: "ArrowDown" }), 5);
+  assert.equal(policy.gridTargetIndex({ rects, activeEligibleIndex: 5, key: "ArrowUp" }), 1);
+});
+
+test("any arrow activates the YouTube homepage grid and boundaries fail open", () => {
+  const rects = grid(3, 6);
+  const base = {
+    activeEligibleIndex: -1, key: "ArrowDown", neutralFocus: true,
+    rects, repeat: false, sessionActive: false, supportedLocation: true
+  };
+  for (const key of ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]) {
+    const entry = policy.decideGridMovement({ ...base, key });
+    assert.equal(entry.targetIndex, 0);
+    assert.equal(entry.reason, "first");
+  }
+  assert.equal(policy.decideGridMovement({ ...base, activeEligibleIndex: 2, neutralFocus: false, key: "ArrowRight" }).cancelDefault, false);
+});
+
+test("viewport scrolling is symmetric and preserves room for the full title", () => {
+  const base = { viewportHeight: 800, topRoom: 96, bottomRoom: 72 };
+  assert.equal(policy.scrollDeltaForVisibility({ ...base, top: 40, bottom: 80 }), -56);
+  assert.equal(policy.scrollDeltaForVisibility({ ...base, top: 710, bottom: 760 }), 32);
+  assert.equal(policy.scrollDeltaForVisibility({ ...base, top: 120, bottom: 680 }), 0);
 });
 
 test("only unmodified arrows produce a direction", () => {

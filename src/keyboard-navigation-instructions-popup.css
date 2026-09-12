@@ -113,20 +113,59 @@ button:disabled {
 
 .site-options {
   margin: 18px 0;
-  padding: 14px;
+  padding: 6px 14px 12px;
   border: 1px solid #b9c7dc;
   border-radius: 10px;
 }
 
-.site-options label {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  margin: 10px 0;
+.site-options legend {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 0 6px;
 }
 
-.site-options input { inline-size: 20px; block-size: 20px; accent-color: #1a73e8; }
+.access-disclosure {
+  font-size: 12px;
+  line-height: 1.35;
+  margin: 4px 0 6px;
+}
+
+.site-options label {
+  border-bottom: 1px solid #dadce0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 44px;
+}
+
+.site-options input {
+  appearance: none;
+  background: #9aa0a6;
+  border-radius: 14px;
+  cursor: pointer;
+  height: 24px;
+  position: relative;
+  width: 42px;
+}
+
+.site-options input::after {
+  background: #ffffff;
+  border-radius: 50%;
+  content: "";
+  height: 18px;
+  left: 3px;
+  position: absolute;
+  top: 3px;
+  transition: transform 120ms ease;
+  width: 18px;
+}
+
+.site-options input:checked { background: #1a73e8; }
+.site-options input:checked::after { transform: translateX(18px); }
+.site-options input:focus-visible { outline: 3px solid #174ea6; outline-offset: 3px; }
+.site-options input:disabled { cursor: wait; opacity: 0.65; }
 .site-message { min-height: 1.4em; margin: 8px 0 0; font-size: 0.9rem; }
+.privacy-note { font-size: 12px; margin-top: 3px; }
 
 .secondary-button:hover {
   background: #e8f0fe;
@@ -246,6 +285,10 @@ kbd:hover {
   tr:hover td {
     background: #253a63;
   }
+
+  .site-options label {
+    border-color: #5f6368;
+  }
 }
 
 @media (forced-colors: active) {
@@ -262,6 +305,10 @@ kbd:hover {
   tr:hover kbd {
     background: ButtonFace;
     color: ButtonText;
+  }
+
+  .site-options input {
+    border: 1px solid ButtonText;
   }
 
   button,

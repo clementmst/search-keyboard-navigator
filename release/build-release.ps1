@@ -1,5 +1,5 @@
 param(
-  [string]$OutputPath = "dist/arrowkey-search-navigator-0.2.0.zip"
+  [string]$OutputPath = "dist/arrowkey-search-navigator-0.2.1.zip"
 )
 
 $ErrorActionPreference = "Stop"

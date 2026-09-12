@@ -1,17 +1,17 @@
 # Privacy Policy — ArrowKey Search Navigator
 
 Effective date: August 31, 2026
-Last updated: September 10, 2026
+Last updated: September 12, 2026
 
-ArrowKey Search Navigator (formerly Search Keyboard Navigator) is a Chrome extension published by an individual developer in France. It helps users move keyboard focus among recognized result links on supported Google Search pages and, only when individually enabled by the user, YouTube video-search and GitHub repository-search pages.
+ArrowKey Search Navigator (formerly Search Keyboard Navigator) is a Chrome extension published by an individual developer in France. It helps users move keyboard focus among recognized result links on supported Google Search pages and, only when individually enabled by the user, YouTube search and homepage videos.
 
 ## Information handled on the device
 
 To provide keyboard navigation, the extension temporarily handles the following information on the user's device:
 
-- **Web history:** the address of the current supported search page, solely to confirm that the page is within an enabled site and route.
+- **Web history:** the address of the current supported page, solely to confirm that the page is within an enabled site and route.
 - **Website content:** visible result-title link text and destinations, surrounding page structure, and element visibility.
-- **User activity:** key-event metadata and current focus state. On supported pages, the extension briefly examines each keydown event only long enough to determine whether it is an eligible Arrow Up, Arrow Down, or active-session Escape command and whether the current page context is safe. All other keys are immediately ignored. The extension does not record typed text, retain keystrokes, or transmit key events.
+- **User activity:** key-event metadata and current focus state. On supported pages, the extension briefly examines each keydown event only long enough to determine whether it is an eligible arrow command, an active-session Escape command, or another key that must be ignored, and whether the current page context is safe. The extension does not record typed text, retain keystrokes, or transmit key events.
 
 Search queries, page content, and result destinations can contain personal or sensitive information. This information is processed only within the current browser page so the extension can recognize eligible result-title links, move native keyboard focus, and display its focus indicator.
 
@@ -21,15 +21,15 @@ Through the extension itself, the developer does not receive, retain, transmit, 
 
 The current release has no analytics, telemetry, accounts, advertising, backend, remote configuration, remote code, or extension-originated network requests.
 
-Before this page handling begins, the popup explains the local processing and asks the user to select **Enable keyboard navigation**. Until that action is taken, the content controller does not inspect the page address, page content, focus, or key events.
+Before this page handling begins, the popup explains the local processing. Turning on the **Google Search** or **YouTube** access switch is the user's affirmative choice for that site. Until Google Search access is on, its content controller remains inactive; until YouTube access is granted, the packaged controller is not registered on YouTube.
 
 ## Permissions and purpose
 
-The extension runs by default only on `https://www.google.com/search*`. Users may separately grant or remove access to `https://www.youtube.com/*` and `https://github.com/*` from the popup. Packaged code loads across an enabled optional origin so it remains available through that site's in-page navigation, but exact runtime guards return without selecting results or moving focus except on YouTube `/results` and GitHub `/search?type=repositories`. `storage` keeps the local consent setting, and optional `scripting` registers only packaged files. No remote code is fetched.
+The extension runs by default only on `https://www.google.com/search*`. Users may separately grant or remove access to `https://www.youtube.com/*` from the popup. Packaged code loads across the enabled YouTube origin so it remains available through in-page navigation, but exact runtime guards return without selecting results or moving focus except on YouTube `/results` and `/`. `storage` keeps the local Google-access setting, and optional `scripting` registers only packaged files. No remote code is fetched.
 
 ## Storage and retention
 
-The extension stores one versioned Boolean setting in Chrome on the user's device: whether keyboard navigation is enabled. It does not store searches, URLs, page content, result destinations, focus history, or keyboard activity. Temporary in-page navigation state ends when the page or extension session ends. The local choice remains until the user changes it or removes the extension.
+The extension stores one versioned Boolean setting in Chrome on the user's device: whether Google Search access is enabled. Chrome separately remembers whether the user granted the optional YouTube origin and scripting permissions. The extension does not store searches, URLs, page content, result destinations, focus history, or keyboard activity. Temporary in-page navigation state ends when the page or extension session ends. Local access choices remain until the user changes them or removes the extension.
 
 ## Sharing and sale
 
@@ -49,7 +49,7 @@ Support information is used only to answer requests, investigate reported proble
 
 ## User choices
 
-Users can stop page processing by selecting **Disable keyboard navigation** in the popup, disabling the extension, or uninstalling it. Disabling from the popup removes the active page listeners and clears the extension's selection. The extension does not create a developer-held record of on-page activity. Users who voluntarily contact support may request access, correction, or deletion of their support communication by emailing the support address, subject to applicable legal or security needs.
+Users can stop page processing by turning off the relevant **Google Search** or **YouTube** access switch, disabling the extension, or uninstalling it. Turning off access removes active page listeners and clears the extension's selection. The extension does not create a developer-held record of on-page activity. Users who voluntarily contact support may request access, correction, or deletion of their support communication by emailing the support address, subject to applicable legal or security needs.
 
 ## Future changes
 

@@ -16,7 +16,7 @@ test("manifest keeps Google static and exposes only approved optional site grant
     ["action", "content_scripts", "description", "icons", "manifest_version", "minimum_chrome_version", "name", "optional_host_permissions", "optional_permissions", "permissions", "version"].sort()
   );
   assert.equal(manifest.name, "ArrowKey Search Navigator");
-  assert.equal(manifest.version, "0.2.0");
+  assert.equal(manifest.version, "0.2.1");
   assert.equal(manifest.minimum_chrome_version, "105");
   assert.ok(manifest.description.length <= 132);
   assert.deepEqual(manifest.icons, {
@@ -30,7 +30,7 @@ test("manifest keeps Google static and exposes only approved optional site grant
   }
   assert.deepEqual(manifest.permissions, ["storage"]);
   assert.deepEqual(manifest.optional_permissions, ["scripting"]);
-  assert.deepEqual(manifest.optional_host_permissions, ["https://www.youtube.com/*", "https://github.com/*"]);
+  assert.deepEqual(manifest.optional_host_permissions, ["https://www.youtube.com/*"]);
   for (const forbidden of [
     "host_permissions",
     "background",
